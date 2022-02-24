@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-project(untitled)
+project(PSE)
 
 set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Werror")
@@ -12,16 +12,16 @@ include_directories(gtest/include)
 link_directories(gtest/lib)
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TicTacToe.cpp TicTacToeMain.cpp)
+set(RELEASE_SOURCE_FILES main.cpp)
 
 # Set source files for DEBUG target
-set(DEBUG_SOURCE_FILES TicTacToe.cpp TicTacToeTests.cpp)
+set(DEBUG_SOURCE_FILES tests.cpp)
 
 # Create RELEASE target
-add_executable(ttt ${RELEASE_SOURCE_FILES})
+add_executable(main ${RELEASE_SOURCE_FILES})
 
 # Create DEBUG target
-add_executable(ttt_debug ${DEBUG_SOURCE_FILES})
+add_executable(tests ${DEBUG_SOURCE_FILES})
 
 # Link library
-target_link_libraries(ttt_debug gtest)
+target_link_libraries(tests gtest)
