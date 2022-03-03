@@ -8,4 +8,3 @@ build.ninja
 /.ninja_*
 CMakeCache.txt
 cmake_install.cmake
-ttt*
