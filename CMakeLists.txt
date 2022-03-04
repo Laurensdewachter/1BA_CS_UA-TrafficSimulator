@@ -12,7 +12,7 @@ include_directories(gtest/include)
 link_directories(gtest/lib)
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES main.cpp parsers/tinyxml/tinyxml.h parsers/tinyxml/tinyxml.cpp parsers/tinyxml/tinyxmlparser.cpp
+set(RELEASE_SOURCE_FILES trafficSimulation.cpp parsers/tinyxml/tinyxml.h parsers/tinyxml/tinyxml.cpp parsers/tinyxml/tinyxmlparser.cpp
         parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinystr.h parsers/tinyxml/tinystr.cpp
         DesignByContract.h parsers/ElementParser.cpp parsers/ElementParser.h objects/Street.cpp objects/Street.h objects/TrafficLight.cpp objects/TrafficLight.h objects/Vehicle.cpp objects/Vehicle.h parsers/StreetParser.cpp parsers/StreetParser.h parsers/ParseException.cpp parsers/ParseException.h parsers/TrafficLightParser.cpp parsers/TrafficLightParser.h parsers/VehicleParser.cpp parsers/VehicleParser.h)
 
