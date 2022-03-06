@@ -9,7 +9,7 @@
 
 Vehicle::Vehicle() {
     Vehicle::_initCheck = this;
-    ENSURE(properlyInitialized(), "Vehicle constructor dit not end in a initialized state.");
+    ENSURE(properlyInitialized(), "Vehicle constructor dit not end in an initialized state");
 }
 
 Vehicle::~Vehicle() {}
@@ -19,23 +19,23 @@ bool Vehicle::properlyInitialized() const {
 }
 
 void Vehicle::setStreet(const std::string &s) {
-    REQUIRE(Vehicle::properlyInitialized(), "Vehicle wasn't initialized when calling `setStreet()`.");
+    REQUIRE(Vehicle::properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()");
     Vehicle::street = s;
-    ENSURE(Vehicle::street == s, "`setStreet()` postcondition failed.");
+    ENSURE(Vehicle::street == s, "setStreet() postcondition");
 }
 
 void Vehicle::setPosition(int p) {
-    REQUIRE(Vehicle::properlyInitialized(), "Vehicle wasn't initialized when calling `setPosition()`.");
+    REQUIRE(Vehicle::properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()");
     Vehicle::position = p;
-    ENSURE(Vehicle::position == p, "`setPosition()` postcondition failed.");
+    ENSURE(Vehicle::position == p, "setPosition() postcondition");
 }
 
 const std::string &Vehicle::getStreet() const {
-    REQUIRE(Vehicle::properlyInitialized(), "Vehicle wasn't initialized when calling `getStreet()`.");
+    REQUIRE(Vehicle::properlyInitialized(), "Vehicle wasn't initialized when calling getStreet()");
     return Vehicle::street;
 }
 
 int Vehicle::getPosition() const {
-    REQUIRE(Vehicle::properlyInitialized(), "Vehicle wasn't initialized when calling `getPosition()`.");
+    REQUIRE(Vehicle::properlyInitialized(), "Vehicle wasn't initialized when calling getPosition()");
     return Vehicle::position;
 }

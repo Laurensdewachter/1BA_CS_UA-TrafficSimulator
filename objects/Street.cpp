@@ -9,7 +9,7 @@
 
 Street::Street() {
     Street::_initCheck = this;
-    ENSURE(Street::properlyInitialized(), "Street constructor dit not end in a initialized state.");
+    ENSURE(properlyInitialized(), "Street constructor dit not end in an initialized state");
 }
 
 Street::~Street() {}
@@ -19,23 +19,23 @@ bool Street::properlyInitialized() const {
 }
 
 void Street::setName(const std::string &n) {
-    REQUIRE(Street::properlyInitialized(), "Street wasn't initialized when calling `setName()`.");
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setName()");
     Street::name = n;
-    ENSURE(Street::name == n, "`setName()` postcondition failed.");
+    ENSURE(this->getName() == n, "setName() postcondition");
 }
 
 void Street::setLength(int l) {
-    REQUIRE(Street::properlyInitialized(), "Street wasn't initialized when calling `setLength()`.");
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setLength()");
     Street::length = l;
-    ENSURE(Street::length == l, "`setLength()` postcondition failed.");
+    ENSURE(this->getLength() == l, "setLength() postcondition");
 }
 
 const std::string &Street::getName() const {
-    REQUIRE(Street::properlyInitialized(), "Street wasn't initialized when calling `getName()`.");
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getName()");
     return Street::name;
 }
 
 int Street::getLength() const {
-    REQUIRE(Street::properlyInitialized(), "Street wasn't initialized when calling `getLength()`.");
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getLength()");
     return Street::length;
 }

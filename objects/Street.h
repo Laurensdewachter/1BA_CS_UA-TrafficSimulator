@@ -15,10 +15,11 @@ class Street {
     Street* _initCheck;
     std::string name;
     int length;
+    int check;
 
 public:
     /*
-     * ENSURE(properlyInitialized(), "Constructor must end in properlyInitialized state.")
+     * ENSURE(properlyInitialized(), "Street constructor dit not end in an initialized state")
      */
     Street();
 
@@ -27,24 +28,24 @@ public:
     bool properlyInitialized() const;
 
     /*
-     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling `setName()`.")
-     * ENSURE(name == n, "`setName()` postcondition failed.")
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setName()")
+     * ENSURE(this->getName() == n, "setName() postcondition")
      */
     void setName(const std::string &name);
 
     /*
-     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling `setLength()`.")
-     * ENSURE(Street::length == l, "`setLength()` postcondition failed.")
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setLength()")
+     * ENSURE(this->getLength() == l, "setLength() postcondition")
      */
     void setLength(int length);
 
     /*
-     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling `getName()`.")
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getName()")
      */
     const std::string &getName() const;
 
     /*
-     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling `getLength()`.")
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getLength()")
      */
     int getLength() const;
 };

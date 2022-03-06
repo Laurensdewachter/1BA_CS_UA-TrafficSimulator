@@ -19,7 +19,7 @@ class TrafficLight {
 
 public:
     /*
-     * ENSURE(properlyInitialized(), "TrafficLight constructor dit not end in a initialized state.")
+     * ENSURE(properlyInitialized(), "TrafficLight constructor dit not end in an initialized state");
      */
     TrafficLight();
 
@@ -28,35 +28,35 @@ public:
     bool properlyInitialized() const;
 
     /*
-     * REQUIRE(TrafficLight::properlyInitialized(), "TrafficLight wasn't initialized when calling `setStreet()`.")
-     * ENSURE(TrafficLight::street == s, "`setStreet()` postcondition failed.")
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setStreet()")
+     * ENSURE(this->getStreet() == s, "setStreet() postcondition")
      */
     void setStreet(const std::string &street);
 
     /*
-     * REQUIRE(TrafficLight::properlyInitialized(), "TrafficLight wasn't initialized when calling `setPosition()`.")
-     * ENSURE(TrafficLight::position == p, "`setPosition()` postcondition failed.")
-     */
-    void setCycle(int cycle);
-
-    /*
-     * REQUIRE(TrafficLight::properlyInitialized(), "TrafficLight wasn't initialized when calling `setCycle()`.")
-     * ENSURE(TrafficLight::position == c, "`setCycle()` postcondition failed.")
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setPosition()")
+     * ENSURE(this->getPosition() == p, "setPosition() postcondition")
      */
     void setPosition(int position);
 
     /*
-     * REQUIRE(TrafficLight::properlyInitialized(), "TrafficLight wasn't initialized when calling `getStreet()`.")
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setCycle()")
+     * ENSURE(this->getCycle() == c, "setCycle() postcondition")
+     */
+    void setCycle(int cycle);
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getStreet()")
      */
     const std::string &getStreet() const;
 
     /*
-     * REQUIRE(TrafficLight::properlyInitialized(), "TrafficLight wasn't initialized when calling `getPosition()`.")
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getPosition()")
      */
     int getPosition() const;
 
     /*
-     * REQUIRE(TrafficLight::properlyInitialized(), "TrafficLight wasn't initialized when calling `getCycle()`.")
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getCycle()")
      */
     int getCycle() const;
 };
