@@ -10,21 +10,38 @@
 
 #include <iostream>
 #include <sstream>
-#include "tinyxml/tinyxml.h"
 #include "ParseException.h"
+#include "tinyxml/tinyxml.h"
+#include "../DesignByContract.h"
 
 class Street;
 
 class StreetParser {
     Street* street;
+    StreetParser* _initCheck;
 
 public:
+    /*
+     * ENSURE(properlyInitialized(), "StreetParser constructor did not end in an initialized state")
+     */
     StreetParser();
+
     virtual ~StreetParser();
 
+    bool properlyInitialized() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()")
+     * ENSURE(street->getName() == name, "parseStreet() postcondition")
+     * ENSURE(street->getLength() == length, "parseStreet() postcondition")
+     */
     void parseStreet(TiXmlElement* BAAN);
+
+    /*
+     * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling getStreet()")
+     */
     Street* getStreet() const;
 };
 
 
-#endif //PSE_STREETPARSER_H
+#endif

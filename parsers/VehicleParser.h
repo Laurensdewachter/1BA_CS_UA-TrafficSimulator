@@ -17,15 +17,30 @@ class Vehicle;
 
 class VehicleParser {
     Vehicle* vehicle;
+    VehicleParser* _initCheck;
 
 public:
+    /*
+     * ENSURE(properlyInitialized(), "VehicleParser constructor did not end in an initialized state")
+     */
     VehicleParser();
+
     virtual ~VehicleParser();
 
+    bool properlyInitialized() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling parseVehicle()")
+     * ENSURE(vehicle->getStreet() == street, "parseVehicle() postcondition")
+     * ENSURE(vehicle->getPosition() == position, "parseVehicle() postcondition")
+     */
     void parseVehicle(TiXmlElement* VOERTUIG);
 
+    /*
+     * REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling getVehicle()")
+     */
     Vehicle *getVehicle() const;
 };
 
 
-#endif //PSE_VEHICLEPARSER_H
+#endif

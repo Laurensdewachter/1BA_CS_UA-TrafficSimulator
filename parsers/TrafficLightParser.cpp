@@ -10,11 +10,19 @@
 
 TrafficLightParser::TrafficLightParser() {
     trafficLight = new TrafficLight();
+    TrafficLightParser::_initCheck = this;
+    ENSURE(properlyInitialized(), "TrafficLightParser constructor did not end in an initialized state");
 }
 
 TrafficLightParser::~TrafficLightParser() {}
 
+bool TrafficLightParser::properlyInitialized() const {
+    return TrafficLightParser::_initCheck == this;
+}
+
 void TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT) {
+    REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling parseTrafficLight()");
+
     TiXmlElement* streetElem = VERKEERSLICHT->FirstChildElement("baan");
     TiXmlElement* positionElem = VERKEERSLICHT->FirstChildElement("positie");
     TiXmlElement* cycleElem = VERKEERSLICHT->FirstChildElement("cyclus");
@@ -46,8 +54,12 @@ void TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT) {
     trafficLight->setStreet(street);
     trafficLight->setPosition(position);
     trafficLight->setCycle(cycle);
+    ENSURE(trafficLight->getStreet() == street, "parseTrafficLight() postcondition");
+    ENSURE(trafficLight->getPosition() == position, "parseTrafficLight() postcondition");
+    ENSURE(trafficLight->getCycle() == cycle, "parseTrafficLight() postcondition");
 }
 
 TrafficLight* TrafficLightParser::getTrafficLight() const {
+    REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling getTrafficLight()");
     return trafficLight;
 }

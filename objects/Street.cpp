@@ -9,7 +9,7 @@
 
 Street::Street() {
     Street::_initCheck = this;
-    ENSURE(properlyInitialized(), "Street constructor dit not end in an initialized state");
+    ENSURE(properlyInitialized(), "Street constructor did not end in an initialized state");
 }
 
 Street::~Street() {}

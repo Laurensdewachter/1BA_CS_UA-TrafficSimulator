@@ -19,7 +19,7 @@ class TrafficLight {
 
 public:
     /*
-     * ENSURE(properlyInitialized(), "TrafficLight constructor dit not end in an initialized state");
+     * ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
      */
     TrafficLight();
 
@@ -31,19 +31,19 @@ public:
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setStreet()")
      * ENSURE(this->getStreet() == s, "setStreet() postcondition")
      */
-    void setStreet(const std::string &street);
+    void setStreet(const std::string &s);
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setPosition()")
      * ENSURE(this->getPosition() == p, "setPosition() postcondition")
      */
-    void setPosition(int position);
+    void setPosition(int p);
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setCycle()")
      * ENSURE(this->getCycle() == c, "setCycle() postcondition")
      */
-    void setCycle(int cycle);
+    void setCycle(int c);
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getStreet()")

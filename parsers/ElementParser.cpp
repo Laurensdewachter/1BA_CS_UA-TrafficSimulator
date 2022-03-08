@@ -1,23 +1,33 @@
 // ===========================================================
 // Name         : ElementParser.cpp
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
-// Description  : This code is used to parse an XML file that contains either a `Street`, `TrafficLight` or `Vehicle` element
+// Version      : 1.1
+// Description  : This code is used to parse an XML file that contains either a `Street`, `TrafficLight`, `Vehicle`
+//                or `VehicleGenerator` element
 // ===========================================================
 
 #include "ElementParser.h"
 
+ElementParser::ElementParser() {
+    ElementParser::_initCheck = this;
+    ENSURE(properlyInitialized(), "ElementParser constructor did not end in an initialized state");
+}
 
-bool ElementParser::parseFile(const std::string &filename) {
+ElementParser::~ElementParser() {}
+
+bool ElementParser::properlyInitialized() const {
+    return ElementParser::_initCheck == this;
+}
+
+void ElementParser::parseFile(const std::string &filename) {
+    REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling parseFile()");
+
     if (!doc.LoadFile(filename.c_str())) {
-        std::cerr << doc.ErrorDesc() << std::endl;
-        return false;
+        throw ParseException(doc.ErrorDesc());
     }
     root = doc.FirstChildElement();
     if (root == NULL) {
-        std::cerr << "Failed to load file: No root element." << std::endl;
-        doc.Clear();
-        return false;
+        throw ParseException("Failed to load file: No root element.");
     }
     // strcmp: https://stackoverflow.com/questions/15050766/comparing-the-values-of-char-arrays-in-c
     if (strcmp(root->Value(), "BAAN") == 0) {
@@ -35,6 +45,10 @@ bool ElementParser::parseFile(const std::string &filename) {
         parser.parseVehicle(root);
         vehicles.push_back(parser.getVehicle());
     }
+    else if (strcmp(root->Value(), "VOERTUIGGENERATOR") == 0) {
+        VehicleGeneratorParser parser;
+        parser.parseVehicleGenerator(root);
+        vehicleGenerators.push_back(parser.getVehicleGenerator());
+    }
     doc.Clear();
-    return true;
 }

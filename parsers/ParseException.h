@@ -19,4 +19,4 @@ public:
 };
 
 
-#endif //PSE_PARSEEXCEPTION_H
+#endif
