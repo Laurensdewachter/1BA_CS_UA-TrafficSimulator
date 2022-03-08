@@ -9,7 +9,7 @@
 
 TrafficLight::TrafficLight() {
     TrafficLight::_initCheck = this;
-    ENSURE(properlyInitialized(), "TrafficLight constructor dit not end in an initialized state");
+    ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
 }
 
 TrafficLight::~TrafficLight() {}

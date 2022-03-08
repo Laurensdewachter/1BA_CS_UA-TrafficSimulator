@@ -10,8 +10,8 @@
 
 #include <iostream>
 #include <sstream>
-#include "tinyxml/tinyxml.h"
 #include "ParseException.h"
+#include "tinyxml/tinyxml.h"
 
 class Street;
 
@@ -27,4 +27,4 @@ public:
 };
 
 
-#endif //PSE_STREETPARSER_H
+#endif

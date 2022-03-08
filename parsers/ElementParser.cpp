@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : ElementParser.cpp
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is used to parse an XML file that contains either a `Street`, `TrafficLight` or `Vehicle` element
 // ===========================================================
 
@@ -34,6 +34,11 @@ bool ElementParser::parseFile(const std::string &filename) {
         VehicleParser parser;
         parser.parseVehicle(root);
         vehicles.push_back(parser.getVehicle());
+    }
+    else if (strcmp(root->Value(), "VOERTUIGGENERATOR") == 0) {
+        VehicleGeneratorParser parser;
+        parser.parseVehicleGenerator(root);
+        vehicleGenerators.push_back(parser.getVehicleGenerator());
     }
     doc.Clear();
     return true;

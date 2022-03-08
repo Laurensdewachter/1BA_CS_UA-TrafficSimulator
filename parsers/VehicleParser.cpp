@@ -8,7 +8,9 @@
 #include "VehicleParser.h"
 #include "../objects/Vehicle.h"
 
-VehicleParser::VehicleParser() {}
+VehicleParser::VehicleParser() {
+    vehicle = new Vehicle;
+}
 
 VehicleParser::~VehicleParser() {}
 

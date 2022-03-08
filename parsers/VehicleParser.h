@@ -23,9 +23,8 @@ public:
     virtual ~VehicleParser();
 
     void parseVehicle(TiXmlElement* VOERTUIG);
-
     Vehicle *getVehicle() const;
 };
 
 
-#endif //PSE_VEHICLEPARSER_H
+#endif

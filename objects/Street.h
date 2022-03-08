@@ -15,11 +15,10 @@ class Street {
     Street* _initCheck;
     std::string name;
     int length;
-    int check;
 
 public:
     /*
-     * ENSURE(properlyInitialized(), "Street constructor dit not end in an initialized state")
+     * ENSURE(properlyInitialized(), "Street constructor did not end in an initialized state")
      */
     Street();
 
@@ -31,13 +30,13 @@ public:
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setName()")
      * ENSURE(this->getName() == n, "setName() postcondition")
      */
-    void setName(const std::string &name);
+    void setName(const std::string &n);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setLength()")
      * ENSURE(this->getLength() == l, "setLength() postcondition")
      */
-    void setLength(int length);
+    void setLength(int l);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getName()")

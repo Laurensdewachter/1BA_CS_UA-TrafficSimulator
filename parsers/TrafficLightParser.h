@@ -11,8 +11,8 @@
 
 #include <iostream>
 #include <sstream>
-#include "tinyxml/tinyxml.h"
 #include "ParseException.h"
+#include "tinyxml/tinyxml.h"
 
 class TrafficLight;
 
@@ -28,4 +28,4 @@ public:
 };
 
 
-#endif //PSE_TRAFFICLIGHTPARSER_H
+#endif

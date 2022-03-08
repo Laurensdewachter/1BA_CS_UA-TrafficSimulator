@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : ElementParser.h
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is used to parse an XML file that contains either a `Street`, `TrafficLight` or `Vehicle` element
 // ===========================================================
 
@@ -10,15 +10,16 @@
 
 #include <iostream>
 #include <vector>
-#include <exception>
 #include "tinyxml/tinyxml.h"
 #include "StreetParser.h"
 #include "TrafficLightParser.h"
 #include "VehicleParser.h"
+#include "VehicleGeneratorParser.h"
 
 class Street;
 class TrafficLight;
 class Vehicle;
+class VehicleGenerator;
 
 class ElementParser {
     TiXmlElement* root;
@@ -27,6 +28,7 @@ class ElementParser {
     std::vector<Street*> streets;
     std::vector<TrafficLight*> trafficLights;
     std::vector<Vehicle*> vehicles;
+    std::vector<VehicleGenerator*> vehicleGenerators;
 
 public:
     ElementParser() {}
@@ -40,4 +42,4 @@ public:
 };
 
 
-#endif //PSE_ELEMENTPARSER_H
+#endif
