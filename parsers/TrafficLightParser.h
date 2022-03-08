@@ -18,12 +18,29 @@ class TrafficLight;
 
 class TrafficLightParser {
     TrafficLight* trafficLight;
+    TrafficLightParser* _initCheck;
 
 public:
+    /*
+     * ENSURE(properlyInitialized(), "TrafficLightParser constructor did not end in an initialized state")
+     */
     TrafficLightParser();
+
     virtual ~TrafficLightParser();
 
+    bool properlyInitialized() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling parseTrafficLight()");
+     * ENSURE(trafficLight->getStreet() == street, "parseTrafficLight() postcondition")
+     * ENSURE(trafficLight->getPosition() == position, "parseTrafficLight() postcondition")
+     * ENSURE(trafficLight->getCycle() == cycle, "parseTrafficLight() postcondition")
+     */
     void parseTrafficLight(TiXmlElement* VERKEERSLICHT);
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling getTrafficLight()")
+     */
     TrafficLight* getTrafficLight() const;
 };
 

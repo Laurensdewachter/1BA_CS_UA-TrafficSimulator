@@ -10,11 +10,19 @@
 
 VehicleGeneratorParser::VehicleGeneratorParser() {
     vehicleGenerator = new VehicleGenerator;
+    VehicleGeneratorParser::_initCheck = this;
+    ENSURE(properlyInitialized(), "VehicleGeneratorParser constructor did not end in an initialized state");
 }
 
 VehicleGeneratorParser::~VehicleGeneratorParser() {}
 
+bool VehicleGeneratorParser::properlyInitialized() const {
+    return VehicleGeneratorParser::_initCheck == this;
+}
+
 void VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERATOR) {
+    REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling parseVehicleGenerator()");
+
     TiXmlElement* baanElem = VOERTUIGGENERATOR->FirstChildElement("baan");
     TiXmlElement* frequencyElem = VOERTUIGGENERATOR->FirstChildElement("frequentie");
     if (baanElem == NULL && frequencyElem == NULL) {
@@ -36,8 +44,12 @@ void VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
 
     vehicleGenerator->setStreet(street);
     vehicleGenerator->setFrequency(frequency);
+
+    ENSURE(vehicleGenerator->getStreet() == street, "parseVehicleGenerator() postcondition");
+    ENSURE(vehicleGenerator->getFrequency() == frequency, "parseVehicleGenerator() postcondition");
 }
 
 VehicleGenerator *VehicleGeneratorParser::getVehicleGenerator() const {
+    REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling getVehicleGenerator()");
     return vehicleGenerator;
 }

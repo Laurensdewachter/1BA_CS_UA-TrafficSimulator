@@ -10,11 +10,19 @@
 
 VehicleParser::VehicleParser() {
     vehicle = new Vehicle;
+    VehicleParser::_initCheck =this;
+    ENSURE(properlyInitialized(), "VehicleParser constructor did not end in an initialized state");
 }
 
 VehicleParser::~VehicleParser() {}
 
+bool VehicleParser::properlyInitialized() const {
+    return VehicleParser::_initCheck == this;
+}
+
 void VehicleParser::parseVehicle(TiXmlElement *VOERTUIG) {
+    REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling parseVehicle()");
+
     TiXmlElement* baanElem = VOERTUIG->FirstChildElement("baan");
     TiXmlElement* positionElem = VOERTUIG->FirstChildElement("positie");
     if (baanElem == NULL && positionElem == NULL) {
@@ -36,8 +44,12 @@ void VehicleParser::parseVehicle(TiXmlElement *VOERTUIG) {
 
     vehicle->setStreet(street);
     vehicle->setPosition(position);
+
+    ENSURE(vehicle->getStreet() == street, "parseVehicle() postcondition");
+    ENSURE(vehicle->getPosition() == position, "parseVehicle() postcondition");
 }
 
 Vehicle *VehicleParser::getVehicle() const {
+    REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling getVehicle()");
     return vehicle;
 }

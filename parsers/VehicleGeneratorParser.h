@@ -17,12 +17,28 @@ class VehicleGenerator;
 
 class VehicleGeneratorParser {
     VehicleGenerator* vehicleGenerator;
+    VehicleGeneratorParser* _initCheck;
 
 public:
+    /*
+     * ENSURE(properlyInitialized(), "VehicleGeneratorParser constructor did not end in an initialized state")
+     */
     VehicleGeneratorParser();
+
     virtual ~VehicleGeneratorParser();
 
+    bool properlyInitialized() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling parseVehicleGenerator()")
+     * ENSURE(vehicleGenerator->getStreet() == street, "parseVehicleGenerator() postcondition")
+     * ENSURE(vehicleGenerator->getFrequency() == frequency, "parseVehicleGenerator() postcondition")
+     */
     void parseVehicleGenerator(TiXmlElement* VOERTUIGGENERATOR);
+
+    /*
+     * REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling getVehicleGenerator()")
+     */
     VehicleGenerator* getVehicleGenerator() const;
 };
 

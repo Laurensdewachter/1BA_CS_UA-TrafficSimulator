@@ -9,12 +9,20 @@
 #include "../objects/Street.h"
 
 StreetParser::StreetParser() {
-    street = new Street();
+    StreetParser::street = new Street();
+    StreetParser::_initCheck = this;
+    ENSURE(properlyInitialized(), "StreetParser constructor did not end in an initialized state");
 }
 
 StreetParser::~StreetParser() {}
 
+bool StreetParser::properlyInitialized() const {
+    return StreetParser::_initCheck == this;
+}
+
 void StreetParser::parseStreet(TiXmlElement* BAAN) {
+    REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()");
+
     TiXmlElement* nameElem = BAAN->FirstChildElement("naam");
     TiXmlElement* lengthElem = BAAN->FirstChildElement("lengte");
     if (nameElem == NULL && lengthElem == NULL) {
@@ -36,8 +44,12 @@ void StreetParser::parseStreet(TiXmlElement* BAAN) {
 
     street->setName(name);
     street->setLength(length);
+
+    ENSURE(street->getName() == name, "parseStreet() postcondition");
+    ENSURE(street->getLength() == length, "parseStreet() postcondition");
 }
 
 Street* StreetParser::getStreet() const {
+    REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling getStreet()");
     return street;
 }
