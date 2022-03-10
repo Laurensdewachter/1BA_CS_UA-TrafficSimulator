@@ -29,7 +29,7 @@ void ElementParser::parseFile(const std::string &filename) {
     if (root == NULL) {
         throw ParseException("Failed to load file: No root element.");
     }
-
+  
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         // strcmp: https://stackoverflow.com/questions/15050766/comparing-the-values-of-char-arrays-in-c
         if (strcmp(elem->Value(), "BAAN") == 0) {
