@@ -26,17 +26,24 @@ void VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
     TiXmlElement* baanElem = VOERTUIGGENERATOR->FirstChildElement("baan");
     TiXmlElement* frequencyElem = VOERTUIGGENERATOR->FirstChildElement("frequentie");
     if (baanElem == NULL && frequencyElem == NULL) {
-        throw ParseException("The vehicle-generator has no contents.\nIt needs both a street and a frequency.");
+        throw ParseException("The fVehicle-generator has no contents.\nIt needs both a fStreet and a fFrequency.");
     }
     if (baanElem == NULL) {
-        throw ParseException("The vehicle-generator has no street.");
+        throw ParseException("The fVehicle-generator has no fStreet.");
     }
     if (frequencyElem == NULL) {
-        throw ParseException("The vehicle-generator has no frequency.");
+        throw ParseException("The fVehicle-generator has no fFrequency.");
+    }
+
+    if (baanElem->FirstChild() == NULL) {
+        throw ParseException("The fVehicle-generators fStreet name is empty");
     }
     TiXmlText* streetText = baanElem->FirstChild()->ToText();
     std::string street = streetText->Value();
 
+    if (frequencyElem->FirstChild() == NULL) {
+        throw ParseException("The fVehicle-generators fFrequency is empty");
+    }
     TiXmlText* frequencyText = frequencyElem->FirstChild()->ToText();
     std::string positionString = frequencyText->Value();
     int frequency;

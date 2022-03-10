@@ -7,8 +7,8 @@
 
 #include "ParseException.h"
 
-ParseException::ParseException(const char *message) : message(message) {}
+ParseException::ParseException(const char *message) : fMessage(message) {}
 
 const char * ParseException::what() const throw() {
-    return message;
+    return fMessage;
 }

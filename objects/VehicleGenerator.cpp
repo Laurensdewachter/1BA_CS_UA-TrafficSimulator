@@ -20,22 +20,22 @@ bool VehicleGenerator::properlyInitialized() const {
 
 void VehicleGenerator::setStreet(const std::string &s) {
     REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setStreet()");
-    VehicleGenerator::street = s;
-    ENSURE(VehicleGenerator::street == s, "setStreet() postcondition");
+    VehicleGenerator::fStreet = s;
+    ENSURE(VehicleGenerator::fStreet == s, "setStreet() postcondition");
 }
 
 void VehicleGenerator::setFrequency(int f) {
     REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setFrequency()");
-    VehicleGenerator::frequency = f;
-    ENSURE(VehicleGenerator::frequency == f, "setFrequency() postcondition");
+    VehicleGenerator::fFrequency = f;
+    ENSURE(VehicleGenerator::fFrequency == f, "setFrequency() postcondition");
 }
 
 const std::string &VehicleGenerator::getStreet() const {
     REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling getStreet()");
-    return VehicleGenerator::street;
+    return VehicleGenerator::fStreet;
 }
 
 int VehicleGenerator::getFrequency() const {
     REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling getFrequency()");
-    return VehicleGenerator::frequency;
+    return VehicleGenerator::fFrequency;
 }

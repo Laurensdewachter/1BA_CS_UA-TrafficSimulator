@@ -11,7 +11,7 @@
 #include <exception>
 
 class ParseException : public std::exception {
-    const char* message;
+    const char* fMessage;
 
 public:
     ParseException(const char* message);

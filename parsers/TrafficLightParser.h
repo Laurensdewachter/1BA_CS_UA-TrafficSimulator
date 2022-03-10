@@ -17,7 +17,7 @@
 class TrafficLight;
 
 class TrafficLightParser {
-    TrafficLight* trafficLight;
+    TrafficLight* fTrafficLight;
     TrafficLightParser* _initCheck;
 
 public:
@@ -32,9 +32,9 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling parseTrafficLight()");
-     * ENSURE(trafficLight->getStreet() == street, "parseTrafficLight() postcondition")
-     * ENSURE(trafficLight->getPosition() == position, "parseTrafficLight() postcondition")
-     * ENSURE(trafficLight->getCycle() == cycle, "parseTrafficLight() postcondition")
+     * ENSURE(fTrafficLight->getStreet() == fStreet, "parseTrafficLight() postcondition")
+     * ENSURE(fTrafficLight->getPosition() == fPosition, "parseTrafficLight() postcondition")
+     * ENSURE(fTrafficLight->getCycle() == fCycle, "parseTrafficLight() postcondition")
      */
     void parseTrafficLight(TiXmlElement* VERKEERSLICHT);
 

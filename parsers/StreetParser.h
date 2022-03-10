@@ -17,7 +17,7 @@
 class Street;
 
 class StreetParser {
-    Street* street;
+    Street* fStreet;
     StreetParser* _initCheck;
 
 public:
@@ -32,8 +32,8 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()")
-     * ENSURE(street->getName() == name, "parseStreet() postcondition")
-     * ENSURE(street->getLength() == length, "parseStreet() postcondition")
+     * ENSURE(fStreet->getName() == name, "parseStreet() postcondition")
+     * ENSURE(fStreet->getLength() == length, "parseStreet() postcondition")
      */
     void parseStreet(TiXmlElement* BAAN);
 

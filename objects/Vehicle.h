@@ -13,8 +13,8 @@
 
 class Vehicle {
     Vehicle* _initCheck;
-    std::string street;
-    int position;
+    std::string fStreet;
+    int fPosition;
 
 public:
     /*
@@ -28,13 +28,13 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()")
-     * ENSURE(Vehicle::street == s, "setStreet() postcondition")
+     * ENSURE(Vehicle::fStreet == s, "setStreet() postcondition")
      */
     void setStreet(const std::string &s);
 
     /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()")
-     * ENSURE(Vehicle::position == p, "setPosition() postcondition")
+     * ENSURE(Vehicle::fPosition == p, "setPosition() postcondition")
      */
     void setPosition(int p);
 
