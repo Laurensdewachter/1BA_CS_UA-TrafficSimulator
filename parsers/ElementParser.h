@@ -29,10 +29,10 @@ class ElementParser {
     TiXmlDocument doc;
     ElementParser* _initCheck;
 
-    std::vector<Street*> streets;
-    std::vector<TrafficLight*> trafficLights;
-    std::vector<Vehicle*> vehicles;
-    std::vector<VehicleGenerator*> vehicleGenerators;
+    std::vector<Street*> fStreets;
+    std::vector<TrafficLight*> fTrafficLights;
+    std::vector<Vehicle*> fVehicles;
+    std::vector<VehicleGenerator*> fVehicleGenerators;
 
 public:
     /*

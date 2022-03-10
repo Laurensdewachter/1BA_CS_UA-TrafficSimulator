@@ -13,8 +13,8 @@
 
 class Street {
     Street* _initCheck;
-    std::string name;
-    int length;
+    std::string fName;
+    int fLength;
 
 public:
     /*

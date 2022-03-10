@@ -16,7 +16,7 @@
 class VehicleGenerator;
 
 class VehicleGeneratorParser {
-    VehicleGenerator* vehicleGenerator;
+    VehicleGenerator* fVehicleGenerator;
     VehicleGeneratorParser* _initCheck;
 
 public:
@@ -31,8 +31,8 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling parseVehicleGenerator()")
-     * ENSURE(vehicleGenerator->getStreet() == street, "parseVehicleGenerator() postcondition")
-     * ENSURE(vehicleGenerator->getFrequency() == frequency, "parseVehicleGenerator() postcondition")
+     * ENSURE(vehicleGenerator->getStreet() == fStreet, "parseVehicleGenerator() postcondition")
+     * ENSURE(vehicleGenerator->getFrequency() == fFrequency, "parseVehicleGenerator() postcondition")
      */
     void parseVehicleGenerator(TiXmlElement* VOERTUIGGENERATOR);
 

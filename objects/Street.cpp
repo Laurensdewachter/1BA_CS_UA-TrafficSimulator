@@ -20,22 +20,22 @@ bool Street::properlyInitialized() const {
 
 void Street::setName(const std::string &n) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setName()");
-    Street::name = n;
+    Street::fName = n;
     ENSURE(this->getName() == n, "setName() postcondition");
 }
 
 void Street::setLength(int l) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setLength()");
-    Street::length = l;
+    Street::fLength = l;
     ENSURE(this->getLength() == l, "setLength() postcondition");
 }
 
 const std::string &Street::getName() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getName()");
-    return Street::name;
+    return Street::fName;
 }
 
 int Street::getLength() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getLength()");
-    return Street::length;
+    return Street::fLength;
 }

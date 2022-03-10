@@ -9,7 +9,7 @@
 #include "../objects/VehicleGenerator.h"
 
 VehicleGeneratorParser::VehicleGeneratorParser() {
-    vehicleGenerator = new VehicleGenerator;
+    fVehicleGenerator = new VehicleGenerator;
     VehicleGeneratorParser::_initCheck = this;
     ENSURE(properlyInitialized(), "VehicleGeneratorParser constructor did not end in an initialized state");
 }
@@ -26,30 +26,37 @@ void VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
     TiXmlElement* baanElem = VOERTUIGGENERATOR->FirstChildElement("baan");
     TiXmlElement* frequencyElem = VOERTUIGGENERATOR->FirstChildElement("frequentie");
     if (baanElem == NULL && frequencyElem == NULL) {
-        throw ParseException("The vehicle-generator has no contents.\nIt needs both a street and a frequency.");
+        throw ParseException("The fVehicle-generator has no contents.\nIt needs both a fStreet and a fFrequency.");
     }
     if (baanElem == NULL) {
-        throw ParseException("The vehicle-generator has no street.");
+        throw ParseException("The fVehicle-generator has no fStreet.");
     }
     if (frequencyElem == NULL) {
-        throw ParseException("The vehicle-generator has no frequency.");
+        throw ParseException("The fVehicle-generator has no fFrequency.");
+    }
+
+    if (baanElem->FirstChild() == NULL) {
+        throw ParseException("The fVehicle-generators fStreet name is empty");
     }
     TiXmlText* streetText = baanElem->FirstChild()->ToText();
     std::string street = streetText->Value();
 
+    if (frequencyElem->FirstChild() == NULL) {
+        throw ParseException("The fVehicle-generators fFrequency is empty");
+    }
     TiXmlText* frequencyText = frequencyElem->FirstChild()->ToText();
     std::string positionString = frequencyText->Value();
     int frequency;
     std::istringstream(positionString) >> frequency;
 
-    vehicleGenerator->setStreet(street);
-    vehicleGenerator->setFrequency(frequency);
+    fVehicleGenerator->setStreet(street);
+    fVehicleGenerator->setFrequency(frequency);
 
-    ENSURE(vehicleGenerator->getStreet() == street, "parseVehicleGenerator() postcondition");
-    ENSURE(vehicleGenerator->getFrequency() == frequency, "parseVehicleGenerator() postcondition");
+    ENSURE(fVehicleGenerator->getStreet() == street, "parseVehicleGenerator() postcondition");
+    ENSURE(fVehicleGenerator->getFrequency() == frequency, "parseVehicleGenerator() postcondition");
 }
 
 VehicleGenerator *VehicleGeneratorParser::getVehicleGenerator() const {
     REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling getVehicleGenerator()");
-    return vehicleGenerator;
+    return fVehicleGenerator;
 }

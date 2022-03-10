@@ -13,9 +13,9 @@
 
 class TrafficLight {
     TrafficLight* _initCheck;
-    std::string street;
-    int position;
-    int cycle;
+    std::string fStreet;
+    int fPosition;
+    int fCycle;
 
 public:
     /*

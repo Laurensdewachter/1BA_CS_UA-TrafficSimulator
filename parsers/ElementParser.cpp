@@ -33,22 +33,22 @@ void ElementParser::parseFile(const std::string &filename) {
     if (strcmp(root->Value(), "BAAN") == 0) {
         StreetParser parser;
         parser.parseStreet(root);
-        streets.push_back(parser.getStreet());
+        fStreets.push_back(parser.getStreet());
     }
     else if (strcmp(root->Value(), "VERKEERSLICHT") == 0) {
         TrafficLightParser parser;
         parser.parseTrafficLight(root);
-        trafficLights.push_back(parser.getTrafficLight());
+        fTrafficLights.push_back(parser.getTrafficLight());
     }
     else if (strcmp(root->Value(), "VOERTUIG") == 0) {
         VehicleParser parser;
         parser.parseVehicle(root);
-        vehicles.push_back(parser.getVehicle());
+        fVehicles.push_back(parser.getVehicle());
     }
     else if (strcmp(root->Value(), "VOERTUIGGENERATOR") == 0) {
         VehicleGeneratorParser parser;
         parser.parseVehicleGenerator(root);
-        vehicleGenerators.push_back(parser.getVehicleGenerator());
+        fVehicleGenerators.push_back(parser.getVehicleGenerator());
     }
     doc.Clear();
 }

@@ -16,7 +16,7 @@
 class Vehicle;
 
 class VehicleParser {
-    Vehicle* vehicle;
+    Vehicle* fVehicle;
     VehicleParser* _initCheck;
 
 public:
@@ -31,8 +31,8 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling parseVehicle()")
-     * ENSURE(vehicle->getStreet() == street, "parseVehicle() postcondition")
-     * ENSURE(vehicle->getPosition() == position, "parseVehicle() postcondition")
+     * ENSURE(fVehicle->getStreet() == fStreet, "parseVehicle() postcondition")
+     * ENSURE(fVehicle->getPosition() == fPosition, "parseVehicle() postcondition")
      */
     void parseVehicle(TiXmlElement* VOERTUIG);
 

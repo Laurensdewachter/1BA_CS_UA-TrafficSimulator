@@ -20,22 +20,22 @@ bool Vehicle::properlyInitialized() const {
 
 void Vehicle::setStreet(const std::string &s) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()");
-    Vehicle::street = s;
-    ENSURE(Vehicle::street == s, "setStreet() postcondition");
+    Vehicle::fStreet = s;
+    ENSURE(Vehicle::fStreet == s, "setStreet() postcondition");
 }
 
 void Vehicle::setPosition(int p) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()");
-    Vehicle::position = p;
-    ENSURE(Vehicle::position == p, "setPosition() postcondition");
+    Vehicle::fPosition = p;
+    ENSURE(Vehicle::fPosition == p, "setPosition() postcondition");
 }
 
 const std::string &Vehicle::getStreet() const {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getStreet()");
-    return Vehicle::street;
+    return Vehicle::fStreet;
 }
 
 int Vehicle::getPosition() const {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getPosition()");
-    return Vehicle::position;
+    return Vehicle::fPosition;
 }

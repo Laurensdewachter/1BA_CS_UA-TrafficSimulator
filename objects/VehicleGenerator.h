@@ -13,8 +13,8 @@
 
 class VehicleGenerator {
     VehicleGenerator* _initCheck;
-    std::string street;
-    int frequency;
+    std::string fStreet;
+    int fFrequency;
 
 public:
     /*
@@ -28,13 +28,13 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setStreet()")
-     * ENSURE(VehicleGenerator::street == s, "setStreet() postcondition")
+     * ENSURE(VehicleGenerator::fStreet == s, "setStreet() postcondition")
      */
     void setStreet(const std::string &s);
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setFrequency()")
-     * ENSURE(VehicleGenerator::frequency == f, "setFrequency() postcondition")
+     * ENSURE(VehicleGenerator::fFrequency == f, "setFrequency() postcondition")
      */
     void setFrequency(int f);
 

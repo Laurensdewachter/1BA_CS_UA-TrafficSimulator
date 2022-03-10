@@ -223,7 +223,7 @@ public:
 	/// Return the current white space setting.
 	static bool IsWhiteSpaceCondensed()						{ return condenseWhiteSpace; }
 
-	/** Return the position, in the original source file, of this node or attribute.
+	/** Return the fPosition, in the original source file, of this node or attribute.
 		The row and column are 1-based. (That is the first row and first column is
 		1,1). If the returns values are 0 or less, then the parser does not have
 		a row and column value.
