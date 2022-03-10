@@ -26,27 +26,29 @@ void StreetParser::parseStreet(TiXmlElement* BAAN) {
     TiXmlElement* nameElem = BAAN->FirstChildElement("naam");
     TiXmlElement* lengthElem = BAAN->FirstChildElement("lengte");
     if (nameElem == NULL && lengthElem == NULL) {
-        throw ParseException("The fStreet has no contents.\nIt needs both a name and a length.");
+        throw ParseException("Street has no contents.\nIt needs both a name and a length.");
     }
     if (nameElem == NULL) {
-        throw ParseException("The fStreet has no name.");
+        throw ParseException("Street has no name.");
     }
     if (lengthElem == NULL) {
-        throw ParseException("The fStreet has no length.");
+        throw ParseException("Street has no length.");
     }
     if (nameElem->FirstChild() == NULL) {
-        throw ParseException("The fStreets name is empty");
+        throw ParseException("Street name is empty");
     }
     TiXmlText* nameText = nameElem->FirstChild()->ToText();
     std::string name = nameText->Value();
 
     if (lengthElem->FirstChild() == NULL) {
-        throw ParseException("The fStreets length is empty");
+        throw ParseException("Street length is empty");
     }
     TiXmlText* lengthText = lengthElem->FirstChild()->ToText();
     std::string lengthString = lengthText->Value();
-    int length;
-    std::istringstream(lengthString) >> length;
+    int length ;
+    if ((std::istringstream(lengthString) >> length).fail()) {
+        throw ParseException("Street length is not a number");
+    }
 
     fStreet->setName(name);
     fStreet->setLength(length);

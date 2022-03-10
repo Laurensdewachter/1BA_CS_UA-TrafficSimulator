@@ -26,27 +26,29 @@ void VehicleParser::parseVehicle(TiXmlElement *VOERTUIG) {
     TiXmlElement* baanElem = VOERTUIG->FirstChildElement("baan");
     TiXmlElement* positionElem = VOERTUIG->FirstChildElement("positie");
     if (baanElem == NULL && positionElem == NULL) {
-        throw ParseException("The fVehicle has no contents.\nIt needs both a fStreet and a fPosition.");
+        throw ParseException("Vehicle has no contents.\nIt needs both a street and a position.");
     }
     if (baanElem == NULL) {
-        throw ParseException("The fVehicle has no fStreet.");
+        throw ParseException("Vehicle has no street.");
     }
     if (positionElem == NULL) {
-        throw ParseException("The fVehicle has no fPosition.");
+        throw ParseException("The vehicle has no position.");
     }
     if (baanElem->FirstChild() == NULL) {
-        throw ParseException("The fVehicles fStreet name is empty");
+        throw ParseException("Vehicle street name is empty");
     }
     TiXmlText* streetText = baanElem->FirstChild()->ToText();
     std::string street = streetText->Value();
 
     if (positionElem->FirstChild() == NULL) {
-        throw ParseException("The fVehicles fPosition is empty");
+        throw ParseException("Vehicle position is empty");
     }
     TiXmlText* positionText = positionElem->FirstChild()->ToText();
     std::string positionString = positionText->Value();
     int position;
-    std::istringstream(positionString) >> position;
+    if ((std::istringstream(positionString) >> position).fail()) {
+        throw ParseException("Vehicle position is not a number");
+    }
 
     fVehicle->setStreet(street);
     fVehicle->setPosition(position);
