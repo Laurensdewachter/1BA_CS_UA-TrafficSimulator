@@ -50,6 +50,26 @@ public:
      * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling parseFile()")
      */
     void parseFile(const std::string &filename);
+
+    /*
+     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()")
+     */
+    std::vector<Street*> getStreets() const;
+
+    /*
+     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getTrafficLights()")
+     */
+    std::vector<TrafficLight*> getTrafficLights() const;
+
+    /*
+     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicles()")
+     */
+    std::vector<Vehicle*> getVehicles() const;
+
+    /*
+     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()")
+     */
+    std::vector<VehicleGenerator*> getVehicleGenerators() const;
 };
 
 
