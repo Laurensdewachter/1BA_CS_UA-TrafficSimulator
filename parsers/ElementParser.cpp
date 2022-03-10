@@ -29,26 +29,46 @@ void ElementParser::parseFile(const std::string &filename) {
     if (root == NULL) {
         throw ParseException("Failed to load file: No root element.");
     }
-    // strcmp: https://stackoverflow.com/questions/15050766/comparing-the-values-of-char-arrays-in-c
-    if (strcmp(root->Value(), "BAAN") == 0) {
-        StreetParser parser;
-        parser.parseStreet(root);
-        fStreets.push_back(parser.getStreet());
-    }
-    else if (strcmp(root->Value(), "VERKEERSLICHT") == 0) {
-        TrafficLightParser parser;
-        parser.parseTrafficLight(root);
-        fTrafficLights.push_back(parser.getTrafficLight());
-    }
-    else if (strcmp(root->Value(), "VOERTUIG") == 0) {
-        VehicleParser parser;
-        parser.parseVehicle(root);
-        fVehicles.push_back(parser.getVehicle());
-    }
-    else if (strcmp(root->Value(), "VOERTUIGGENERATOR") == 0) {
-        VehicleGeneratorParser parser;
-        parser.parseVehicleGenerator(root);
-        fVehicleGenerators.push_back(parser.getVehicleGenerator());
+  
+    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
+        // strcmp: https://stackoverflow.com/questions/15050766/comparing-the-values-of-char-arrays-in-c
+        if (strcmp(elem->Value(), "BAAN") == 0) {
+            StreetParser parser;
+            parser.parseStreet(elem);
+            fStreets.push_back(parser.getStreet());
+        } else if (strcmp(elem->Value(), "VERKEERSLICHT") == 0) {
+            TrafficLightParser parser;
+            parser.parseTrafficLight(elem);
+            fTrafficLights.push_back(parser.getTrafficLight());
+        } else if (strcmp(elem->Value(), "VOERTUIG") == 0) {
+            VehicleParser parser;
+            parser.parseVehicle(elem);
+            fVehicles.push_back(parser.getVehicle());
+        } else if (strcmp(elem->Value(), "VOERTUIGGENERATOR") == 0) {
+            VehicleGeneratorParser parser;
+            parser.parseVehicleGenerator(elem);
+            fVehicleGenerators.push_back(parser.getVehicleGenerator());
+        }
     }
     doc.Clear();
+}
+
+std::vector<Street*> ElementParser::getStreets() const {
+    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()");
+    return ElementParser::fStreets;
+}
+
+std::vector<TrafficLight*> ElementParser::getTrafficLights() const {
+    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getTrafficLights()");
+    return ElementParser::fTrafficLights;
+}
+
+std::vector<Vehicle*> ElementParser::getVehicles() const {
+    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicles()");
+    return ElementParser::fVehicles;
+}
+
+std::vector<VehicleGenerator*> ElementParser::getVehicleGenerators() const {
+    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()");
+    return ElementParser::fVehicleGenerators;
 }
