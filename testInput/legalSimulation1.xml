@@ -1,0 +1,10 @@
+<SIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>2000</lengte>
+    </BAAN>
+    <VOERTUIG>
+        <baan>Turnhoutsebaan</baan>
+        <positie>0</positie>
+    </VOERTUIG>
+</SIMULATIE>

@@ -20,7 +20,10 @@ set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp parsers/tinyxml/tinyxml.cpp p
 
 # Set source files for DEBUG target
 set(DEBUG_SOURCE_FILES tests/TrafficSimulationTests.cpp parsers/tinyxml/tinyxml.cpp parsers/tinyxml/tinyxmlparser.cpp
-        parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinystr.cpp tests/TrafficSimulationInputTests.cpp)
+        parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinystr.cpp tests/TrafficSimulationInputTests.cpp
+        Utils.cpp TrafficSimulation.cpp parsers/ElementParser.cpp parsers/VehicleParser.cpp parsers/VehicleGeneratorParser.cpp
+        parsers/StreetParser.cpp parsers/TrafficLightParser.cpp objects/Street.cpp objects/TrafficLight.cpp objects/Vehicle.cpp
+        objects/VehicleGenerator.cpp parsers/ParseException.cpp)
 
 # Create RELEASE target
 add_executable(main ${RELEASE_SOURCE_FILES})

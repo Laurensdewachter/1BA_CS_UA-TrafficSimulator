@@ -1,0 +1,28 @@
+<SIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>300</lengte>
+    </BAAN>
+    <BAAN>
+        <naam>Rode Dreef</naam>
+        <lengte>100</lengte>
+    </BAAN>
+    <VOERTUIG>
+        <baan>Rode Dreef</baan>
+        <positie>27</positie>
+    </VOERTUIG>
+    <VOERTUIGGENERATOR>
+        <baan>Turnhoutsebaan</baan>
+        <frequentie>10</frequentie>
+    </VOERTUIGGENERATOR>
+    <VERKEERSLICHT>
+        <baan>Turnhoutsebaan</baan>
+        <positie>0</positie>
+        <cyclus>10</cyclus>
+    </VERKEERSLICHT>
+    <VERKEERSLICHT>
+        <baan>Turnhoutsebaan</baan>
+        <positie>125</positie>
+        <cyclus>5</cyclus>
+    </VERKEERSLICHT>
+</SIMULATIE>
