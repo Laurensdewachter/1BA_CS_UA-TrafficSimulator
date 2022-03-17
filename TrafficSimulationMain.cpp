@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "TrafficSimulation.h"
 
 int main(int argc, char** argv) {

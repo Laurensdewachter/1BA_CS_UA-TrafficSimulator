@@ -9,12 +9,17 @@
 #define PSE_VEHICLE_H
 
 #include <iostream>
+#include <cmath>
+#include <algorithm>
 #include "../DesignByContract.h"
+#include "../Variables.h"
 
 class Vehicle {
     Vehicle* _initCheck;
     std::string fStreet;
-    int fPosition;
+    double fPosition;
+    double fSpeed;
+    double fAcceleration;
 
 public:
     /*
@@ -46,7 +51,17 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getPosition()")
      */
-    int getPosition() const;
+    double getPosition() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getPosition()")
+     */
+    double getSpeed() const;
+
+    /*
+     *
+     */
+    void drive(Vehicle* vehicleInFront = NULL);
 };
 
 
