@@ -9,12 +9,16 @@
 #define PSE_STREET_H
 
 #include <iostream>
+#include <vector>
 #include "../DesignByContract.h"
+
+class Vehicle;
 
 class Street {
     Street* _initCheck;
     std::string fName;
     int fLength;
+    std::vector<Vehicle*> fVehicles;
 
 public:
     /*
@@ -39,6 +43,17 @@ public:
     void setLength(int l);
 
     /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicle()")
+     * ENSURE(fVehicles.size() >= 1, "addVehicle() postcondition")
+     */
+    void addVehicle(Vehicle* v);
+
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling removeVehicle()")
+     */
+    void removeVehicle();
+
+    /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getName()")
      */
     const std::string &getName() const;
@@ -47,6 +62,11 @@ public:
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getLength()")
      */
     int getLength() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getVehicles()")
+     */
+    std::vector<Vehicle*> getVehicles() const;
 };
 
 

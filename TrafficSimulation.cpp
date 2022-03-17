@@ -33,41 +33,53 @@ void TrafficSimulation::parseInputFile(const std::string &filename) {
         std::cerr << e->what() << std::endl;
     }
 
-    std::vector<Street*> tempStreets = parser.getStreets();
-    for (long unsigned int i = 0; i < tempStreets.size(); i++) {
-        fStreets[tempStreets[i]->getName()] = tempStreets[i];
-    }
+    TrafficSimulation::fStreets = parser.getStreets();
+
     TrafficSimulation::fTrafficLights = parser.getTrafficLights();
 
-    TrafficSimulation::fVehicles = parser.getVehicles();
-    for (long unsigned int i = 0; i < fVehicles.size(); i++) {
-        TrafficSimulation::fVehiclesByStreet[fVehicles[i]->getStreet()] = fVehicles[i];
-    }
+    std::vector<Vehicle*> vehicles = parser.getVehicles();
 
     TrafficSimulation::fVehicleGenerators = parser.getVehicleGenerators();
+
+    for (long unsigned int i = 0; i < vehicles.size(); i++) {
+        try {
+            Street *s = getStreet(vehicles[i]->getStreet());
+            s->addVehicle(vehicles[i]);
+        }
+        catch (std::exception &e) {
+            throw SimulationException("There is a vehicle that was initialized on a non-existent street");
+        }
+    }
 }
 
 void TrafficSimulation::drive() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling drive()");
 
-    if (fVehicles.empty()) {
-        throw SimulationException("There are no vehicles in the simulation");
-    }
+    for (long unsigned int i = 0; i < fStreets.size(); i++) {
+        Street* curStreet = fStreets[i];
+        std::vector<Vehicle*> curVehicles = curStreet->getVehicles();
 
-    fVehicles[0]->drive();
-    if (fVehicles[0]->getPosition() > fStreets[fVehicles[0]->getStreet()]->getLength()) {
-        Vehicle* toBeDeleted = fVehicles[0];
-        fVehicles.erase(fVehicles.begin());
-        delete toBeDeleted;
-    }
-    if (fVehicles.size() > 1) {
-        for (long unsigned int i = 1; i < fVehicles.size(); i++) {
-            fVehicles[i]->drive(fVehicles[i - 1]);
+        if (curVehicles.empty()) {
+            continue;
+        }
+
+        curVehicles[0]->drive();
+        if (curVehicles[0]->getPosition() > curStreet->getLength()) {
+            curStreet->removeVehicle();
+        }
+        if (curVehicles.size() > 1) {
+            for (long unsigned int j = 1; j < curVehicles.size(); j++) {
+                curVehicles[j]->drive(curVehicles[j-1]);
+            }
         }
     }
 }
 
-void TrafficSimulation::sortVehicles() {
-    std::vector<Vehicle*> newList;
-    
+Street *TrafficSimulation::getStreet(const std::string &name) const {
+    for (long unsigned int i = 0; i < fStreets.size(); i++) {
+        if (fStreets[i]->getName() == name) {
+            return fStreets[i];
+        }
+    }
+    throw SimulationException("Street not found");
 }

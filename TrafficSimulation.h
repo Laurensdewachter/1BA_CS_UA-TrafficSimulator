@@ -19,9 +19,8 @@ class Vehicle;
 class VehicleGenerator;
 
 class TrafficSimulation {
-    std::map<std::string, Street*> fStreets;
+    std::vector<Street*> fStreets;
     std::vector<TrafficLight*> fTrafficLights;
-    std::vector<Vehicle*> fVehicles;
     std::map<std::string, Vehicle*> fVehiclesByStreet;
     std::vector<VehicleGenerator*> fVehicleGenerators;
     TrafficSimulation* _initCheck;
@@ -48,7 +47,7 @@ public:
     void drive();
 
 private:
-    void sortVehicles();
+    Street* getStreet(const std::string &name) const;
 };
 
 
