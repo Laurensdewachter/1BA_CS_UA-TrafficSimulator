@@ -12,12 +12,7 @@ int main(int argc, char** argv) {
         retValue = -1;
     }
     else {
-        std::ofstream errFile;
-        errFile.open("ParsingErrors.txt");
-
-        sim.parseInputFile(argv[1], errFile);
-
-        errFile.close();
+        sim.parseInputFile(argv[1], std::cerr);
     }
 
     return retValue;

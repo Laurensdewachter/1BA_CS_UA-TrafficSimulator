@@ -1,7 +1,7 @@
 <SIMULATIE>
     <BAAN>
         <naam>Turnhoutsebaan</naam>
-        <lengte>300</lengte>
+        <lengte>2000</lengte>
     </BAAN>
     <BAAN>
         <naam>Rode Dreef</naam>
@@ -12,7 +12,8 @@
         <positie>27</positie>
     </VOERTUIG>
     <VOERTUIGGENERATOR>
-        <baan>Turnhoutsebaan</baan>
+        # non-existing street
+        <baan>testbaan</baan>
         <frequentie>10</frequentie>
     </VOERTUIGGENERATOR>
     <VERKEERSLICHT>
@@ -22,7 +23,7 @@
     </VERKEERSLICHT>
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
-        <positie>125</positie>
+        <positie>500</positie>
         <cyclus>5</cyclus>
     </VERKEERSLICHT>
     <VOERTUIG>

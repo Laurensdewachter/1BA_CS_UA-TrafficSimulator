@@ -9,7 +9,6 @@
 #include "gtest/gtest.h"
 #include "../TrafficSimulation.h"
 #include "../Utils.h"
-#include "../parsers/ParseException.h"
 
 class TrafficSimulationInputTest : public ::testing::Test {
 protected:
@@ -23,6 +22,7 @@ protected:
 TEST_F(TrafficSimulationInputTest, InputHappyDay) {
     ASSERT_TRUE(sim.properlyInitialized());
     ASSERT_TRUE(DirectoryExists("testInput"));
+    ASSERT_TRUE(DirectoryExists("testOutput"));
 
     std::ofstream myFile;
     myFile.open("testInput/testHappyDay.xml");
@@ -48,91 +48,90 @@ TEST_F(TrafficSimulationInputTest, InputHappyDay) {
         << "</SIMULATIE>" << std::endl;
     myFile.close();
 
-    try {
-        sim.parseInputFile("testInput/testHappyDay.xml");
-    }
-    catch (ParseException &e) {
-        FAIL();
-    }
+    std::ofstream errStream;
+    errStream.open("testOutput/HappyDayOut.txt");
+    sim.parseInputFile("testInput/testHappyDay.xml", errStream);
+    errStream.close();
+
+    ASSERT_TRUE(FileIsEmpty("testOutput/HappyDayOut.txt"));
 }
 
 TEST_F(TrafficSimulationInputTest, InputLegalSimulations) {
     ASSERT_TRUE(sim.properlyInitialized());
     ASSERT_TRUE(DirectoryExists("testInput"));
+    ASSERT_TRUE(DirectoryExists("testOutput"));
 
     int fileCounter = 1;
     std::string fileName = "testInput/legalSimulation" + ToString(fileCounter) + ".xml";
 
+    std::ofstream errStream;
+
     while (FileExists(fileName)) {
-        try {
-            sim.parseInputFile(fileName);
-        }
-        catch (std::exception &e) {
-            FAIL();
-        }
+        errStream.open("testOutput/legalOut.txt");
+        EParserSucces parserSucces = sim.parseInputFile(fileName, errStream);
+        errStream.close();
+
+        EXPECT_TRUE(parserSucces == Success);
+
+        ASSERT_TRUE(FileIsEmpty("testOutput/legalOut.txt"));
 
         fileCounter++;
         fileName = "testInput/legalSimulation" + ToString(fileCounter) + ".xml";
     }
 }
 
-TEST_F(TrafficSimulationInputTest, InputIllegalSimulations) {
-    ASSERT_TRUE(sim.properlyInitialized());
-    ASSERT_TRUE(DirectoryExists("testInput"));
+
+TEST_F(TrafficSimulationInputTest, InputXMLSyntaxErrors) {
+    EXPECT_TRUE(sim.properlyInitialized());
+    EXPECT_TRUE(DirectoryExists("testInput"));
+    ASSERT_TRUE(DirectoryExists("testOutput"));
 
     int fileCounter = 1;
-    std::string fileName = "testInput/illegalSimulation" + ToString(fileCounter) + ".xml";
+    std::string filename = "testInput/syntaxError" + ToString(fileCounter) + ".xml";
 
-    while (FileExists(fileName)) {
-        // https://stackoverflow.com/questions/23270078/test-a-specific-exception-type-is-thrown-and-the-exception-has-the-right-propert
-        EXPECT_THROW({
-             try {
-                 sim.parseInputFile(fileName);
-             }
-             catch (ParseException &e) {
-                 throw;
-             }
-        }, ParseException);
+    std::ofstream errStream;
+    std::string errStreamName = "testOutput/syntaxError" + ToString(fileCounter) + ".txt";
+
+    std::string compareFilename = "testInput/syntaxError" + ToString(fileCounter) + ".txt";
+
+    while (FileExists(filename)) {
+        errStream.open(errStreamName.c_str());
+        EParserSucces parserSucces = sim.parseInputFile(filename, errStream);
+        errStream.close();
+
+        EXPECT_FALSE(parserSucces == Success);
+
+        EXPECT_TRUE(FileCompare(errStreamName, compareFilename));
 
         fileCounter++;
-        fileName = "testInput/illegalSimulation" + ToString(fileCounter) + ".xml";
+        filename = "testInput/syntaxError" + ToString(fileCounter) + ".xml";
+        errStreamName = "testOutput/syntaxError" + ToString(fileCounter) + ".txt";
+        compareFilename = "testInput/syntaxError" + ToString(fileCounter) + ".txt";
     }
 }
 
-TEST_F(TrafficSimulationInputTest, InputException) {
-    ASSERT_TRUE(sim.properlyInitialized());
-    ASSERT_TRUE(DirectoryExists("testInput"));
+TEST_F(TrafficSimulationInputTest, InputConsistencyErrors) {
+    EXPECT_TRUE(sim.properlyInitialized());
+    EXPECT_TRUE(DirectoryExists("testInput"));
+    ASSERT_TRUE(DirectoryExists("testOutput"));
 
     int fileCounter = 1;
-    std::string fileName = "testInput/illegalSimulation" + ToString(fileCounter) + ".xml";
+    std::string filename = "testInput/consistencyError" + ToString(fileCounter) + ".xml";
 
-    EXPECT_THROW({
-        try {
-            sim.parseInputFile("testInput/illegalSimulation1.xml");
-        }
-        catch (ParseException &e) {
-            EXPECT_STREQ("Street name is empty", e.what());
-            throw;
-        }
-    }, ParseException);
+    std::ofstream errStream;
+    std::string errStreamName = "testOutput/consistencyError" + ToString(fileCounter) + ".txt";
 
-    EXPECT_THROW({
-         try {
-             sim.parseInputFile("testInput/illegalSimulation2.xml");
-         }
-         catch (ParseException &e) {
-             EXPECT_STREQ("Error reading Attributes.", e.what());
-             throw;
-         }
-     }, ParseException);
+    while (FileExists(filename)) {
+        errStream.open(errStreamName.c_str());
+        EParserSucces parserSucces = sim.parseInputFile(filename, errStream);
+        errStream.close();
 
-    EXPECT_THROW({
-         try {
-             sim.parseInputFile("testInput/illegalSimulation3.xml");
-         }
-         catch (ParseException &e) {
-             EXPECT_STREQ("Street length is not a number", e.what());
-             throw;
-         }
-     }, ParseException);
+        EXPECT_FALSE(parserSucces == Success);
+
+        EXPECT_TRUE(FileCompare(errStreamName, "testInput/consistencyError.txt"));
+
+        fileCounter++;
+        filename = "testInput/consistencyError" + ToString(fileCounter) + ".xml";
+        errStreamName = "testOutput/consistencyError" + ToString(fileCounter) + ".txt";
+    }
 }

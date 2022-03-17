@@ -1,7 +1,7 @@
 <SIMULATIE>
     <BAAN>
         <naam>Turnhoutsebaan</naam>
-        <lengte>300</lengte>
+        <lengte>2000</lengte>
     </BAAN>
     <BAAN>
         <naam>Rode Dreef</naam>
@@ -22,7 +22,8 @@
     </VERKEERSLICHT>
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
-        <positie>125</positie>
+        # should be an integer
+        <positie>test</positie>
         <cyclus>5</cyclus>
     </VERKEERSLICHT>
     <VOERTUIG>
@@ -30,7 +31,7 @@
         <positie>99</positie>
     </VOERTUIG>
     <VOERTUIG>
-        <baan>Rode Dreef</baan>
+        # missing `baan`
         <positie>50</positie>
     </VOERTUIG>
     <VERKEERSLICHT>

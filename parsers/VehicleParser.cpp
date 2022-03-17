@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : VehicleParser.cpp
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is used to parse an XML file that contains either a `Vehicle`.
 // ===========================================================
 
@@ -20,34 +20,38 @@ bool VehicleParser::properlyInitialized() const {
     return VehicleParser::_initCheck == this;
 }
 
-void VehicleParser::parseVehicle(TiXmlElement *VOERTUIG) {
+bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling parseVehicle()");
+    REQUIRE(errStream.good(), "The errorStream wasn't good");
 
     TiXmlElement* baanElem = VOERTUIG->FirstChildElement("baan");
     TiXmlElement* positionElem = VOERTUIG->FirstChildElement("positie");
-    if (baanElem == NULL && positionElem == NULL) {
-        throw ParseException("Vehicle has no contents.\nIt needs both a street and a position.");
-    }
-    if (baanElem == NULL) {
-        throw ParseException("Vehicle has no street.");
-    }
-    if (positionElem == NULL) {
-        throw ParseException("The vehicle has no position.");
-    }
-    if (baanElem->FirstChild() == NULL) {
-        throw ParseException("Vehicle street name is empty");
-    }
-    TiXmlText* streetText = baanElem->FirstChild()->ToText();
-    std::string street = streetText->Value();
 
-    if (positionElem->FirstChild() == NULL) {
-        throw ParseException("Vehicle position is empty");
-    }
-    TiXmlText* positionText = positionElem->FirstChild()->ToText();
-    std::string positionString = positionText->Value();
+    std::string street;
     int position;
-    if ((std::istringstream(positionString) >> position).fail()) {
-        throw ParseException("Vehicle position is not a number");
+
+    bool wrongTypes = false;
+    bool missingElements = false;
+    if (baanElem == NULL || baanElem->FirstChild() == NULL) {
+        errStream << "XML PARTIAL IMPORT: Expected <baan> ... </baan>." << std::endl;
+        missingElements = true;
+    } else {
+        TiXmlText* streetText = baanElem->FirstChild()->ToText();
+        street = streetText->Value();
+    }
+    if (positionElem == NULL || positionElem->FirstChild() == NULL) {
+        errStream << "XML PARTIAL IMPORT: Expected <positie> ... </positie>." << std::endl;
+        missingElements = true;
+    } else {
+        std::string positionString = positionElem->FirstChild()->ToText()->Value();
+        if ((std::istringstream(positionString) >> position).fail()) {
+            errStream << "XML PARTIAL IMPORT: Expected <positie> to be an integer." << std::endl;
+            wrongTypes = true;
+        }
+    }
+
+    if (missingElements || wrongTypes) {
+        return false;
     }
 
     fVehicle->setStreet(street);
@@ -55,6 +59,8 @@ void VehicleParser::parseVehicle(TiXmlElement *VOERTUIG) {
 
     ENSURE(fVehicle->getStreet() == street, "parseVehicle() postcondition");
     ENSURE(fVehicle->getPosition() == position, "parseVehicle() postcondition");
+
+    return true;
 }
 
 Vehicle *VehicleParser::getVehicle() const {

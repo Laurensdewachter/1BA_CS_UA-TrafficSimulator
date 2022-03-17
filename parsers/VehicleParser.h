@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : VehicleParser.h
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is used to parse an XML file that contains a `Vehicle`.
 // ===========================================================
 
@@ -10,8 +10,8 @@
 
 #include <iostream>
 #include <sstream>
-#include "ParseException.h"
 #include "tinyxml/tinyxml.h"
+#include "../DesignByContract.h"
 
 class Vehicle;
 
@@ -31,10 +31,11 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling parseVehicle()")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good")
      * ENSURE(fVehicle->getStreet() == fStreet, "parseVehicle() postcondition")
      * ENSURE(fVehicle->getPosition() == fPosition, "parseVehicle() postcondition")
      */
-    void parseVehicle(TiXmlElement* VOERTUIG);
+    bool parseVehicle(TiXmlElement* VOERTUIG, std::ostream &errStream);
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling getVehicle()")

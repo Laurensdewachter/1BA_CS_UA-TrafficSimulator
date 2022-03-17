@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : VehicleGeneratorParser.cpp
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is used to parse an XML file that contains a `VehicleGenerator`.
 // ===========================================================
 
@@ -20,35 +20,38 @@ bool VehicleGeneratorParser::properlyInitialized() const {
     return VehicleGeneratorParser::_initCheck == this;
 }
 
-void VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERATOR) {
+bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERATOR, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling parseVehicleGenerator()");
+    REQUIRE(errStream.good(), "The errorStream wasn't good");
 
     TiXmlElement* baanElem = VOERTUIGGENERATOR->FirstChildElement("baan");
     TiXmlElement* frequencyElem = VOERTUIGGENERATOR->FirstChildElement("frequentie");
-    if (baanElem == NULL && frequencyElem == NULL) {
-        throw ParseException("The vehicle-generator has no contents.\nIt needs both a street and a frequency.");
-    }
-    if (baanElem == NULL) {
-        throw ParseException("Vehicle-generator has no street.");
-    }
-    if (frequencyElem == NULL) {
-        throw ParseException("Vehicle-generator has no frequency.");
-    }
 
-    if (baanElem->FirstChild() == NULL) {
-        throw ParseException("Vehicle-generator street name is empty");
-    }
-    TiXmlText* streetText = baanElem->FirstChild()->ToText();
-    std::string street = streetText->Value();
-
-    if (frequencyElem->FirstChild() == NULL) {
-        throw ParseException("Vehicle-generator frequency is empty");
-    }
-    TiXmlText* frequencyText = frequencyElem->FirstChild()->ToText();
-    std::string positionString = frequencyText->Value();
+    std::string street;
     int frequency;
-    if ((std::istringstream(positionString) >> frequency).fail()) {
-        throw ParseException("Vehicle-generator frequency is not a number");
+
+    bool wrongTypes = false;
+    bool missingElements = false;
+    if (baanElem == NULL || baanElem->FirstChild() == NULL) {
+        errStream << "XML PARTIAL IMPORT: Expected <baan> .. </baan>." << std::endl;
+        missingElements = true;
+    } else {
+        TiXmlText* streetText = baanElem->FirstChild()->ToText();
+        street = streetText->Value();
+    }
+    if (frequencyElem == NULL || frequencyElem->FirstChild() == NULL) {
+        errStream << "XML PARTIAL IMPORT: Expected <frequentie> ... </frequentie>." << std::endl;
+        missingElements = true;
+    } else {
+        std::string positionString = frequencyElem->FirstChild()->ToText()->Value();
+        if ((std::istringstream(positionString) >> frequency).fail()) {
+            errStream << "XML PARTIAL IMPORT: Expected <frequentie> to be an integer." << std::endl;
+            wrongTypes = true;
+        }
+    }
+
+    if (missingElements || wrongTypes) {
+        return false;
     }
 
     fVehicleGenerator->setStreet(street);
@@ -56,6 +59,8 @@ void VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
 
     ENSURE(fVehicleGenerator->getStreet() == street, "parseVehicleGenerator() postcondition");
     ENSURE(fVehicleGenerator->getFrequency() == frequency, "parseVehicleGenerator() postcondition");
+
+    return true;
 }
 
 VehicleGenerator *VehicleGeneratorParser::getVehicleGenerator() const {

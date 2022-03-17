@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : StreetParser.h
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is used to parse an XML file that contains a `Street`.
 // ===========================================================
 
@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <sstream>
-#include "ParseException.h"
 #include "tinyxml/tinyxml.h"
 #include "../DesignByContract.h"
 
@@ -32,10 +31,11 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good")
      * ENSURE(fStreet->getName() == name, "parseStreet() postcondition")
      * ENSURE(fStreet->getLength() == length, "parseStreet() postcondition")
      */
-    void parseStreet(TiXmlElement* BAAN, std::ostream &errStream);
+    bool parseStreet(TiXmlElement* BAAN, std::ostream &errStream);
 
     /*
      * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling getStreet()")

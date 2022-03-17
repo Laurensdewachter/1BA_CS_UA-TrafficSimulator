@@ -19,6 +19,12 @@
 #include "VehicleParser.h"
 #include "VehicleGeneratorParser.h"
 
+enum EParserSucces {
+    Success,
+    PartialImport,
+    ImportAborted
+};
+
 class Street;
 class TrafficLight;
 class Vehicle;
@@ -48,8 +54,9 @@ public:
      * This method loads an XML file and immediately parses it using the individual parsers for each element type.
      * Returns true when the file was loaded successfully.
      * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling parseFile()")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good")
      */
-    void parseFile(const std::string &filename, std::ostream &errStream);
+    EParserSucces parseFile(const std::string &filename, std::ostream &errStream);
 
     /*
      * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()")

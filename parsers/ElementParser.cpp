@@ -19,77 +19,81 @@ bool ElementParser::properlyInitialized() const {
     return ElementParser::_initCheck == this;
 }
 
-void ElementParser::parseFile(const std::string &filename, std::ostream &errStream) {
+EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling parseFile()");
     REQUIRE(errStream.good(), "The errorStream wasn't good");
 
+    EParserSucces endResult = Success;
+
     if (!doc.LoadFile(filename.c_str())) {
-        errStream << doc.ErrorDesc() << std::endl;
-        return;
+        errStream << "XML IMPORT ABORTED: " << doc.ErrorDesc() << std::endl;
+        return ImportAborted;
     }
     root = doc.FirstChildElement();
     if (root == NULL) {
-        errStream << "Failed to load file: No root element" << std::endl;
+        errStream << "XML PARTIAL IMPORT: No root element." << std::endl;
+        endResult = PartialImport;
     }
+    else {
+        TiXmlElement *elem = root->FirstChildElement();
+        while (elem != NULL) {
+            try {
+                std::string type = elem->Value();
 
-    TiXmlElement* elem = root->FirstChildElement();
-    while (elem != NULL) {
-        try {
-            std::string type = elem->Value();
+                if (type == "BAAN") {
+                    StreetParser sParser;
+                    if (sParser.parseStreet(elem, errStream)) {
+                        fStreets.push_back(sParser.getStreet());
+                    }
+                    else {
+                        endResult = PartialImport;
+                    }
+                    elem = elem->NextSiblingElement();
+                    continue;
+                }
+                if (type == "VERKEERSLICHT") {
+                    TrafficLightParser tlParser;
+                    if (tlParser.parseTrafficLight(elem, errStream)) {
+                        fTrafficLights.push_back(tlParser.getTrafficLight());
+                    } else {
+                        endResult = PartialImport;
+                    }
+                    elem = elem->NextSiblingElement();
+                    continue;
+                }
+                if (type == "VOERTUIG") {
+                    VehicleParser vParser;
+                    if (vParser.parseVehicle(elem, errStream)) {
+                        fVehicles.push_back(vParser.getVehicle());
+                    } else {
+                        endResult = PartialImport;
+                    }
+                    elem = elem->NextSiblingElement();
+                    continue;
+                }
+                if (type == "VOERTUIGGENERATOR") {
+                    VehicleGeneratorParser vgParser;
+                    if (vgParser.parseVehicleGenerator(elem, errStream)) {
+                        fVehicleGenerators.push_back(vgParser.getVehicleGenerator());
+                    } else {
+                        endResult = PartialImport;
+                    }
+                    elem = elem->NextSiblingElement();
+                    continue;
+                }
+                errStream << "XML IMPORT: Unexpected element <" << type << ">." << std::endl;
 
-            if (type == "BAAN") {
-                StreetParser sParser;
-                sParser.parseStreet(elem, errStream);
-                fStreets.push_back(sParser.getStreet());
+            } catch (std::exception &e) {
+                errStream << "XML PARTIAL IMPORT: " << e.what() << "." << std::endl;
+                endResult = PartialImport;
             }
-            else if (type == "VERKEERSLICHT") {
 
-            }
-            else if (type == "VOERTUIG") {
-
-            }
-            else if (type == "VOERTUIGGENERATOR") {
-
-            }
-            else {
-                errStream << "Het element " << type << "bestaat niet in de simulatie" << std::endl;
-            }
+            elem = elem->NextSiblingElement();
         }
-        catch (std::exception &e) {
-            errStream << e.what() << std::endl;
-        }
-
-        elem = elem->NextSiblingElement();
     }
-/*
-    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
-        // strcmp: https://stackoverflow.com/questions/15050766/comparing-the-values-of-char-arrays-in-c
-        if (strcmp(elem->Value(), "BAAN") == 0) {
-            StreetParser parser;
-            parser.parseStreet(elem, errStream);
-            fStreets.push_back(parser.getStreet());
-        }
-        else if (strcmp(elem->Value(), "VERKEERSLICHT") == 0) {
-            TrafficLightParser parser;
-            parser.parseTrafficLight(elem);
-            fTrafficLights.push_back(parser.getTrafficLight());
-        }
-        else if (strcmp(elem->Value(), "VOERTUIG") == 0) {
-            VehicleParser parser;
-            parser.parseVehicle(elem);
-            fVehicles.push_back(parser.getVehicle());
-        }
-        else if (strcmp(elem->Value(), "VOERTUIGGENERATOR") == 0) {
-            VehicleGeneratorParser parser;
-            parser.parseVehicleGenerator(elem);
-            fVehicleGenerators.push_back(parser.getVehicleGenerator());
-        }
-        else {
-            errStream << "";
-        }
-    }
-    */
     doc.Clear();
+
+    return endResult;
 }
 
 std::vector<Street*> ElementParser::getStreets() const {
