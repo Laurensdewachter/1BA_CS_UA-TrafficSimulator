@@ -1,6 +1,6 @@
 <SIMULATIE>
     <BAAN>
-        <naam>Turnhoutsebaan</naam>
+        <naam>Turnhoutsebaan</naam
         <lengte>300</lengte>
     </BAAN>
     <BAAN>
@@ -13,7 +13,7 @@
     </VOERTUIG>
     <VOERTUIGGENERATOR>
         <baan>Turnhoutsebaan</baan>
-        <frequentie>10</frequentie>
+        frequentie>10</frequentie>
     </VOERTUIGGENERATOR>
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>

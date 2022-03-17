@@ -12,13 +12,17 @@
 #include <vector>
 #include "../DesignByContract.h"
 
+class TrafficLight;
 class Vehicle;
+class VehicleGenerator;
 
 class Street {
     Street* _initCheck;
     std::string fName;
     int fLength;
+    std::vector<TrafficLight*> fTrafficLights;
     std::vector<Vehicle*> fVehicles;
+    VehicleGenerator* fVehicleGenerator;
 
 public:
     /*
@@ -43,10 +47,22 @@ public:
     void setLength(int l);
 
     /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addTrafficLight()")
+     * ENSURE(!fTrafficLights.empty(), "addTrafficLight() postcondition")
+     */
+    void addTrafficLight(TrafficLight* t);
+
+    /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicle()")
      * ENSURE(fVehicles.size() >= 1, "addVehicle() postcondition")
      */
     void addVehicle(Vehicle* v);
+
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicleGenerator()")
+     * ENSURE(fVehicleGenerator == vg, "addVehicleGenerator() postcondition")
+     */
+    void setVehicleGenerator(VehicleGenerator* vg);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling removeVehicle()")
@@ -64,9 +80,19 @@ public:
     int getLength() const;
 
     /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getTrafficLights()")
+     */
+    std::vector<TrafficLight*> getTrafficLights() const;
+
+    /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getVehicles()")
      */
     std::vector<Vehicle*> getVehicles() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling hasVehicleGenerator()")
+     */
+    bool hasVehicleGenerator() const;
 };
 
 

@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : TrafficLightParser.cpp
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is used to parse an XML file that contains a `TrafficLight`.
 // ===========================================================
 
@@ -20,56 +20,61 @@ bool TrafficLightParser::properlyInitialized() const {
     return TrafficLightParser::_initCheck == this;
 }
 
-void TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT) {
+bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling parseTrafficLight()");
+    REQUIRE(errStream.good(), "The errorStream wasn't good");
 
     TiXmlElement* streetElem = VERKEERSLICHT->FirstChildElement("baan");
     TiXmlElement* positionElem = VERKEERSLICHT->FirstChildElement("positie");
     TiXmlElement* cycleElem = VERKEERSLICHT->FirstChildElement("cyclus");
-    if (streetElem == NULL && positionElem == NULL && cycleElem == NULL) {
-        throw ParseException("Traffic light has no contents.\nIt needs a street, a position and a cycle.");
-    }
-    if (streetElem == NULL) {
-        throw ParseException("Traffic light has no street.");
-    }
-    if (positionElem == NULL) {
-        throw ParseException("Traffic light has no position.");
-    }
-    if (cycleElem == NULL) {
-        throw ParseException("Traffic light has no cycle.");
-    }
-    if (streetElem->FirstChild() == NULL) {
-        throw ParseException("Traffic light street name is empty");
-    }
-    TiXmlText* streetText = streetElem->FirstChild()->ToText();
-    std::string street = streetText->Value();
 
-    if (positionElem->FirstChild() == NULL) {
-        throw ParseException("Traffic light position is empty");
-    }
-    TiXmlText* PositionText = positionElem->FirstChild()->ToText();
-    std::string positionString = PositionText->Value();
+    std::string street;
     int position;
-    if ((std::istringstream(positionString) >> position).fail()) {
-        throw ParseException("Traffic light position is not a number");
+    int cycle;
+
+    bool wrongTypes = false;
+    bool missingElements = false;
+    if (streetElem == NULL || streetElem->FirstChild() == NULL) {
+        errStream << "XML PARTIAL IMPORT: Expected <baan> ... </baan>." << std::endl;
+        missingElements = true;
+    } else {
+        TiXmlText* streetText = streetElem->FirstChild()->ToText();
+        street = streetText->Value();
+    }
+    if (positionElem == NULL || positionElem->FirstChild() == NULL) {
+        errStream << "XML PARTIAL IMPORT: Expected <positie> .. </positie>." << std::endl;
+        missingElements = true;
+    } else {
+        std::string positionString = positionElem->FirstChild()->ToText()->Value();
+        if ((std::istringstream(positionString) >> position).fail()) {
+            errStream << "XML PARTIAL IMPORT: Expected <positie> to be an integer." << std::endl;
+            wrongTypes = true;
+        }
+    }
+    if (cycleElem == NULL || cycleElem->FirstChild() == NULL) {
+        errStream << "XML PARTIAL IMPORT: Expected <cyclus> .. </cyclus>." << std::endl;
+        missingElements = true;
+    } else {
+        std::string cycleString = cycleElem->FirstChild()->ToText()->Value();
+        if ((std::istringstream(cycleString) >> cycle).fail()) {
+            errStream << "XML PARTIAL IMPORT: Expected <cyclus> to be an integer." << std::endl;
+            wrongTypes = true;
+        }
     }
 
-    if (positionElem->FirstChild() == NULL) {
-        throw ParseException("Traffic light cycle is empty");
-    }
-    TiXmlText* cycleText = cycleElem->FirstChild()->ToText();
-    std::string cycleString = cycleText->Value();
-    int cycle;
-    if ((std::istringstream(cycleString) >> cycle).fail()) {
-        throw ParseException("Traffic light cycle is not a number");
+    if (missingElements || wrongTypes) {
+        return false;
     }
 
     fTrafficLight->setStreet(street);
     fTrafficLight->setPosition(position);
     fTrafficLight->setCycle(cycle);
+
     ENSURE(fTrafficLight->getStreet() == street, "parseTrafficLight() postcondition");
     ENSURE(fTrafficLight->getPosition() == position, "parseTrafficLight() postcondition");
     ENSURE(fTrafficLight->getCycle() == cycle, "parseTrafficLight() postcondition");
+
+    return true;
 }
 
 TrafficLight* TrafficLightParser::getTrafficLight() const {

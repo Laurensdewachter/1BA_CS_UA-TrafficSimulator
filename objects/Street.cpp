@@ -9,6 +9,7 @@
 #include "Vehicle.h"
 
 Street::Street() {
+    fVehicleGenerator = NULL;
     Street::_initCheck = this;
     ENSURE(properlyInitialized(), "Street constructor did not end in an initialized state");
 }
@@ -31,10 +32,22 @@ void Street::setLength(int l) {
     ENSURE(this->getLength() == l, "setLength() postcondition");
 }
 
+void Street::addTrafficLight(TrafficLight *t) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addTrafficLight()");
+    fTrafficLights.push_back(t);
+    ENSURE(!fTrafficLights.empty(), "addTrafficLight() postcondition");
+}
+
 void Street::addVehicle(Vehicle *v) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicle()");
     fVehicles.push_back(v);
-    ENSURE(fVehicles.size() >= 1, "addVehicle() postcondition");
+    ENSURE(!fVehicles.empty(), "addVehicle() postcondition");
+}
+
+void Street::setVehicleGenerator(VehicleGenerator *vg) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicleGenerator()");
+    fVehicleGenerator = vg;
+    ENSURE(fVehicleGenerator == vg, "addVehicleGenerator() postcondition");
 }
 
 void Street::removeVehicle() {
@@ -53,7 +66,17 @@ int Street::getLength() const {
     return Street::fLength;
 }
 
+std::vector<TrafficLight *> Street::getTrafficLights() const {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getTrafficLights()");
+    return fTrafficLights;
+}
+
 std::vector<Vehicle*> Street::getVehicles() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getVehicles()");
     return fVehicles;
+}
+
+bool Street::hasVehicleGenerator() const {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling hasVehicleGenerator()");
+    return fVehicleGenerator != NULL;
 }

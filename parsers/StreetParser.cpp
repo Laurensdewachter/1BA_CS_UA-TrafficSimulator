@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : StreetParser.cpp
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is used to parse an XML file that contains a `Street`.
 // ===========================================================
 
@@ -20,34 +20,38 @@ bool StreetParser::properlyInitialized() const {
     return StreetParser::_initCheck == this;
 }
 
-void StreetParser::parseStreet(TiXmlElement* BAAN) {
+bool StreetParser::parseStreet(TiXmlElement* BAAN, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()");
+    REQUIRE(errStream.good(), "The errorStream wasn't good");
 
     TiXmlElement* nameElem = BAAN->FirstChildElement("naam");
     TiXmlElement* lengthElem = BAAN->FirstChildElement("lengte");
-    if (nameElem == NULL && lengthElem == NULL) {
-        throw ParseException("Street has no contents.\nIt needs both a name and a length.");
-    }
-    if (nameElem == NULL) {
-        throw ParseException("Street has no name.");
-    }
-    if (lengthElem == NULL) {
-        throw ParseException("Street has no length.");
-    }
-    if (nameElem->FirstChild() == NULL) {
-        throw ParseException("Street name is empty");
-    }
-    TiXmlText* nameText = nameElem->FirstChild()->ToText();
-    std::string name = nameText->Value();
 
-    if (lengthElem->FirstChild() == NULL) {
-        throw ParseException("Street length is empty");
+    std::string name;
+    int length;
+
+    bool wrongTypes = false;
+    bool missingElements = false;
+    if (nameElem == NULL || nameElem->FirstChild() == NULL) {
+        errStream<< "XML PARTIAL IMPORT: Expected <naam> ... </naam>." << std::endl;
+        missingElements = true;
+    } else {
+        TiXmlText* nameText = nameElem->FirstChild()->ToText();
+        name = nameText->Value();
     }
-    TiXmlText* lengthText = lengthElem->FirstChild()->ToText();
-    std::string lengthString = lengthText->Value();
-    int length ;
-    if ((std::istringstream(lengthString) >> length).fail()) {
-        throw ParseException("Street length is not a number");
+    if (lengthElem == NULL || lengthElem->FirstChild() == NULL) {
+        errStream<< "XML PARTIAL IMPORT: Expected <lengte> ... </lengte>." << std::endl;
+        missingElements = true;
+    } else {
+        std::string lengthString = lengthElem->FirstChild()->ToText()->Value();
+        if ((std::istringstream(lengthString) >> length).fail()) {
+            errStream << "XML PARTIAL IMPORT: Expected <lengte> to be an integer." << std::endl;
+            wrongTypes = true;
+        }
+    }
+
+    if (missingElements || wrongTypes) {
+        return false;
     }
 
     fStreet->setName(name);
@@ -55,6 +59,8 @@ void StreetParser::parseStreet(TiXmlElement* BAAN) {
 
     ENSURE(fStreet->getName() == name, "parseStreet() postcondition");
     ENSURE(fStreet->getLength() == length, "parseStreet() postcondition");
+
+    return true;
 }
 
 Street* StreetParser::getStreet() const {
