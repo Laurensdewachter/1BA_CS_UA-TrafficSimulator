@@ -16,7 +16,7 @@ set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp parsers/tinyxml/tinyxml.cpp p
         parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinystr.cpp
         parsers/ElementParser.cpp objects/Street.cpp objects/TrafficLight.cpp objects/Vehicle.cpp parsers/StreetParser.cpp
         parsers/ParseException.cpp parsers/TrafficLightParser.cpp parsers/VehicleParser.cpp parsers/VehicleGeneratorParser.cpp
-        objects/VehicleGenerator.cpp TrafficSimulation.cpp)
+        objects/VehicleGenerator.cpp TrafficSimulation.cpp SimulationException.cpp SimulationException.h)
 
 # Set source files for DEBUG target
 set(DEBUG_SOURCE_FILES tests/TrafficSimulationTests.cpp parsers/tinyxml/tinyxml.cpp parsers/tinyxml/tinyxmlparser.cpp
@@ -26,10 +26,10 @@ set(DEBUG_SOURCE_FILES tests/TrafficSimulationTests.cpp parsers/tinyxml/tinyxml.
         objects/VehicleGenerator.cpp parsers/ParseException.cpp)
 
 # Create RELEASE target
-add_executable(main ${RELEASE_SOURCE_FILES})
+add_executable(TrafficSimulation ${RELEASE_SOURCE_FILES})
 
 # Create DEBUG target
-add_executable(tests ${DEBUG_SOURCE_FILES})
+add_executable(TrafficSimulationTests ${DEBUG_SOURCE_FILES})
 
 # Link library
-target_link_libraries(tests gtest)
+target_link_libraries(TrafficSimulationTests gtest)

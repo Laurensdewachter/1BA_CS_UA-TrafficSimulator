@@ -6,6 +6,7 @@
 // ===========================================================
 
 #include "Street.h"
+#include "Vehicle.h"
 
 Street::Street() {
     Street::_initCheck = this;
@@ -30,6 +31,18 @@ void Street::setLength(int l) {
     ENSURE(this->getLength() == l, "setLength() postcondition");
 }
 
+void Street::addVehicle(Vehicle *v) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicle()");
+    fVehicles.push_back(v);
+    ENSURE(fVehicles.size() >= 1, "addVehicle() postcondition");
+}
+
+void Street::removeVehicle() {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling removeVehicle()");
+    delete fVehicles[0];
+    fVehicles.erase(fVehicles.begin());
+}
+
 const std::string &Street::getName() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getName()");
     return Street::fName;
@@ -38,4 +51,9 @@ const std::string &Street::getName() const {
 int Street::getLength() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getLength()");
     return Street::fLength;
+}
+
+std::vector<Vehicle*> Street::getVehicles() const {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getVehicles()");
+    return fVehicles;
 }
