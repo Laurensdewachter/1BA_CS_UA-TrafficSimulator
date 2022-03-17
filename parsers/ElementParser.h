@@ -49,7 +49,7 @@ public:
      * Returns true when the file was loaded successfully.
      * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling parseFile()")
      */
-    void parseFile(const std::string &filename);
+    void parseFile(const std::string &filename, std::ostream &errStream);
 
     /*
      * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()")

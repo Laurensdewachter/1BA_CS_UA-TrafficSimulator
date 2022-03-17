@@ -35,7 +35,7 @@ public:
      * ENSURE(fStreet->getName() == name, "parseStreet() postcondition")
      * ENSURE(fStreet->getLength() == length, "parseStreet() postcondition")
      */
-    void parseStreet(TiXmlElement* BAAN);
+    void parseStreet(TiXmlElement* BAAN, std::ostream &errStream);
 
     /*
      * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling getStreet()")

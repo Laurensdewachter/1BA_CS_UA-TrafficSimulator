@@ -22,33 +22,24 @@ bool TrafficSimulation::properlyInitialized() const {
     return TrafficSimulation::_initCheck == this;
 }
 
-void TrafficSimulation::parseInputFile(const std::string &filename) {
+void TrafficSimulation::parseInputFile(const std::string &filename, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling parseInputFile()");
+    REQUIRE(errStream.good(), "The errorStream wasn't good");
 
     ElementParser parser;
-    try {
-        parser.parseFile(filename);
-    }
-    catch (std::exception *e) {
-        std::cerr << e->what() << std::endl;
-    }
+    parser.parseFile(filename, errStream);
 
     TrafficSimulation::fStreets = parser.getStreets();
-
     TrafficSimulation::fTrafficLights = parser.getTrafficLights();
-
     std::vector<Vehicle*> vehicles = parser.getVehicles();
-
     TrafficSimulation::fVehicleGenerators = parser.getVehicleGenerators();
-
     for (long unsigned int i = 0; i < vehicles.size(); i++) {
-        try {
-            Street *s = getStreet(vehicles[i]->getStreet());
-            s->addVehicle(vehicles[i]);
+        Street *s = getStreet(vehicles[i]->getStreet());
+        if (s == NULL) {
+            errStream << "There was a vehicle that was generated on a non-existing street" << std::endl;
+            continue;
         }
-        catch (std::exception &e) {
-            throw SimulationException("There is a vehicle that was initialized on a non-existent street");
-        }
+        s->addVehicle(vehicles[i]);
     }
 }
 
@@ -81,5 +72,5 @@ Street *TrafficSimulation::getStreet(const std::string &name) const {
             return fStreets[i];
         }
     }
-    throw SimulationException("Street not found");
+    return NULL;
 }

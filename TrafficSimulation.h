@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <fstream>
 #include "DesignByContract.h"
 
 class Street;
@@ -38,7 +39,7 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling parseInputFile()")
      */
-    void parseInputFile(const std::string &filename);
+    void parseInputFile(const std::string &filename, std::ostream &errStream);
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling drive()")

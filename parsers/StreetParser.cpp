@@ -20,34 +20,40 @@ bool StreetParser::properlyInitialized() const {
     return StreetParser::_initCheck == this;
 }
 
-void StreetParser::parseStreet(TiXmlElement* BAAN) {
+void StreetParser::parseStreet(TiXmlElement* BAAN, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()");
 
     TiXmlElement* nameElem = BAAN->FirstChildElement("naam");
     TiXmlElement* lengthElem = BAAN->FirstChildElement("lengte");
     if (nameElem == NULL && lengthElem == NULL) {
-        throw ParseException("Street has no contents.\nIt needs both a name and a length.");
+        errStream<< "Street has no contents. It needs both a name and a length." << std::endl;
+        return;
     }
     if (nameElem == NULL) {
-        throw ParseException("Street has no name.");
+        errStream<< "Street has no name." << std::endl;
+        return;
     }
     if (lengthElem == NULL) {
-        throw ParseException("Street has no length.");
+        errStream<< "Street has no length." << std::endl;
+        return;
     }
     if (nameElem->FirstChild() == NULL) {
-        throw ParseException("Street name is empty");
+        errStream << "Street name is empty" << std::endl;
+        return;
     }
     TiXmlText* nameText = nameElem->FirstChild()->ToText();
     std::string name = nameText->Value();
 
     if (lengthElem->FirstChild() == NULL) {
-        throw ParseException("Street length is empty");
+        errStream << "Street length is empty" << std::endl;
+        return;
     }
     TiXmlText* lengthText = lengthElem->FirstChild()->ToText();
     std::string lengthString = lengthText->Value();
     int length ;
     if ((std::istringstream(lengthString) >> length).fail()) {
-        throw ParseException("Street length is not a number");
+        errStream << "Street length is not a number" << std::endl;
+        return;
     }
 
     fStreet->setName(name);
