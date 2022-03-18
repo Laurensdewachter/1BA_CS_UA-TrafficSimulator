@@ -93,6 +93,8 @@ public:
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling hasVehicleGenerator()")
      */
     bool hasVehicleGenerator() const;
+
+    void driveVehicles();
 };
 
 

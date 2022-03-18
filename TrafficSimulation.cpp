@@ -13,6 +13,7 @@
 #include "objects/VehicleGenerator.h"
 
 TrafficSimulation::TrafficSimulation() {
+    TrafficSimulation::fTime = 0;
     TrafficSimulation::_initCheck = this;
     ENSURE(properlyInitialized(), "TrafficSimulation constructor did not end in an initialized state");
 }
@@ -86,30 +87,34 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
     return parseSucces;
 }
 
-void TrafficSimulation::drive() {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling drive()");
+void TrafficSimulation::writeOn(std::ostream &onstream) const {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling writeOn()");
 
-    for (long unsigned int i = 0; i < fStreets.size(); i++) {
-        Street* curStreet = fStreets[i];
-        std::vector<Vehicle*> curVehicles = curStreet->getVehicles();
+    onstream << "Tijd: " << fTime << std::endl;
 
-        if (curVehicles.empty()) {
-            continue;
-        }
-
-        curVehicles[0]->drive();
-        if (curVehicles[0]->getPosition() > curStreet->getLength()) {
-            curStreet->removeVehicle();
-        }
-        if (curVehicles.size() > 1) {
-            for (long unsigned int j = 1; j < curVehicles.size(); j++) {
-                curVehicles[j]->drive(curVehicles[j-1]);
-            }
+    int voertuigCounter = 0;
+    for (unsigned int i = 0; i < fStreets.size(); i++) {
+        std::vector<Vehicle*> vehicles = fStreets[i]->getVehicles();
+        for (unsigned int j = 0; j < vehicles.size(); j++) {
+            Vehicle* curVehicle = vehicles[j];
+            onstream << "Voertuig " << voertuigCounter << std::endl;
+            onstream << "-> baan: " << curVehicle->getStreet() << std::endl;
+            onstream << "-> positie: " << curVehicle->getPosition() << std::endl;
+            onstream << "-> snelheid: " << curVehicle->getSpeed() << std::endl << std::endl;
+            voertuigCounter++;
         }
     }
 }
 
+void TrafficSimulation::simulate() {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
+    for (long unsigned int i = 0; i < fStreets.size(); i++) {
+        fStreets[i]->driveVehicles();
+    }
+}
+
 Street *TrafficSimulation::getStreet(const std::string &name) const {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()");
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
         if (fStreets[i]->getName() == name) {
             return fStreets[i];

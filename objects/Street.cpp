@@ -80,3 +80,19 @@ bool Street::hasVehicleGenerator() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling hasVehicleGenerator()");
     return fVehicleGenerator != NULL;
 }
+
+void Street::driveVehicles() {
+    if (fVehicles.empty()) {
+        return;
+    }
+    for (unsigned int i = 0; i < fVehicles.size(); i++) {
+        if (i == 0) {
+            fVehicles[i]->drive();
+            if (fVehicles[i]->getPosition() > fLength) {
+                this->removeVehicle();
+            }
+            continue;
+        }
+        fVehicles[i]->drive(fVehicles[i-1]);
+    }
+}
