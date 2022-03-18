@@ -39,6 +39,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling getVehicle()")
+     * REQUIRE(fVehicle != NULL, "VehicleParser had no vehicle when calling getVehicle()")
      */
     Vehicle *getVehicle() const;
 };

@@ -9,7 +9,6 @@
 #include "../objects/Street.h"
 
 StreetParser::StreetParser() {
-    StreetParser::fStreet = new Street();
     StreetParser::_initCheck = this;
     ENSURE(properlyInitialized(), "StreetParser constructor did not end in an initialized state");
 }
@@ -54,6 +53,7 @@ bool StreetParser::parseStreet(TiXmlElement* BAAN, std::ostream &errStream) {
         return false;
     }
 
+    fStreet = new Street();
     fStreet->setName(name);
     fStreet->setLength(length);
 
@@ -65,5 +65,6 @@ bool StreetParser::parseStreet(TiXmlElement* BAAN, std::ostream &errStream) {
 
 Street* StreetParser::getStreet() const {
     REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling getStreet()");
+    REQUIRE(fStreet != NULL, "StreetParser had no street when calling getStreet()");
     return fStreet;
 }

@@ -16,9 +16,6 @@
 #include "parsers/ElementParser.h"
 
 class Street;
-class TrafficLight;
-class Vehicle;
-class VehicleGenerator;
 
 class TrafficSimulation {
     std::vector<Street*> fStreets;

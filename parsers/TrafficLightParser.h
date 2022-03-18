@@ -40,6 +40,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling getTrafficLight()")
+     * REQUIRE(fTrafficLight != NULL, "TrafficLightParser had no traffic light when calling getTrafficLight()")
      */
     TrafficLight* getTrafficLight() const;
 };

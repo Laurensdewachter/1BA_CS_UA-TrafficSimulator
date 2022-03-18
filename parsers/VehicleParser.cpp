@@ -9,7 +9,6 @@
 #include "../objects/Vehicle.h"
 
 VehicleParser::VehicleParser() {
-    fVehicle = new Vehicle;
     VehicleParser::_initCheck = this;
     ENSURE(properlyInitialized(), "VehicleParser constructor did not end in an initialized state");
 }
@@ -54,6 +53,7 @@ bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream
         return false;
     }
 
+    fVehicle = new Vehicle();
     fVehicle->setStreet(street);
     fVehicle->setPosition(position);
 
@@ -65,5 +65,6 @@ bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream
 
 Vehicle *VehicleParser::getVehicle() const {
     REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling getVehicle()");
+    REQUIRE(fVehicle != NULL, "VehicleParser had no vehicle when calling getVehicle()");
     return fVehicle;
 }

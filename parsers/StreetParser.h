@@ -39,6 +39,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling getStreet()")
+     * REQUIRE(fStreet != NULL, "StreetParser had no street when calling getStreet()")
      */
     Street* getStreet() const;
 };

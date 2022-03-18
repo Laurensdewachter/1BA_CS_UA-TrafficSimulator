@@ -9,7 +9,6 @@
 #include "../objects/VehicleGenerator.h"
 
 VehicleGeneratorParser::VehicleGeneratorParser() {
-    fVehicleGenerator = new VehicleGenerator;
     VehicleGeneratorParser::_initCheck = this;
     ENSURE(properlyInitialized(), "VehicleGeneratorParser constructor did not end in an initialized state");
 }
@@ -54,6 +53,7 @@ bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
         return false;
     }
 
+    fVehicleGenerator = new VehicleGenerator();
     fVehicleGenerator->setStreet(street);
     fVehicleGenerator->setFrequency(frequency);
 
@@ -65,5 +65,6 @@ bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
 
 VehicleGenerator *VehicleGeneratorParser::getVehicleGenerator() const {
     REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling getVehicleGenerator()");
+    REQUIRE(fVehicleGenerator != NULL, "VehicleGeneratorParser had no vehicle generator when calling getVehicleGenerator()");
     return fVehicleGenerator;
 }

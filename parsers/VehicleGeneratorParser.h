@@ -39,6 +39,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling getVehicleGenerator()")
+     * REQUIRE(fVehicleGenerator != NULL, "VehicleGeneratorParser had no vehicle generator when calling getVehicleGenerator()")
      */
     VehicleGenerator* getVehicleGenerator() const;
 };

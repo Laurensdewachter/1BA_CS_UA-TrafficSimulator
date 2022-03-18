@@ -59,7 +59,7 @@ public:
     double getSpeed() const;
 
     /*
-     *
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()")
      */
     void drive(Vehicle* vehicleInFront = NULL);
 };

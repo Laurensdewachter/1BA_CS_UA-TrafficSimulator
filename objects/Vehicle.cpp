@@ -49,6 +49,7 @@ double Vehicle::getSpeed() const {
 }
 
 void Vehicle::drive(Vehicle* vehicleInFront) {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()");
     if (fSpeed + (fAcceleration*gSimulationTime) < 0) {
         fPosition -= pow(fSpeed, 2)/(2*fAcceleration);
         fSpeed = 0;
