@@ -12,7 +12,13 @@ int main(int argc, char** argv) {
         retValue = -1;
     }
     else {
-        sim.parseInputFile(argv[1], std::cerr);
+        sim.parseInputFile(argv[1]);
+
+        for (int i = 0; i < 2000; i++) {
+            sim.simulate();
+        }
+
+        sim.writeOn();
     }
 
     return retValue;

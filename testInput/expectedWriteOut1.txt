@@ -1,0 +1,6 @@
+Tijd: 0
+Voertuig 0
+-> baan: Turnhoutsebaan
+-> positie: 0
+-> snelheid: 0
+

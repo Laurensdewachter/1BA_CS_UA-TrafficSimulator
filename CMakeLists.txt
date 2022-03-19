@@ -23,7 +23,7 @@ set(DEBUG_SOURCE_FILES tests/TrafficSimulationTests.cpp parsers/tinyxml/tinyxml.
         parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinystr.cpp tests/TrafficSimulationInputTests.cpp
         Utils.cpp TrafficSimulation.cpp parsers/ElementParser.cpp parsers/VehicleParser.cpp parsers/VehicleGeneratorParser.cpp
         parsers/StreetParser.cpp parsers/TrafficLightParser.cpp objects/Street.cpp objects/TrafficLight.cpp objects/Vehicle.cpp
-        objects/VehicleGenerator.cpp parsers/ParseException.cpp)
+        objects/VehicleGenerator.cpp parsers/ParseException.cpp tests/TrafficSimulationOutputTests.cpp)
 
 # Create RELEASE target
 add_executable(TrafficSimulation ${RELEASE_SOURCE_FILES})
