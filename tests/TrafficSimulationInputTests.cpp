@@ -5,7 +5,6 @@
 // Description  : This code tests the parsers of the TrafficSimulation.
 // ===========================================================
 
-#include <fstream>
 #include "gtest/gtest.h"
 #include "../TrafficSimulation.h"
 #include "../Utils.h"
@@ -20,46 +19,52 @@ protected:
 };
 
 TEST_F(TrafficSimulationInputTest, InputHappyDay) {
-    ASSERT_TRUE(sim.properlyInitialized());
-    ASSERT_TRUE(DirectoryExists("testInput"));
-    ASSERT_TRUE(DirectoryExists("testOutput"));
+    EXPECT_TRUE(sim.properlyInitialized());
+    EXPECT_TRUE(DirectoryExists("testInput"));
+    EXPECT_TRUE(DirectoryExists("testOutput"));
 
     std::ofstream myFile;
-    myFile.open("testInput/testHappyDay.xml");
+    myFile.open("testInput/HappyDayIn.xml");
     myFile << "<?xml version=\"1.0\" ?>" << std::endl
-        << "<SIMULATIE>" << std::endl
-        << "<BAAN>" << std::endl
-        << "<naam>Middelheimlaan</naam>" << std::endl
-        << "<lengte>500</lengte>" << std::endl
-        << "</BAAN>" << std::endl
-        << "<VOERTUIG>" << std::endl
-        << "<baan>Middelheimlaan</baan>" << std::endl
-        << "<positie>20</positie>" << std::endl
-        << "</VOERTUIG>" << std::endl
-        << "<VERKEERSLICHT>" << std::endl
-        << "<baan>Middelheimlaan</baan>" << std::endl
-        << "<positie>400</positie>" << std::endl
-        << "<cyclus>20</cyclus>" << std::endl
-        << "</VERKEERSLICHT>" << std::endl
-        << "<VOERTUIGGENERATOR>" << std::endl
-        << "<baan>Middelheimlaan</baan>" << std::endl
-        << "<frequentie>5</frequentie>" << std::endl
-        << "</VOERTUIGGENERATOR>" << std::endl
-        << "</SIMULATIE>" << std::endl;
+           << "<SIMULATIE>" << std::endl
+           << "<BAAN>" << std::endl
+           << "<naam>Middelheimlaan</naam>" << std::endl
+           << "<lengte>500</lengte>" << std::endl
+           << "</BAAN>" << std::endl
+           << "<VOERTUIG>" << std::endl
+           << "<baan>Middelheimlaan</baan>" << std::endl
+           << "<positie>20</positie>" << std::endl
+           << "</VOERTUIG>" << std::endl
+           << "<VOERTUIG>" <<std::endl
+           << "<baan>Middelheimlaan</baan >" << std::endl
+           << "<positie>480</positie>" << std::endl
+           << "</VOERTUIG>" << std::endl
+           << "<VERKEERSLICHT>" << std::endl
+           << "<baan>Middelheimlaan</baan>" << std::endl
+           << "<positie>400</positie>" << std::endl
+           << "<cyclus>20</cyclus>" << std::endl
+           << "</VERKEERSLICHT>" << std::endl
+           << "<VOERTUIGGENERATOR>" << std::endl
+           << "<baan>Middelheimlaan</baan>" << std::endl
+           << "<frequentie>5</frequentie>" << std::endl
+           << "</VOERTUIGGENERATOR>" << std::endl
+           << "</SIMULATIE>" << std::endl;
     myFile.close();
 
     std::ofstream errStream;
-    errStream.open("testOutput/HappyDayOut.txt");
-    sim.parseInputFile("testInput/testHappyDay.xml", errStream);
+    errStream.open("testOutput/HappyDayInErrors.txt");
+    sim.parseInputFile("testInput/HappyDayIn.xml", errStream);
     errStream.close();
 
-    ASSERT_TRUE(FileIsEmpty("testOutput/HappyDayOut.txt"));
+    EXPECT_TRUE(FileIsEmpty("testOutput/HappyDayInErrors.txt"));
+
+    sim.clearSimulation();
 }
 
 TEST_F(TrafficSimulationInputTest, InputLegalSimulations) {
-    ASSERT_TRUE(sim.properlyInitialized());
-    ASSERT_TRUE(DirectoryExists("testInput"));
-    ASSERT_TRUE(DirectoryExists("testOutput"));
+    EXPECT_TRUE(sim.properlyInitialized());
+    EXPECT_TRUE(DirectoryExists("testInput"));
+    EXPECT_TRUE(DirectoryExists("testOutput"));
 
     int fileCounter = 1;
     std::string fileName = "testInput/legalSimulation" + ToString(fileCounter) + ".xml";
@@ -77,6 +82,8 @@ TEST_F(TrafficSimulationInputTest, InputLegalSimulations) {
 
         fileCounter++;
         fileName = "testInput/legalSimulation" + ToString(fileCounter) + ".xml";
+
+        sim.clearSimulation();
     }
 }
 
@@ -107,6 +114,8 @@ TEST_F(TrafficSimulationInputTest, InputXMLSyntaxErrors) {
         filename = "testInput/syntaxError" + ToString(fileCounter) + ".xml";
         errStreamName = "testOutput/syntaxError" + ToString(fileCounter) + ".txt";
         compareFilename = "testInput/syntaxError" + ToString(fileCounter) + ".txt";
+
+        sim.clearSimulation();
     }
 }
 
@@ -133,5 +142,7 @@ TEST_F(TrafficSimulationInputTest, InputConsistencyErrors) {
         fileCounter++;
         filename = "testInput/consistencyError" + ToString(fileCounter) + ".xml";
         errStreamName = "testOutput/consistencyError" + ToString(fileCounter) + ".txt";
+
+        sim.clearSimulation();
     }
 }

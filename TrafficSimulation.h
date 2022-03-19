@@ -47,6 +47,11 @@ public:
      */
     void simulate();
 
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()")
+     */
+    void clearSimulation();
+
 private:
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()")

@@ -84,6 +84,10 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
         }
     }
 
+    for (unsigned int i = 0; i < fStreets.size(); i++) {
+        fStreets[i]->sortVehicles();
+    }
+
     return parseSucces;
 }
 
@@ -110,6 +114,15 @@ void TrafficSimulation::simulate() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
         fStreets[i]->driveVehicles();
+    }
+}
+
+void TrafficSimulation::clearSimulation() {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
+
+    fTime = 0;
+    for (unsigned int i = 0; i < fStreets.size(); i++) {
+        delete fStreets[i];
     }
 }
 

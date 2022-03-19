@@ -1,0 +1,11 @@
+Tijd: 0
+Voertuig 0
+-> baan: Middelheimlaan
+-> positie: 480
+-> snelheid: 0
+
+Voertuig 1
+-> baan: Middelheimlaan
+-> positie: 20
+-> snelheid: 0
+

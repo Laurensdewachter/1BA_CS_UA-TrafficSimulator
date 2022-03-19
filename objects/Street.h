@@ -94,7 +94,15 @@ public:
      */
     bool hasVehicleGenerator() const;
 
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling driveVehicles()")
+     */
     void driveVehicles();
+
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()")
+     */
+    void sortVehicles();
 };
 
 

@@ -6,7 +6,9 @@
 // ===========================================================
 
 #include "Street.h"
+#include "TrafficLight.h"
 #include "Vehicle.h"
+#include "VehicleGenerator.h"
 
 Street::Street() {
     fVehicleGenerator = NULL;
@@ -14,7 +16,15 @@ Street::Street() {
     ENSURE(properlyInitialized(), "Street constructor did not end in an initialized state");
 }
 
-Street::~Street() {}
+Street::~Street() {
+    for (unsigned int i = 0; i < fTrafficLights.size(); i++) {
+        delete fTrafficLights[i];
+    }
+    for (unsigned int i = 0; i < fVehicles.size(); i++) {
+        delete fVehicles[i];
+    }
+    delete fVehicleGenerator;
+}
 
 bool Street::properlyInitialized() const {
     return Street::_initCheck == this;
@@ -78,10 +88,13 @@ std::vector<Vehicle*> Street::getVehicles() const {
 
 bool Street::hasVehicleGenerator() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling hasVehicleGenerator()");
+
     return fVehicleGenerator != NULL;
 }
 
 void Street::driveVehicles() {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling driveVehicles()");
+
     if (fVehicles.empty()) {
         return;
     }
@@ -95,4 +108,26 @@ void Street::driveVehicles() {
         }
         fVehicles[i]->drive(fVehicles[i-1]);
     }
+}
+
+void Street::sortVehicles() {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()");
+
+    if (fVehicles.empty()) {
+        return;
+    }
+
+    std::vector<Vehicle*> newVehicles;
+    newVehicles.push_back(fVehicles[0]);
+
+    for (unsigned int i = 1; i < fVehicles.size(); i++) {
+        for (unsigned int j = 0; j < newVehicles.size(); j++) {
+            if (fVehicles[i]->getPosition() > newVehicles[j]->getPosition()) {
+                newVehicles.insert(newVehicles.begin() + j, fVehicles[i]);
+                break;
+            }
+        }
+    }
+
+    fVehicles = newVehicles;
 }
