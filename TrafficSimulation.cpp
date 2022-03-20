@@ -18,9 +18,7 @@ TrafficSimulation::TrafficSimulation() {
     ENSURE(properlyInitialized(), "TrafficSimulation constructor did not end in an initialized state");
 }
 
-TrafficSimulation::~TrafficSimulation() {
-    clearSimulation();
-}
+TrafficSimulation::~TrafficSimulation() {}
 
 bool TrafficSimulation::properlyInitialized() const {
     return TrafficSimulation::_initCheck == this;
@@ -161,34 +159,34 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
 }
 
 void TrafficSimulation::simulate() {
-REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
-for (long unsigned int i = 0; i < fStreets.size(); i++) {
-    fStreets[i]->driveVehicles();
-    fStreets[i]->simTrafficLights(fTime);
-}
-fTime += gSimulationTime;
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
+    for (long unsigned int i = 0; i < fStreets.size(); i++) {
+        fStreets[i]->driveVehicles();
+        fStreets[i]->simTrafficLights(fTime);
+    }
+    fTime += gSimulationTime;
 }
 
 void TrafficSimulation::clearSimulation() {
-REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
 
-fTime = 0;
-for (unsigned int i = 0; i < fStreets.size(); i++) {
-    delete fStreets[i];
-}
+    fTime = 0;
+    for (unsigned int i = 0; i < fStreets.size(); i++) {
+        delete fStreets[i];
+    }
 }
 
 Street *TrafficSimulation::getStreet(const std::string &name) const {
-REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()");
-for (long unsigned int i = 0; i < fStreets.size(); i++) {
-    if (fStreets[i]->getName() == name) {
-        return fStreets[i];
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()");
+    for (long unsigned int i = 0; i < fStreets.size(); i++) {
+        if (fStreets[i]->getName() == name) {
+            return fStreets[i];
+        }
     }
-}
-return NULL;
+    return NULL;
 }
 
 double TrafficSimulation::getFTime() const {
-REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFtime()");
-return TrafficSimulation::fTime;
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFtime()");
+    return TrafficSimulation::fTime;
 }

@@ -52,25 +52,17 @@ TEST_F(TrafficSimulationOutputTest, OutputHappyDay) {
     myFile.close();
 
     std::fstream errStream;
-    sim.parseInputFile("testInput/HappyDayOut.xml", errStream);
+    EParserSucces parserSucces = sim.parseInputFile("testInput/HappyDayOut.xml", errStream);
+
+    EXPECT_TRUE(parserSucces == Success);
 
     EXPECT_TRUE(FileIsEmpty("testOutput/HappyDayOutErrors.txt"));
 
-    myFile.open("testOutput/HappyDayOut1.txt");
+    myFile.open("testOutput/HappyDayOut.txt");
     sim.writeOn(myFile);
     myFile.close();
 
-    EXPECT_TRUE(FileCompare("testOutput/HappyDayOut1.txt", "testInput/expectedHappyDayOut1.txt"));
-
-    for (unsigned int i = 0; i < 3000; i++) {
-        sim.simulate();
-    }
-
-    myFile.open("testOutput/HappyDayOut2.txt");
-    sim.writeOn(myFile);
-    myFile.close();
-
-    EXPECT_TRUE(FileCompare("testOutput/HappyDayOut2.txt", "testInput/expectedHappyDayOut2.txt"));
+    EXPECT_TRUE(FileCompare("testOutput/HappyDayOut.txt", "testInput/expectedHappyDayOut.txt"));
 
     sim.clearSimulation();
 }

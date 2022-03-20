@@ -1,6 +1,0 @@
-Tijd: 0
-Voertuig 1
--> baan: Rode Dreef
--> positie: 27
--> snelheid: 0
-

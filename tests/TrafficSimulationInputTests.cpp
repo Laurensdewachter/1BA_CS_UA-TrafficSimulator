@@ -53,8 +53,10 @@ TEST_F(TrafficSimulationInputTest, InputHappyDay) {
 
     std::ofstream errStream;
     errStream.open("testOutput/HappyDayInErrors.txt");
-    sim.parseInputFile("testInput/HappyDayIn.xml", errStream);
+    EParserSucces parserSucces = sim.parseInputFile("testInput/HappyDayIn.xml", errStream);
     errStream.close();
+
+    EXPECT_TRUE(parserSucces == Success);
 
     EXPECT_TRUE(FileIsEmpty("testOutput/HappyDayInErrors.txt"));
 

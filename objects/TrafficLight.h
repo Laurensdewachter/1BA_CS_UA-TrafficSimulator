@@ -81,6 +81,11 @@ public:
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getUpdatedlight()")
      */
     double getUpdatedlight() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling changeLight()")
+     */
+    void changeLight();
 };
 
 

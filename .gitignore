@@ -1,5 +1,6 @@
 cmake-build-debug/
 .idea/
 gtest/
-testInput/HappyDay*
 testOutput/
+pse-traffic-simulation-visualizer-main/
+testInput/HappyDay*

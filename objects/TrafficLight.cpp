@@ -9,10 +9,10 @@
 #include "../Variables.h"
 
 TrafficLight::TrafficLight() {
-    TrafficLight::_initCheck = this;
-    ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
     fIsgreen = true;
     fUpdatedlight = 0;
+    TrafficLight::_initCheck = this;
+    ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
 }
 
 TrafficLight::~TrafficLight() {}
@@ -74,4 +74,12 @@ bool TrafficLight::getIsgreen() const {
 double TrafficLight::getUpdatedlight() const {
     REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getUpdatedlight()");
     return TrafficLight::fUpdatedlight;
+}
+
+void TrafficLight::changeLight() {
+    if (fIsgreen) {
+        fIsgreen = false;
+    } else {
+        fIsgreen = true;
+    }
 }
