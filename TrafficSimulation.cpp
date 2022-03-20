@@ -96,7 +96,7 @@ void TrafficSimulation::writeOn(std::ostream &onstream) const {
 
     onstream << "Tijd: " << fTime << std::endl;
 
-    int voertuigCounter = 0;
+    int voertuigCounter = 1;
     for (unsigned int i = 0; i < fStreets.size(); i++) {
         std::vector<Vehicle*> vehicles = fStreets[i]->getVehicles();
         for (unsigned int j = 0; j < vehicles.size(); j++) {

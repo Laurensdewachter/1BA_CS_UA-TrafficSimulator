@@ -1,15 +1,15 @@
 Tijd: 0
-Voertuig 0
+Voertuig 1
 -> baan: Rode Dreef
 -> positie: 99
 -> snelheid: 0
 
-Voertuig 1
+Voertuig 2
 -> baan: Rode Dreef
 -> positie: 50
 -> snelheid: 0
 
-Voertuig 2
+Voertuig 3
 -> baan: Rode Dreef
 -> positie: 27
 -> snelheid: 0

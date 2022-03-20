@@ -1,10 +1,5 @@
 cmake-build-debug/
 .idea/
-CMakeFiles/
 gtest/
-.cmake/
-Testing/
-build.ninja
-/.ninja_*
-CMakeCache.txt
-cmake_install.cmake
+testInput/HappyDay*
+testOutput/
