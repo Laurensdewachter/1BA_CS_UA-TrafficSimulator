@@ -119,12 +119,12 @@ void Street::simTrafficLights(double &fTime) {
     for(unsigned int j = 0;j < getVehicles().size();j++){
         for(unsigned int i = 0; i < getTrafficLights().size(); i++){
             if(fTime >= fTrafficLights[i]->getUpdatedlight()){
-            if(fTrafficLights[i]->getIsgreen()){
-                fTrafficLights[i]->setLight(false);
-            }else{
-                fTrafficLights[i]->setLight(true);
-            }
-            fTrafficLights[i]->setUpdatedlight(fTrafficLights[i]->getUpdatedlight() + fTrafficLights[i]->getCycle());
+                if(fTrafficLights[i]->getIsgreen()){
+                    fTrafficLights[i]->setLight(false);
+                }else{
+                    fTrafficLights[i]->setLight(true);
+                }
+                fTrafficLights[i]->setUpdatedlight(fTrafficLights[i]->getUpdatedlight() + fTrafficLights[i]->getCycle());
         }
 
         if(fTrafficLights[i]->getIsgreen()) {
@@ -146,7 +146,7 @@ void Street::simTrafficLights(double &fTime) {
                 if(carPosition >= brakedistanceA && carPosition < brakedistanceB){      // car finds himself in the "brake" zone
                     fVehicles[j]->setMaxSpeed(gSlowDownFactor*gMaxSpeed);
                 }else if (carPosition >= stopdistanceA && carPosition < stopdistanceB){ // car finds himself in the "stop" zone
-                    fVehicles[j]->setMaxSpeed(gSlowDownFactor);
+                    fVehicles[j]->setMaxSpeed(0.00000001);
                     //std::cout << "__________________" << std::endl;
                 }else{                                                                  // car finds himself in the "too close to stop" zone
                     fVehicles[j]->setMaxSpeed(gMaxSpeed);
