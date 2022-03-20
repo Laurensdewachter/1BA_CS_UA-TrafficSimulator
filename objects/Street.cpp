@@ -142,7 +142,7 @@ void Street::simTrafficLights(double &fTime) {
 
             double carPosition = fVehicles[j]->getPosition();
 
-            if(distance_car_and_light >= 0){                                            // car hasnt pass the trafficlight yet
+            if(distance_car_and_light > 0 && carPosition >= brakedistanceA){ // car hasnt pass the trafficlight yet
                 if(carPosition >= brakedistanceA && carPosition < brakedistanceB){      // car finds himself in the "brake" zone
                     fVehicles[j]->setMaxSpeed(gSlowDownFactor*gMaxSpeed);
                 }else if (carPosition >= stopdistanceA && carPosition < stopdistanceB){ // car finds himself in the "stop" zone

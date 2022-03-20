@@ -1,7 +1,7 @@
 <SIMULATIE>
     <BAAN>
         <naam>Turnhoutsebaan</naam>
-        <lengte>300</lengte>
+        <lengte>500</lengte>
     </BAAN>
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
@@ -11,22 +11,23 @@
         <baan>Turnhoutsebaan</baan>
         <positie>0</positie>
     </VOERTUIG>
-    <VERKEERSLICHT>
-        <baan>Turnhoutsebaan</baan>
-        <positie>150</positie>
-        <cyclus>8</cyclus>
-    </VERKEERSLICHT>
 
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>240</positie>
-        <cyclus>100</cyclus>
+        <cyclus>40</cyclus>
+    </VERKEERSLICHT>
+
+    <VERKEERSLICHT>
+        <baan>Turnhoutsebaan</baan>
+        <positie>400</positie>
+        <cyclus>70</cyclus>
     </VERKEERSLICHT>
 
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>90</positie>
-        <cyclus>20</cyclus>
+        <cyclus>5</cyclus>
     </VERKEERSLICHT>
 
 </SIMULATIE>
