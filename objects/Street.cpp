@@ -121,13 +121,14 @@ void Street::simTrafficLights(double &fTime) {
     std::cout << "Simulation: " << fTime << std::endl;
     for(unsigned int i = 0; i < fTrafficLights.size(); i++){
         std::cout << "Trafficlight pos: " << fTrafficLights[i]->getPosition() << " and has cycle: " << fTrafficLights[i]->getCycle();
-        if(int(fTime) % fTrafficLights[i]->getCycle() == 0){
+        if(fTime >= fTrafficLights[i]->getUpdatedlight()){
             std::cout << " | From " << fTrafficLights[i]->getIsgreen() << " to ";
             if(fTrafficLights[i]->getIsgreen()){
                 fTrafficLights[i]->setLight(false);
             }else{
                 fTrafficLights[i]->setLight(true);
             }
+            fTrafficLights[i]->setUpdatedlight(fTrafficLights[i]->getUpdatedlight() + fTrafficLights[i]->getCycle());                  // set next light at getCycle() + fTime
             std::cout << fTrafficLights[i]->getIsgreen() << std::endl;
         }
 
