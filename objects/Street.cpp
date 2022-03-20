@@ -118,18 +118,18 @@ void Street::simTrafficLights(double &fTime) {
     }
 
     // change light when MOD is 0
-    std::cout << "Simulation: " << fTime << std::endl;
+    //std::cout << "Simulation: " << fTime << std::endl;
     for(unsigned int i = 0; i < fTrafficLights.size(); i++){
-        std::cout << "Trafficlight pos: " << fTrafficLights[i]->getPosition() << " and has cycle: " << fTrafficLights[i]->getCycle();
+        //std::cout << "Trafficlight pos: " << fTrafficLights[i]->getPosition() << " and has cycle: " << fTrafficLights[i]->getCycle();
         if(fTime >= fTrafficLights[i]->getUpdatedlight()){
-            std::cout << " | From " << fTrafficLights[i]->getIsgreen() << " to ";
+            //std::cout << " | From " << fTrafficLights[i]->getIsgreen() << " to ";
             if(fTrafficLights[i]->getIsgreen()){
                 fTrafficLights[i]->setLight(false);
             }else{
                 fTrafficLights[i]->setLight(true);
             }
             fTrafficLights[i]->setUpdatedlight(fTrafficLights[i]->getUpdatedlight() + fTrafficLights[i]->getCycle());                  // set next light at getCycle() + fTime
-            std::cout << fTrafficLights[i]->getIsgreen() << std::endl;
+            //std::cout << fTrafficLights[i]->getIsgreen() << std::endl;
         }
 
         if(fTrafficLights[i]->getIsgreen()) {
@@ -142,10 +142,9 @@ void Street::simTrafficLights(double &fTime) {
                 fVehicles[0]->setMaxSpeed(0);
             }
         }
-
-        std::cout << std::endl;
+        //std::cout << std::endl;
     }
-    std::cout << std::endl;
+    //std::cout << std::endl;
 }
 void Street::sortVehicles() {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()");

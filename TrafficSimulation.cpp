@@ -96,7 +96,8 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
 void TrafficSimulation::writeOn(std::ostream &onstream) const {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling writeOn()");
 
-    onstream << "Tijd: " << fTime << std::endl;
+
+    /*onstream << "Tijd: " << fTime << std::endl;
 
     int voertuigCounter = 1;
     for (unsigned int i = 0; i < fStreets.size(); i++) {
@@ -109,38 +110,75 @@ void TrafficSimulation::writeOn(std::ostream &onstream) const {
             onstream << "-> snelheid: " << curVehicle->getSpeed() << std::endl << std::endl;
             voertuigCounter++;
         }
+    }*/
+
+    onstream << "{";
+
+    onstream << "\"time\":" << fTime << ",";
+    onstream << "\"roads\":[";
+    for (unsigned int i = 0; i < fStreets.size(); i++) {
+        onstream << "{";
+        std::vector<Vehicle*> vehicles = fStreets[i]->getVehicles();
+        for (unsigned int j = 0; j < vehicles.size(); j++) {
+            Vehicle* curVehicle = vehicles[j];
+            onstream << "\"name\":\"" << curVehicle->getStreet()<< "\",";
+            onstream << "\"length\":" << fStreets[i]->getLength() << ",";
+            if(!fStreets[i]->getVehicles().empty()){
+                onstream << "\"cars\":";
+                onstream << "[";
+                onstream << "{";
+                onstream << "\"x\":" << curVehicle->getPosition();
+                onstream << "}";
+            }
+            onstream << "],";
+            if(!fStreets[i]->getTrafficLights().empty()){
+                onstream << "\"lights\":";
+                onstream << "[";
+                onstream << "{";
+                std::vector<TrafficLight*> lights = fStreets[i]->getTrafficLights();
+                onstream << "\"x\":" << lights[0]->getPosition() << ",";
+                onstream << "\"green\":" << int(lights[0]->getIsgreen())<< ",";
+                onstream << "\"xs\":" << gBrakeDistance << ",";
+                onstream << "\"xs0\":" << gStopDistance;
+
+
+                onstream << "}";
+            }
+            onstream << "]" <<"}" << "]";
+        }
     }
+    onstream << "}" << std::endl;
 }
 
 void TrafficSimulation::simulate() {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
-    for (long unsigned int i = 0; i < fStreets.size(); i++) {
-        fStreets[i]->driveVehicles();
-        fStreets[i]->simTrafficLights(fTime);
-    }
-    fTime += gSimulationTime;
+REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
+for (long unsigned int i = 0; i < fStreets.size(); i++) {
+    fStreets[i]->driveVehicles();
+    fStreets[i]->simTrafficLights(fTime);
+}
+fTime += gSimulationTime;
 }
 
 void TrafficSimulation::clearSimulation() {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
+REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
 
-    fTime = 0;
-    for (unsigned int i = 0; i < fStreets.size(); i++) {
-        delete fStreets[i];
-    }
+fTime = 0;
+for (unsigned int i = 0; i < fStreets.size(); i++) {
+    delete fStreets[i];
+}
 }
 
 Street *TrafficSimulation::getStreet(const std::string &name) const {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()");
-    for (long unsigned int i = 0; i < fStreets.size(); i++) {
-        if (fStreets[i]->getName() == name) {
-            return fStreets[i];
-        }
+REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()");
+for (long unsigned int i = 0; i < fStreets.size(); i++) {
+    if (fStreets[i]->getName() == name) {
+        return fStreets[i];
     }
-    return NULL;
+}
+return NULL;
 }
 
 double TrafficSimulation::getFTime() const {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFtime()");
-    return TrafficSimulation::fTime;
+REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFtime()");
+return TrafficSimulation::fTime;
 }
