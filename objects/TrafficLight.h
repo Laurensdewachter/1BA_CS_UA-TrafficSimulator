@@ -16,6 +16,8 @@ class TrafficLight {
     std::string fStreet;
     int fPosition;
     int fCycle;
+    bool fIsgreen;
+    double fUpdatedlight;
 
 public:
     /*
@@ -46,6 +48,16 @@ public:
     void setCycle(int c);
 
     /*
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLight()")
+     */
+    void setLight(bool s);
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setUpdatedlight()")
+     */
+    void setUpdatedlight(double u);
+
+    /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getStreet()")
      */
     const std::string &getStreet() const;
@@ -59,6 +71,16 @@ public:
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getCycle()")
      */
     int getCycle() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getIsgreen()")
+     */
+    bool getIsgreen() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getUpdatedlight()")
+     */
+    double getUpdatedlight() const;
 };
 
 

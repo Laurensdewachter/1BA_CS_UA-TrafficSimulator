@@ -20,6 +20,7 @@ class Vehicle {
     double fPosition;
     double fSpeed;
     double fAcceleration;
+    double fMaxSpeed;
 
 public:
     /*
@@ -42,6 +43,12 @@ public:
      * ENSURE(Vehicle::fPosition == p, "setPosition() postcondition")
      */
     void setPosition(int p);
+
+    /*
+    * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setMaxSpeed()")
+    * ENSURE(Vehicle::fMaxSpeed == m, "setMaxSpeed() postcondition")
+    */
+    void setMaxSpeed(double m);
 
     /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getStreet()")

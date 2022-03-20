@@ -14,11 +14,11 @@ int main(int argc, char** argv) {
     else {
         sim.parseInputFile(argv[1]);
 
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 4000; i++) {
             sim.simulate();
+            sim.visualize();
         }
-
-        sim.writeOn();
+        //sim.writeOn();
     }
 
     return retValue;

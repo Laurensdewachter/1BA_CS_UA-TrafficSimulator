@@ -18,7 +18,9 @@ TrafficSimulation::TrafficSimulation() {
     ENSURE(properlyInitialized(), "TrafficSimulation constructor did not end in an initialized state");
 }
 
-TrafficSimulation::~TrafficSimulation() {}
+TrafficSimulation::~TrafficSimulation() {
+    clearSimulation();
+}
 
 bool TrafficSimulation::properlyInitialized() const {
     return TrafficSimulation::_initCheck == this;
@@ -110,28 +112,83 @@ void TrafficSimulation::writeOn(std::ostream &onstream) const {
     }
 }
 
-void TrafficSimulation::simulate() {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
-    for (long unsigned int i = 0; i < fStreets.size(); i++) {
-        fStreets[i]->driveVehicles();
+void TrafficSimulation::visualize(std::ostream &onstream) const {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling visualize()");
+
+    for (unsigned int i = 0; i < fStreets.size(); i++) {
+        std::vector<Vehicle*> vehicles = fStreets[i]->getVehicles();
+        for (unsigned int j = 0; j < vehicles.size(); j++) {
+            onstream << "{";
+            onstream << "\"time\":" << fTime << ",";
+            onstream << "\"roads\":[";
+            onstream << "{";
+            Vehicle* curVehicle = vehicles[j];
+            onstream << "\"name\":\"" << curVehicle->getStreet()<< "\",";
+            onstream << "\"length\":" << fStreets[i]->getLength() << ",";
+            onstream << "\"cars\":";
+            onstream << "[";
+            if(!fStreets[i]->getVehicles().empty()){
+                for(unsigned int l = 0; l <vehicles.size();l++){
+                    Vehicle* curVehicle2 = vehicles[l];
+                    onstream << "{";
+                    onstream << "\"x\":" << curVehicle2->getPosition();
+                    onstream << "}";
+                    if(l<vehicles.size()-1){
+                        onstream << ",";
+                    }
+                }
+            }
+            onstream << "],";
+            if(!fStreets[i]->getTrafficLights().empty()){
+                onstream << "\"lights\":";
+                onstream << "[";
+                for(unsigned int t = 0;t<fStreets[i]->getTrafficLights().size();t++){
+                    TrafficLight * T = fStreets[i]->getTrafficLights()[t];
+                    onstream << "{";
+                    onstream << "\"x\":" << T->getPosition() << ",";
+                    onstream << "\"green\":" << int(T->getIsgreen())<< ",";
+                    onstream << "\"xs\":" << gBrakeDistance << ",";
+                    onstream << "\"xs0\":" << gStopDistance;
+                    onstream << "}";
+                    if(t<fStreets[i]->getTrafficLights().size()-1){
+                        onstream << ",";
+                    }
+                }
+            }
+            onstream << "]" <<"}" << "]" << "}" << std::endl;
+        }
     }
+}
+
+void TrafficSimulation::simulate() {
+REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
+for (long unsigned int i = 0; i < fStreets.size(); i++) {
+    fStreets[i]->driveVehicles();
+    fStreets[i]->simTrafficLights(fTime);
+}
+fTime += gSimulationTime;
 }
 
 void TrafficSimulation::clearSimulation() {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
+REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
 
-    fTime = 0;
-    for (unsigned int i = 0; i < fStreets.size(); i++) {
-        delete fStreets[i];
-    }
+fTime = 0;
+for (unsigned int i = 0; i < fStreets.size(); i++) {
+    delete fStreets[i];
+}
 }
 
 Street *TrafficSimulation::getStreet(const std::string &name) const {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()");
-    for (long unsigned int i = 0; i < fStreets.size(); i++) {
-        if (fStreets[i]->getName() == name) {
-            return fStreets[i];
-        }
+REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()");
+for (long unsigned int i = 0; i < fStreets.size(); i++) {
+    if (fStreets[i]->getName() == name) {
+        return fStreets[i];
     }
-    return NULL;
+}
+return NULL;
+}
+
+double TrafficSimulation::getFTime() const {
+REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFtime()");
+return TrafficSimulation::fTime;
 }

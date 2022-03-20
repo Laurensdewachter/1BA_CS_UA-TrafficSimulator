@@ -110,6 +110,52 @@ void Street::driveVehicles() {
     }
 }
 
+void Street::simTrafficLights(double &fTime) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simTrafficLights()");
+
+    if(fTrafficLights.empty()){
+        return;
+    }
+    for(unsigned int j = 0;j < getVehicles().size();j++){
+        for(unsigned int i = 0; i < getTrafficLights().size(); i++){
+            if(fTime >= fTrafficLights[i]->getUpdatedlight()){
+                if(fTrafficLights[i]->getIsgreen()){
+                    fTrafficLights[i]->setLight(false);
+                }else{
+                    fTrafficLights[i]->setLight(true);
+                }
+                fTrafficLights[i]->setUpdatedlight(fTrafficLights[i]->getUpdatedlight() + fTrafficLights[i]->getCycle());
+        }
+
+        if(fTrafficLights[i]->getIsgreen()) {
+            if(fTrafficLights[i]->getPosition() > fVehicles[j]->getPosition()){
+                fVehicles[j]->setMaxSpeed(gMaxSpeed);
+            }
+        }else{
+            double distance_car_and_light =  fTrafficLights[i]->getPosition() - fVehicles[j]->getPosition();
+
+            double brakedistanceA = fTrafficLights[i]->getPosition() - gBrakeDistance;
+            double brakedistanceB = fTrafficLights[i]->getPosition() - gStopDistance;
+
+            double stopdistanceA = fTrafficLights[i]->getPosition() - gStopDistance;
+            double stopdistanceB = fTrafficLights[i]->getPosition() - gStopDistance/2;
+
+            double carPosition = fVehicles[j]->getPosition();
+
+            if(distance_car_and_light > 0 && carPosition >= brakedistanceA){ // car hasnt pass the trafficlight yet
+                if(carPosition >= brakedistanceA && carPosition < brakedistanceB){      // car finds himself in the "brake" zone
+                    fVehicles[j]->setMaxSpeed(gSlowDownFactor*gMaxSpeed);
+                }else if (carPosition >= stopdistanceA && carPosition < stopdistanceB){ // car finds himself in the "stop" zone
+                    fVehicles[j]->setMaxSpeed(0.00000001);
+                    //std::cout << "__________________" << std::endl;
+                }else{                                                                  // car finds himself in the "too close to stop" zone
+                    fVehicles[j]->setMaxSpeed(gMaxSpeed);
+                }
+            }
+        }
+    }
+}
+}
 void Street::sortVehicles() {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()");
 
@@ -124,6 +170,9 @@ void Street::sortVehicles() {
         for (unsigned int j = 0; j < newVehicles.size(); j++) {
             if (fVehicles[i]->getPosition() > newVehicles[j]->getPosition()) {
                 newVehicles.insert(newVehicles.begin() + j, fVehicles[i]);
+                break;
+            } else if (j == newVehicles.size()-1) {
+                newVehicles.push_back(fVehicles[i]);
                 break;
             }
         }

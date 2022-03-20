@@ -6,10 +6,13 @@
 // ===========================================================
 
 #include "TrafficLight.h"
+#include "../Variables.h"
 
 TrafficLight::TrafficLight() {
     TrafficLight::_initCheck = this;
     ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
+    fIsgreen = true;
+    fUpdatedlight = 0;
 }
 
 TrafficLight::~TrafficLight() {}
@@ -36,6 +39,18 @@ void TrafficLight::setCycle(int c) {
     ENSURE(this->getCycle() == c, "setCycle() postcondition");
 }
 
+void TrafficLight::setLight(bool s) {
+    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLight()");
+    TrafficLight::fIsgreen = s;
+    ENSURE(this->getIsgreen() == s, "setLight() postcondition");
+}
+
+void TrafficLight::setUpdatedlight(double u) {
+    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setUpdatedlight()");
+    TrafficLight::fUpdatedlight = u;
+    ENSURE(this->getUpdatedlight() == u, "setUpdatedlight() postcondition");
+}
+
 const std::string &TrafficLight::getStreet() const {
     REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getStreet()");
     return TrafficLight::fStreet;
@@ -49,4 +64,14 @@ int TrafficLight::getPosition() const {
 int TrafficLight::getCycle() const {
     REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getCycle()");
     return TrafficLight::fCycle;
+}
+
+bool TrafficLight::getIsgreen() const {
+    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getIsgreen()");
+    return TrafficLight::fIsgreen;
+}
+
+double TrafficLight::getUpdatedlight() const {
+    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getUpdatedlight()");
+    return TrafficLight::fUpdatedlight;
 }
