@@ -11,6 +11,7 @@ Vehicle::Vehicle() {
     Vehicle::fPosition = 0;
     Vehicle::fSpeed = 0;
     Vehicle::fAcceleration = 0;
+    Vehicle::fMaxSpeed = gMaxSpeed;
     Vehicle::_initCheck = this;
     ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state");
 }
@@ -31,6 +32,12 @@ void Vehicle::setPosition(int p) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()");
     Vehicle::fPosition = p;
     ENSURE(Vehicle::fPosition == p, "setPosition() postcondition");
+}
+
+void Vehicle::setMaxSpeed(double m) {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setMaxSpeed()");
+    Vehicle::fMaxSpeed = m;
+    ENSURE(Vehicle::fMaxSpeed == m, "setMaxSpeed() postcondition");
 }
 
 const std::string &Vehicle::getStreet() const {
@@ -64,5 +71,5 @@ void Vehicle::drive(Vehicle* vehicleInFront) {
         double deltaV = fSpeed - vehicleInFront->getSpeed();
         delta = (gMinFollowDistance + std::max(0.0, (fSpeed+((fSpeed*deltaV)/(2*sqrt(gMaxAcceleration*gMaxBrakeFactor))))))/deltaX;
     }
-    fAcceleration = gMaxAcceleration*(1 - pow(fSpeed/gMaxSpeed, 4) - pow(delta, 2));
+    fAcceleration = gMaxAcceleration*(1 - pow(fSpeed/fMaxSpeed, 4) - pow(delta, 2));
 }

@@ -19,8 +19,8 @@ class Street;
 
 class TrafficSimulation {
     std::vector<Street*> fStreets;
-    double fTime;
     TrafficSimulation* _initCheck;
+    double fTime;
 
 public:
     /*
@@ -36,6 +36,11 @@ public:
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling parseInputFile()")
      */
     EParserSucces parseInputFile(const std::string &filename, std::ostream &errStream = std::cerr);
+
+    /*
+    * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFTime()")
+    */
+    double getFTime() const;
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling writeOn()")

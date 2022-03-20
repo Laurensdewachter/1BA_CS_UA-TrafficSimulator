@@ -11,10 +11,10 @@
 #include <iostream>
 #include <vector>
 #include "../DesignByContract.h"
-
 class TrafficLight;
 class Vehicle;
 class VehicleGenerator;
+class TrafficSimulation;
 
 class Street {
     Street* _initCheck;
@@ -98,6 +98,11 @@ public:
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling driveVehicles()")
      */
     void driveVehicles();
+
+    /*
+    * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simTrafficLights()")
+    */
+    void simTrafficLights(double &fTime);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()")

@@ -110,6 +110,42 @@ void Street::driveVehicles() {
     }
 }
 
+void Street::simTrafficLights(double &fTime) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simTrafficLights()");
+
+    if(fTrafficLights.empty()){
+        return;
+    }
+
+    // change light when MOD is 0
+    std::cout << "Simulation: " << fTime << std::endl;
+    for(unsigned int i = 0; i < fTrafficLights.size(); i++){
+        std::cout << "Trafficlight pos: " << fTrafficLights[i]->getPosition() << " and has cycle: " << fTrafficLights[i]->getCycle();
+        if(int(fTime) % fTrafficLights[i]->getCycle() == 0){
+            std::cout << " | From " << fTrafficLights[i]->getIsgreen() << " to ";
+            if(fTrafficLights[i]->getIsgreen()){
+                fTrafficLights[i]->setLight(false);
+            }else{
+                fTrafficLights[i]->setLight(true);
+            }
+            std::cout << fTrafficLights[i]->getIsgreen() << std::endl;
+        }
+
+        if(fTrafficLights[i]->getIsgreen()) {
+            fVehicles[0]->setMaxSpeed(gMaxSpeed);
+        }else{
+            double distance =  fTrafficLights[i]->getPosition() - fVehicles[0]->getPosition();
+            if(distance <= gBrakeDistance && distance >= 0){                    // pas vertraagfactor toe op deze auto
+                fVehicles[0]->setMaxSpeed(gSlowDownFactor*gMaxSpeed);
+            }else if(distance <= gStopDistance && distance >= gStopDistance/2){ // vehicle is in the first half (15-7.5) of the stopdistance => then stop
+                fVehicles[0]->setMaxSpeed(0);
+            }
+        }
+
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+}
 void Street::sortVehicles() {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()");
 

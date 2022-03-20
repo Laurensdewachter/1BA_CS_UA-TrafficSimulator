@@ -18,7 +18,9 @@ TrafficSimulation::TrafficSimulation() {
     ENSURE(properlyInitialized(), "TrafficSimulation constructor did not end in an initialized state");
 }
 
-TrafficSimulation::~TrafficSimulation() {}
+TrafficSimulation::~TrafficSimulation() {
+    clearSimulation();
+}
 
 bool TrafficSimulation::properlyInitialized() const {
     return TrafficSimulation::_initCheck == this;
@@ -96,7 +98,7 @@ void TrafficSimulation::writeOn(std::ostream &onstream) const {
 
     onstream << "Tijd: " << fTime << std::endl;
 
-    int voertuigCounter = 0;
+    int voertuigCounter = 1;
     for (unsigned int i = 0; i < fStreets.size(); i++) {
         std::vector<Vehicle*> vehicles = fStreets[i]->getVehicles();
         for (unsigned int j = 0; j < vehicles.size(); j++) {
@@ -114,7 +116,9 @@ void TrafficSimulation::simulate() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
         fStreets[i]->driveVehicles();
+        fStreets[i]->simTrafficLights(fTime);
     }
+    fTime++;
 }
 
 void TrafficSimulation::clearSimulation() {
@@ -134,4 +138,9 @@ Street *TrafficSimulation::getStreet(const std::string &name) const {
         }
     }
     return NULL;
+}
+
+double TrafficSimulation::getFTime() const {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFtime()");
+    return TrafficSimulation::fTime;
 }
