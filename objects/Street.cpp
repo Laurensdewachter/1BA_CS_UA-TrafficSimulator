@@ -116,35 +116,45 @@ void Street::simTrafficLights(double &fTime) {
     if(fTrafficLights.empty()){
         return;
     }
-
-    // change light when MOD is 0
-    //std::cout << "Simulation: " << fTime << std::endl;
-    for(unsigned int i = 0; i < fTrafficLights.size(); i++){
-        //std::cout << "Trafficlight pos: " << fTrafficLights[i]->getPosition() << " and has cycle: " << fTrafficLights[i]->getCycle();
-        if(fTime >= fTrafficLights[i]->getUpdatedlight()){
-            //std::cout << " | From " << fTrafficLights[i]->getIsgreen() << " to ";
+    for(unsigned int j = 0;j < getVehicles().size();j++){
+        for(unsigned int i = 0; i < getTrafficLights().size(); i++){
+            if(fTime >= fTrafficLights[i]->getUpdatedlight()){
             if(fTrafficLights[i]->getIsgreen()){
                 fTrafficLights[i]->setLight(false);
             }else{
                 fTrafficLights[i]->setLight(true);
             }
-            fTrafficLights[i]->setUpdatedlight(fTrafficLights[i]->getUpdatedlight() + fTrafficLights[i]->getCycle());                  // set next light at getCycle() + fTime
-            //std::cout << fTrafficLights[i]->getIsgreen() << std::endl;
+            fTrafficLights[i]->setUpdatedlight(fTrafficLights[i]->getUpdatedlight() + fTrafficLights[i]->getCycle());
         }
 
         if(fTrafficLights[i]->getIsgreen()) {
-            fVehicles[0]->setMaxSpeed(gMaxSpeed);
+            if(fTrafficLights[i]->getPosition() > fVehicles[j]->getPosition()){
+                fVehicles[j]->setMaxSpeed(gMaxSpeed);
+            }
         }else{
-            double distance =  fTrafficLights[i]->getPosition() - fVehicles[0]->getPosition();
-            if(distance <= gBrakeDistance && distance >= 0){                    // pas vertraagfactor toe op deze auto
-                fVehicles[0]->setMaxSpeed(gSlowDownFactor*gMaxSpeed);
-            }else if(distance <= gStopDistance && distance >= gStopDistance/2){ // vehicle is in the first half (15-7.5) of the stopdistance => then stop
-                fVehicles[0]->setMaxSpeed(0);
+            double distance_car_and_light =  fTrafficLights[i]->getPosition() - fVehicles[j]->getPosition();
+
+            double brakedistanceA = fTrafficLights[i]->getPosition() - gBrakeDistance;
+            double brakedistanceB = fTrafficLights[i]->getPosition() - gStopDistance;
+
+            double stopdistanceA = fTrafficLights[i]->getPosition() - gStopDistance;
+            double stopdistanceB = fTrafficLights[i]->getPosition() - gStopDistance/2;
+
+            double carPosition = fVehicles[j]->getPosition();
+
+            if(distance_car_and_light >= 0){                                            // car hasnt pass the trafficlight yet
+                if(carPosition >= brakedistanceA && carPosition < brakedistanceB){      // car finds himself in the "brake" zone
+                    fVehicles[j]->setMaxSpeed(gSlowDownFactor*gMaxSpeed);
+                }else if (carPosition >= stopdistanceA && carPosition < stopdistanceB){ // car finds himself in the "stop" zone
+                    fVehicles[j]->setMaxSpeed(gSlowDownFactor);
+                    //std::cout << "__________________" << std::endl;
+                }else{                                                                  // car finds himself in the "too close to stop" zone
+                    fVehicles[j]->setMaxSpeed(gMaxSpeed);
+                }
             }
         }
-        //std::cout << std::endl;
     }
-    //std::cout << std::endl;
+}
 }
 void Street::sortVehicles() {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()");
@@ -160,6 +170,9 @@ void Street::sortVehicles() {
         for (unsigned int j = 0; j < newVehicles.size(); j++) {
             if (fVehicles[i]->getPosition() > newVehicles[j]->getPosition()) {
                 newVehicles.insert(newVehicles.begin() + j, fVehicles[i]);
+                break;
+            } else if (j == newVehicles.size()-1) {
+                newVehicles.push_back(fVehicles[i]);
                 break;
             }
         }

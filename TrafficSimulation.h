@@ -48,6 +48,11 @@ public:
     void writeOn(std::ostream &onstream = std::cout) const;
 
     /*
+     * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling visualize()")
+     */
+    void visualize(std::ostream &onstream = std::cout) const;
+
+    /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()")
      */
     void simulate();
