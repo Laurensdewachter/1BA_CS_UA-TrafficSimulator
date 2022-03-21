@@ -5,11 +5,7 @@
     </BAAN>
     <VOERTUIGGENERATOR>
         <baan>Turnhoutsebaan</baan>
-        <frequentie>10</frequentie>
-    </VOERTUIGGENERATOR>
-    # second generator on same street
-    <VOERTUIGGENERATOR>
-        <baan>Turnhoutsebaan</baan>
-        <frequentie>35</frequentie>
+        # frequentie should be an integer
+        <frequentie>test</frequentie>
     </VOERTUIGGENERATOR>
 </SIMULATIE>

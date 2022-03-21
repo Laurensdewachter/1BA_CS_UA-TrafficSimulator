@@ -3,8 +3,9 @@
         <naam>Turnhoutsebaan</naam>
         <lengte>2000</lengte>
     </BAAN>
-    <VOERTUIG>
+    <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>2001</positie>
-    </VOERTUIG>
+        <cyclus>10</cyclus>
+    </VERKEERSLICHT>
 </SIMULATIE>

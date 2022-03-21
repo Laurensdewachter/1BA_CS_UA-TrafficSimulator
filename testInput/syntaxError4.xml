@@ -5,6 +5,6 @@
     </BAAN>
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
-        <positie>2001</positie>
+        # missing `positie`
     </VOERTUIG>
 </SIMULATIE>

@@ -1,2 +1,1 @@
-XML PARTIAL IMPORT: Expected <positie> to be an integer.
 XML PARTIAL IMPORT: Expected <baan> ... </baan>.

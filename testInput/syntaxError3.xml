@@ -5,6 +5,7 @@
     </BAAN>
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
-        <positie>2001</positie>
+        # `positie` should be an integer
+        <positie>test</positie>
     </VOERTUIG>
 </SIMULATIE>

@@ -68,7 +68,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
         if (curStreet != NULL && curVehicle->getPosition() < curStreet->getLength()) {
             curStreet->addVehicle(curVehicle);
         } else {
-            errStream << "XML IMPORT ABORT: The simulation is not consistent" << std::endl;
+            errStream << "XML IMPORT ABORT: The simulation is not consistent." << std::endl;
             return ImportAborted;
         }
     }
@@ -79,7 +79,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
         if (curStreet != NULL && !curStreet->hasVehicleGenerator()) {
             curStreet->setVehicleGenerator(curVehicleGenerator);
         } else {
-            errStream << "XML IMPORT ABORT: The simulation is not consistent" << std::endl;
+            errStream << "XML IMPORT ABORT: The simulation is not consistent." << std::endl;
             return ImportAborted;
         }
     }

@@ -17,16 +17,34 @@
         <positie>240</positie>
         <cyclus>40</cyclus>
     </VERKEERSLICHT>
+
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>400</positie>
         <cyclus>70</cyclus>
     </VERKEERSLICHT>
-
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>90</positie>
         <cyclus>5</cyclus>
     </VERKEERSLICHT>
+    <BAAN>
+        <naam>Middelheimlaan</naam>
+        <lengte>500</lengte>
+    </BAAN>
+    <VOERTUIGGENERATOR>
+        <baan>Middelheimlaan</baan>
+        <frequentie>20</frequentie>
+    </VOERTUIGGENERATOR>
+    <VERKEERSLICHT>
+        <baan>Middelheimlaan</baan>
+        <positie>85</positie>
+        <cyclus>10</cyclus>
+    </VERKEERSLICHT>
+    <VOERTUIG>
+        <baan>Middelheimlaan</baan>
+        <positie>85</positie>
+    </VOERTUIG>
+
 
 </SIMULATIE>

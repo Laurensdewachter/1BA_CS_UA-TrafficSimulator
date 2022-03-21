@@ -1,0 +1,12 @@
+<SIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>2000</lengte>
+    </BAAN>
+    <VERKEERSLICHT>
+        <baan>Turhnoutsebaan</baan>
+        # `positie` should be an integer
+        <positie>test</positie>
+        <cyclus>10</cyclus>
+    </VERKEERSLICHT>
+</SIMULATIE>
