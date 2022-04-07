@@ -104,7 +104,12 @@ public:
     /*
     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simTrafficLights()")
     */
-    void simTrafficLights(double &fTime);
+    void simTrafficLights(double &time);
+
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simGenerator()")
+     */
+    void simGenerator(double &time);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()")
