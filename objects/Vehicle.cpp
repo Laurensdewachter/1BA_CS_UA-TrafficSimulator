@@ -8,7 +8,6 @@
 #include "Vehicle.h"
 
 Vehicle::Vehicle() {
-    Vehicle::fPosition = 0;
     Vehicle::fSpeed = 0;
     Vehicle::fAcceleration = 0;
     Vehicle::fMaxSpeed = gMaxSpeed;

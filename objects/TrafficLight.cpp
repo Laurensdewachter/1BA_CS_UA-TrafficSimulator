@@ -46,14 +46,6 @@ void TrafficLight::setCycle(int c) {
     ENSURE(this->getCycle() == c, "setCycle() postcondition");
 }
 
-void TrafficLight::setLight(bool s) {
-    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLight()");
-
-    TrafficLight::fIsgreen = s;
-
-    ENSURE(this->isGreen() == s, "setLight() postcondition");
-}
-
 void TrafficLight::setLastUpdateTime(double u) {
     REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLastUpdateTime()");
 
