@@ -18,8 +18,9 @@
 class Street;
 
 class TrafficSimulation {
-    std::vector<Street*> fStreets;
     TrafficSimulation* _initCheck;
+
+    std::vector<Street*> fStreets;
     double fTime;
 
 public:
@@ -34,21 +35,23 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling parseInputFile()")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good when calling parseInputFile()")
+     * ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseInputFile()")
+     * ENSURE(parseSucces == Success || parseSucces == ImportAborted, "The parser did not return a proper succes or aborted value")
      */
     EParserSucces parseInputFile(const std::string &filename, std::ostream &errStream = std::cerr);
 
     /*
-    * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFTime()")
-    */
-    double getFTime() const;
-
-    /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling writeOn()")
+     * REQUIRE(onstream.good(), "The outputStream wasn't good when calling writeOn()")
+     * ENSURE(onstream.good(), "The outputStream wasn't good at the end of writeOn()")
      */
     void writeOn(std::ostream &onstream = std::cout) const;
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling visualize()")
+     * REQUIRE(onstream.good(), "The outputStream wasn't good when calling visualize()")
+     * ENSURE(onstream.good(), "The outputStream wasn't good at the end of visualize()")
      */
     void visualize(std::ostream &onstream = std::cout) const;
 
@@ -59,13 +62,11 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()")
+     * ENSURE(fStreets.empty(), "The streets vector wasn't empty at the end of clearSimulation()")
      */
     void clearSimulation();
 
 private:
-    /*
-     * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()")
-     */
     Street* getStreet(const std::string &name) const;
 };
 

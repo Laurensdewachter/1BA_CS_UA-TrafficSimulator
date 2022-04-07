@@ -13,6 +13,7 @@ Vehicle::Vehicle() {
     Vehicle::fAcceleration = 0;
     Vehicle::fMaxSpeed = gMaxSpeed;
     Vehicle::_initCheck = this;
+
     ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state");
 }
 
@@ -24,39 +25,49 @@ bool Vehicle::properlyInitialized() const {
 
 void Vehicle::setStreet(const std::string &s) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()");
+
     Vehicle::fStreet = s;
+
     ENSURE(Vehicle::fStreet == s, "setStreet() postcondition");
 }
 
 void Vehicle::setPosition(int p) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()");
+
     Vehicle::fPosition = p;
+
     ENSURE(Vehicle::fPosition == p, "setPosition() postcondition");
 }
 
 void Vehicle::setMaxSpeed(double m) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setMaxSpeed()");
+
     Vehicle::fMaxSpeed = m;
+
     ENSURE(Vehicle::fMaxSpeed == m, "setMaxSpeed() postcondition");
 }
 
 const std::string &Vehicle::getStreet() const {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getStreet()");
+
     return Vehicle::fStreet;
 }
 
 double Vehicle::getPosition() const {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getPosition()");
+
     return Vehicle::fPosition;
 }
 
 double Vehicle::getSpeed() const {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getSpeed()");
+
     return Vehicle::fSpeed;
 }
 
 void Vehicle::drive(Vehicle* vehicleInFront) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()");
+
     if (fSpeed + (fAcceleration*gSimulationTime) < 0) {
         fPosition -= pow(fSpeed, 2)/(2*fAcceleration);
         fSpeed = 0;
@@ -72,10 +83,13 @@ void Vehicle::drive(Vehicle* vehicleInFront) {
         delta = (gMinFollowDistance + std::max(0.0, (fSpeed+((fSpeed*deltaV)/(2*sqrt(gMaxAcceleration*gMaxBrakeFactor))))))/deltaX;
     }
     fAcceleration = gMaxAcceleration*(1 - pow(fSpeed/fMaxSpeed, 4) - pow(delta, 2));
+
+    // TODO: ask about ENSURE here
 }
 
 void Vehicle::brake() {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling brake()");
+
     fMaxSpeed = gBrakeFactor * gMaxSpeed;
     if (fMaxSpeed == 0) {
         fMaxSpeed = 0.0000000000000000000001;
@@ -84,5 +98,6 @@ void Vehicle::brake() {
 
 void Vehicle::stop() {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling stop()");
+
     fAcceleration = -((gMaxBrakeFactor * fSpeed) / fMaxSpeed);
 }
