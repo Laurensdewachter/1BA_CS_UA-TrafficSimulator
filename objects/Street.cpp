@@ -116,76 +116,44 @@ void Street::simTrafficLights(double &fTime) {
     if (fTrafficLights.empty()) {
         return;
     }
-/*
-    for (unsigned int i = 0; i < fTrafficLights.size(); i++) {
 
+    for (unsigned int i = 0; i < fTrafficLights.size(); i++) {
         // Change traffic light if necessary
-        TrafficLight* curTrafficLight = fTrafficLights[i];
-        if (fTime >= curTrafficLight->getUpdatedlight()) {
+        TrafficLight *curTrafficLight = fTrafficLights[i];
+
+        if (fTime >= curTrafficLight->getLastUpdateTime()) {
             curTrafficLight->changeLight();
-            curTrafficLight->setUpdatedlight(curTrafficLight->getUpdatedlight() + curTrafficLight->getCycle());
+            curTrafficLight->setLastUpdateTime(curTrafficLight->getLastUpdateTime() + curTrafficLight->getCycle());
         }
 
         // Get vehicle closest to the traffic light
         if (fVehicles.empty()) {
             return;
         }
-        Vehicle* closestVehicle = NULL;
+        Vehicle *closestVehicle = NULL;
         for (unsigned int v = 0; v < fVehicles.size(); v++) {
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
                 closestVehicle = fVehicles[v];
             }
-        }
 
-        // Traffic light is green
-        if (curTrafficLight->getIsgreen()) {
-            closestVehicle->setMaxSpeed(gMaxSpeed);
-        }
-
-        // Traffic light is red
-        else {
-
-        }
-    }
-*/
-
-    for (unsigned int j = 0; j < getVehicles().size(); j++) {
-        for (unsigned int i = 0; i < getTrafficLights().size(); i++) {
-            if (fTime >= fTrafficLights[i]->getUpdatedlight()) {
-                if (fTrafficLights[i]->getIsgreen()) {
-                    fTrafficLights[i]->setLight(false);
-                } else {
-                    fTrafficLights[i]->setLight(true);
-                }
-                fTrafficLights[i]->setUpdatedlight(
-                        fTrafficLights[i]->getUpdatedlight() + fTrafficLights[i]->getCycle());
+            // Go to next traffic light if there is no vehicle before the traffic light
+            if (closestVehicle == NULL) {
+                continue;
             }
 
-            if (fTrafficLights[i]->getIsgreen()) {
-                if (fTrafficLights[i]->getPosition() > fVehicles[j]->getPosition()) {
-                    fVehicles[j]->setMaxSpeed(gMaxSpeed);
+            // Traffic light is green
+            if (curTrafficLight->isGreen()) {
+                closestVehicle->setMaxSpeed(gMaxSpeed);
+            }
+
+            // Traffic light is red
+            else {
+                double distance = curTrafficLight->getPosition() - closestVehicle->getPosition();
+                if (distance > 0 && distance < gStopDistance) {
+                    closestVehicle->stop();
                 }
-            } else {
-                double distance_car_and_light = fTrafficLights[i]->getPosition() - fVehicles[j]->getPosition();
-
-                double brakedistanceA = fTrafficLights[i]->getPosition() - gBrakeDistance;
-                double brakedistanceB = fTrafficLights[i]->getPosition() - gStopDistance;
-
-                double stopdistanceA = fTrafficLights[i]->getPosition() - gStopDistance;
-                double stopdistanceB = fTrafficLights[i]->getPosition() - gStopDistance / 2;;
-                double carPosition = fVehicles[j]->getPosition();
-
-                if (distance_car_and_light > 0 &&
-                    carPosition >= brakedistanceA) { // car hasn't passed the traffic light yet
-                    if (carPosition >= brakedistanceA &&
-                        carPosition < brakedistanceB) {      // car finds himself in the "brake" zone
-                        fVehicles[j]->setMaxSpeed(gSlowDownFactor * gMaxSpeed);
-                    } else if (carPosition >= stopdistanceA &&
-                               carPosition < stopdistanceB) { // car finds himself in the "stop" zone
-                        fVehicles[j]->setMaxSpeed(0.00000001);
-                    } else {                                                                  // car finds himself in the "too close to stop" zone
-                        fVehicles[j]->setMaxSpeed(gMaxSpeed);
-                    }
+                else if (distance > 0 && distance < gBrakeDistance) {
+                    closestVehicle->brake();
                 }
             }
         }

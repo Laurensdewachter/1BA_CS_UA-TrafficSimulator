@@ -46,7 +46,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
             bool validTrafficLight = true;
             for (long unsigned int j = 0; j < trafficLightsOnStreet.size(); j++) {
                 int position = trafficLightsOnStreet[j]->getPosition();
-                if (abs(position - curTrafficLight->getPosition()) < gSlowDownDistance) {
+                if (abs(position - curTrafficLight->getPosition()) < gBrakeDistance) {
                     validTrafficLight = false;
                 }
             }
@@ -129,7 +129,7 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
         for (unsigned int k = 0; k < fStreets[i]->getTrafficLights().size(); k++) {
             TrafficLight* curTrafficLight = fStreets[i]->getTrafficLights()[k];
             onstream << "{\"x\": " << curTrafficLight->getPosition() << ", \"green\": " << int(curTrafficLight->isGreen())
-            << ", \"xs\": " << gSlowDownDistance << ", \"xs0\": " << gStopDistance << "}";
+                     << ", \"xs\": " << gBrakeDistance << ", \"xs0\": " << gStopDistance << "}";
             if (k != fStreets[i]->getTrafficLights().size()-1) {
                 onstream << ", ";
             }

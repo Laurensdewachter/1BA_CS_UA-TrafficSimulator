@@ -17,7 +17,7 @@ class TrafficLight {
     int fPosition;
     int fCycle;
     bool fIsgreen;
-    double fUpdatedlight;
+    double fLastUpdateTime;
 
 public:
     /*
@@ -53,9 +53,9 @@ public:
     void setLight(bool s);
 
     /*
-     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setUpdatedlight()")
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLastUpdateTime()")
      */
-    void setUpdatedlight(double u);
+    void setLastUpdateTime(double u);
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getStreet()")
@@ -73,14 +73,14 @@ public:
     int getCycle() const;
 
     /*
-     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getIsgreen()")
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling isGreen()")
      */
-    bool getIsgreen() const;
+    bool isGreen() const;
 
     /*
-     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getUpdatedlight()")
+     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getLastUpdateTime()")
      */
-    double getUpdatedlight() const;
+    double getLastUpdateTime() const;
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling changeLight()")
