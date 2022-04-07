@@ -69,6 +69,16 @@ public:
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()")
      */
     void drive(Vehicle* vehicleInFront = NULL);
+
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling brake()")
+     */
+    void brake();
+
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling stop()")
+     */
+    void stop();
 };
 
 

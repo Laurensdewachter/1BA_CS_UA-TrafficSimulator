@@ -73,3 +73,16 @@ void Vehicle::drive(Vehicle* vehicleInFront) {
     }
     fAcceleration = gMaxAcceleration*(1 - pow(fSpeed/fMaxSpeed, 4) - pow(delta, 2));
 }
+
+void Vehicle::brake() {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling brake()");
+    fMaxSpeed = gBrakeFactor * gMaxSpeed;
+    if (fMaxSpeed == 0) {
+        fMaxSpeed = 0.0000000000000000000001;
+    }
+}
+
+void Vehicle::stop() {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling stop()");
+    fAcceleration = -((gMaxBrakeFactor * fSpeed) / fMaxSpeed);
+}

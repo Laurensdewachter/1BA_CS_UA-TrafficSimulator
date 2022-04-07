@@ -10,7 +10,7 @@
 
 TrafficLight::TrafficLight() {
     fIsgreen = true;
-    fUpdatedlight = 0;
+    fLastUpdateTime = 0;
     TrafficLight::_initCheck = this;
     ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
 }
@@ -42,13 +42,13 @@ void TrafficLight::setCycle(int c) {
 void TrafficLight::setLight(bool s) {
     REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLight()");
     TrafficLight::fIsgreen = s;
-    ENSURE(this->getIsgreen() == s, "setLight() postcondition");
+    ENSURE(this->isGreen() == s, "setLight() postcondition");
 }
 
-void TrafficLight::setUpdatedlight(double u) {
-    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setUpdatedlight()");
-    TrafficLight::fUpdatedlight = u;
-    ENSURE(this->getUpdatedlight() == u, "setUpdatedlight() postcondition");
+void TrafficLight::setLastUpdateTime(double u) {
+    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLastUpdateTime()");
+    TrafficLight::fLastUpdateTime = u;
+    ENSURE(this->getLastUpdateTime() == u, "setLastUpdateTime() postcondition");
 }
 
 const std::string &TrafficLight::getStreet() const {
@@ -66,14 +66,14 @@ int TrafficLight::getCycle() const {
     return TrafficLight::fCycle;
 }
 
-bool TrafficLight::getIsgreen() const {
-    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getIsgreen()");
+bool TrafficLight::isGreen() const {
+    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling isGreen()");
     return TrafficLight::fIsgreen;
 }
 
-double TrafficLight::getUpdatedlight() const {
-    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getUpdatedlight()");
-    return TrafficLight::fUpdatedlight;
+double TrafficLight::getLastUpdateTime() const {
+    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling getLastUpdateTime()");
+    return TrafficLight::fLastUpdateTime;
 }
 
 void TrafficLight::changeLight() {
