@@ -46,7 +46,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
             bool validTrafficLight = true;
             for (long unsigned int j = 0; j < trafficLightsOnStreet.size(); j++) {
                 int position = trafficLightsOnStreet[j]->getPosition();
-                if (abs(position - curTrafficLight->getPosition()) < gBrakeDistance) {
+                if (abs(position - curTrafficLight->getPosition()) < gSlowDownDistance) {
                     validTrafficLight = false;
                 }
             }
@@ -113,49 +113,29 @@ void TrafficSimulation::writeOn(std::ostream &onstream) const {
 void TrafficSimulation::visualize(std::ostream &onstream) const {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling visualize()");
 
+    onstream << "{\"time\": " << fTime << ", \"roads\": [ ";
     for (unsigned int i = 0; i < fStreets.size(); i++) {
-        std::vector<Vehicle*> vehicles = fStreets[i]->getVehicles();
-        for (unsigned int j = 0; j < vehicles.size(); j++) {
-            onstream << "{";
-            onstream << "\"time\":" << fTime << ",";
-            onstream << "\"roads\":[";
-            onstream << "{";
-            Vehicle* curVehicle = vehicles[j];
-            onstream << "\"name\":\"" << curVehicle->getStreet()<< "\",";
-            onstream << "\"length\":" << fStreets[i]->getLength() << ",";
-            onstream << "\"cars\":";
-            onstream << "[";
-            if(!fStreets[i]->getVehicles().empty()){
-                for(unsigned int l = 0; l <vehicles.size();l++){
-                    Vehicle* curVehicle2 = vehicles[l];
-                    onstream << "{";
-                    onstream << "\"x\":" << curVehicle2->getPosition();
-                    onstream << "}";
-                    if(l<vehicles.size()-1){
-                        onstream << ",";
-                    }
-                }
+        onstream << "{\"name\": \"" << fStreets[i]->getName() << "\", "
+        << "\"length\": " << fStreets[i]->getLength() << ", "
+        << "\"cars\": [ ";
+        for (unsigned int k = 0; k < fStreets[i]->getVehicles().size(); k++) {
+            Vehicle* curVehicle = fStreets[i]->getVehicles()[k];
+            onstream << "{\"x\": " << curVehicle->getPosition() << "}";
+            if (k != fStreets[i]->getVehicles().size()-1) {
+                onstream << ", ";
             }
-            onstream << "],";
-            if(!fStreets[i]->getTrafficLights().empty()){
-                onstream << "\"lights\":";
-                onstream << "[";
-                for(unsigned int t = 0;t<fStreets[i]->getTrafficLights().size();t++){
-                    TrafficLight * T = fStreets[i]->getTrafficLights()[t];
-                    onstream << "{";
-                    onstream << "\"x\":" << T->getPosition() << ",";
-                    onstream << "\"green\":" << int(T->getIsgreen())<< ",";
-                    onstream << "\"xs\":" << gBrakeDistance << ",";
-                    onstream << "\"xs0\":" << gStopDistance;
-                    onstream << "}";
-                    if(t<fStreets[i]->getTrafficLights().size()-1){
-                        onstream << ",";
-                    }
-                }
+        }
+        onstream << " ], \"lights\": [ ";
+        for (unsigned int k = 0; k < fStreets[i]->getTrafficLights().size(); k++) {
+            TrafficLight* curTrafficLight = fStreets[i]->getTrafficLights()[k];
+            onstream << "{\"x\": " << curTrafficLight->getPosition() << ", \"green\": " << int(curTrafficLight->isGreen())
+            << ", \"xs\": " << gSlowDownDistance << ", \"xs0\": " << gStopDistance << "}";
+            if (k != fStreets[i]->getTrafficLights().size()-1) {
+                onstream << ", ";
             }
-            onstream << "]" <<"}" << "]" << "}" << std::endl;
         }
     }
+    onstream << " ] } ] }" << std::endl;
 }
 
 void TrafficSimulation::simulate() {
