@@ -7,8 +7,12 @@
 - `EParserSucces parseInputFile(const std::string &filename, std::ostream &errStream)`
   - Parses a given xml-file using the help of the ElementParser. Other types of files are not supported and result
     in an error.
-- `void drive()`
-  - Moves all vehicles
+- `void writeOn(std::ostream &outStream) const`
+  - Writes the content of the object to the given stream
+- `void visualize(std::ostream &onstream = std::cout) const`
+  - Visualizes the content of the object on the given stream when it is pipelined to the visualizer.
+- `void simulate()`
+  - Moves one time-unit forward in the simulation.
   
 ### ElementParser
 
@@ -109,6 +113,12 @@
   - Returns fVehicles.
 - `bool hasVehicleGenerator() const`
   - Returns true if fVehicleGenerator is not NULL, else false.
+- `void driveVehicles()`
+  - Drives all vehicles on the street
+- `void simTrafficLights(double &fTime)`
+  - Simulates the traffic lights on the street.
+- `void sortVehicles()`
+  - Sorts the vehicles on the street by their position (farthest first).
 
 ### TrafficLight
 
@@ -116,6 +126,8 @@
   - `std::string fStreet`
   - `int fPosition`
   - `int fCycle`
+  - `bool fIsGreen`
+  - `double fLastUpdateTime`
 
 
 - `void setStreet(const std::string &s)`
@@ -124,12 +136,20 @@
   - set fPosition to p.
 - `void setCycle(int c)`
   - set fCycle to c.
+- `void setLastUpdateTime(double u)`
+  - set fLastUpdateTime to u.
 - `const std::string &getStreet() const`
   - Returns fStreet.
 - `int getPosition() const`
   - Returns fPosition.
 - `int getCycle() const`
   - Returns fCycle.
+- `bool isGreen() const`
+  - Returns fIsGreen.
+- `double getLastUpdateTime() const`
+  - Returns fLastUpdateTime.
+- `void changeLight()`
+  - Changes the light.
 
 ### Vehicle
 
@@ -138,12 +158,15 @@
   - `double fPosition`
   - `double fSpeed = 0`
   - `double fAcceleration = 0`
+  - `double fMaxSpeed = gMaxSpeed`
 
 
 - `void setStreet(const std::string &s)`
   - set fStreet to s.
 - `void setPosition(int p)`
   - set fPosition to p.
+- `void setMaxSpeed(double m)`
+  - set fMaxSpeed to m.
 - `const std::string &getStreet() const`
   - Returns fStreet.
 - `double getPosition() const`
@@ -152,6 +175,10 @@
   - Returns fSpeed.
 - `void drive(Vehicle* vehicleInFront = NULL)`
   - Calculates the position, speed and acceleration of the vehicle after a movement.
+- `void brake()`
+  - Brakes the vehicle.
+- `void stop()`
+  - Stops the vehicle.
 
 ### VehicleGenerator
 

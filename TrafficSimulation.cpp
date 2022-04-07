@@ -15,6 +15,7 @@
 TrafficSimulation::TrafficSimulation() {
     TrafficSimulation::fTime = 0;
     TrafficSimulation::_initCheck = this;
+
     ENSURE(properlyInitialized(), "TrafficSimulation constructor did not end in an initialized state");
 }
 
@@ -26,7 +27,7 @@ bool TrafficSimulation::properlyInitialized() const {
 
 EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling parseInputFile()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good when calling parseInputFile()");
 
     EParserSucces parseSucces = Success;
 
@@ -88,11 +89,15 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
         fStreets[i]->sortVehicles();
     }
 
+    ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseInputFile()");
+    ENSURE(parseSucces == Success || parseSucces == ImportAborted, "The parser did not return a proper succes or aborted value");
+
     return parseSucces;
 }
 
 void TrafficSimulation::writeOn(std::ostream &onstream) const {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling writeOn()");
+    REQUIRE(onstream.good(), "The outputStream wasn't good when calling writeOn()");
 
     onstream << "Tijd: " << fTime << std::endl;
 
@@ -108,10 +113,13 @@ void TrafficSimulation::writeOn(std::ostream &onstream) const {
             voertuigCounter++;
         }
     }
+
+    ENSURE(onstream.good(), "The outputStream wasn't good at the end of writeOn()");
 }
 
 void TrafficSimulation::visualize(std::ostream &onstream) const {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling visualize()");
+    REQUIRE(onstream.good(), "The outputStream wasn't good when calling visualize()");
 
     onstream << "{\"time\": " << fTime << ", \"roads\": [ ";
     for (unsigned int i = 0; i < fStreets.size(); i++) {
@@ -132,14 +140,22 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
                      << ", \"xs\": " << gBrakeDistance << ", \"xs0\": " << gStopDistance << "}";
             if (k != fStreets[i]->getTrafficLights().size()-1) {
                 onstream << ", ";
+            } else {
+                onstream << " ]";
             }
         }
+        if (i != fStreets.size()-1) {
+            onstream << " }, ";
+        }
     }
-    onstream << " ] } ] }" << std::endl;
+    onstream << "} ] }" << std::endl;
+
+    ENSURE(onstream.good(), "The outputStream wasn't good at the end of visualize()");
 }
 
 void TrafficSimulation::simulate() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
+
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
         fStreets[i]->driveVehicles();
         fStreets[i]->simTrafficLights(fTime);
@@ -154,19 +170,15 @@ void TrafficSimulation::clearSimulation() {
     for (unsigned int i = 0; i < fStreets.size(); i++) {
         delete fStreets[i];
     }
+
+    ENSURE(fStreets.empty(), "The streets vector wasn't empty at the end of clearSimulation()");
 }
 
 Street *TrafficSimulation::getStreet(const std::string &name) const {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreet()");
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
         if (fStreets[i]->getName() == name) {
             return fStreets[i];
         }
     }
     return NULL;
-}
-
-double TrafficSimulation::getFTime() const {
-    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getFtime()");
-    return TrafficSimulation::fTime;
 }

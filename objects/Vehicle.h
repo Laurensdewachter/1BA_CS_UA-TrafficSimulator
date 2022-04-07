@@ -16,6 +16,7 @@
 
 class Vehicle {
     Vehicle* _initCheck;
+
     std::string fStreet;
     double fPosition;
     double fSpeed;

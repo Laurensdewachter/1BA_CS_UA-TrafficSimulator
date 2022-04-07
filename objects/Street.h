@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : Street.h
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is contains the `Street` class
 // ===========================================================
 
@@ -18,6 +18,7 @@ class TrafficSimulation;
 
 class Street {
     Street* _initCheck;
+
     std::string fName;
     int fLength;
     std::vector<TrafficLight*> fTrafficLights;
@@ -66,6 +67,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling removeVehicle()")
+     * ENSURE(fVehicles.size() == vehiclesSize-1, "removeVehicle() postcondition")
      */
     void removeVehicle();
 
@@ -106,6 +108,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()")
+     * ENSURE(!fVehicles.empty(), "sortVehicles() postcondition")
      */
     void sortVehicles();
 };

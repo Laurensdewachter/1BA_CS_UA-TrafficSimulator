@@ -13,6 +13,7 @@
 
 class TrafficLight {
     TrafficLight* _initCheck;
+
     std::string fStreet;
     int fPosition;
     int fCycle;
@@ -48,12 +49,8 @@ public:
     void setCycle(int c);
 
     /*
-     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLight()")
-     */
-    void setLight(bool s);
-
-    /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLastUpdateTime()")
+     * ENSURE(this->getLastUpdateTime() == u, "setLastUpdateTime() postcondition")
      */
     void setLastUpdateTime(double u);
 
