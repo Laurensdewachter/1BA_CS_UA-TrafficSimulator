@@ -13,8 +13,10 @@
 
 class VehicleGenerator {
     VehicleGenerator* _initCheck;
+
     std::string fStreet;
     int fFrequency;
+    double fTimeSinceLastSpawn;
 
 public:
     /*
@@ -39,6 +41,12 @@ public:
     void setFrequency(int f);
 
     /*
+     * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setTimeSinceLastSpawn()")
+     * ENSURE(VehicleGenerator::fTimeSinceLastSpawn == 0, "setTimeSinceLastSpawn() postcondition")
+     */
+    void setTimeSinceLastSpawn(double t);
+
+    /*
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling getStreet()")
      */
     const std::string &getStreet() const;
@@ -47,6 +55,11 @@ public:
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling getFrequency()")
      */
     int getFrequency() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling getTimeSinceLastSpawn()")
+     */
+    double getTimeSinceLastSpawn() const;
 };
 
 
