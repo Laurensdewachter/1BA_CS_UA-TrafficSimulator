@@ -132,7 +132,7 @@ void Street::driveVehicles() {
     // TODO: ask about ENSURE here
 }
 
-void Street::simTrafficLights(double &fTime) {
+void Street::simTrafficLights(double &time) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simTrafficLights()");
 
     if (fTrafficLights.empty()) {
@@ -143,7 +143,7 @@ void Street::simTrafficLights(double &fTime) {
         // Change traffic light if necessary
         TrafficLight *curTrafficLight = fTrafficLights[i];
 
-        if (fTime >= curTrafficLight->getLastUpdateTime()) {
+        if (time >= curTrafficLight->getLastUpdateTime()) {
             curTrafficLight->changeLight();
             curTrafficLight->setLastUpdateTime(curTrafficLight->getLastUpdateTime() + curTrafficLight->getCycle());
         }
@@ -182,6 +182,22 @@ void Street::simTrafficLights(double &fTime) {
     }
 
     // TODO: ask about ENSURE here
+}
+
+void Street::simGenerator(double &time) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simGenerator()");
+
+    if (fVehicleGenerator == NULL) {
+        return;
+    }
+    if (fVehicleGenerator->getTimeSinceLastSpawn() < time && (fVehicles.empty() || fVehicles.back()->getPosition() > 2*gLength)) {
+        Vehicle* newVehicle = new Vehicle();
+        newVehicle->setStreet(fName);
+        newVehicle->setPosition(0);
+        fVehicles.push_back(newVehicle);
+
+        fVehicleGenerator->setTimeSinceLastSpawn(fVehicleGenerator->getTimeSinceLastSpawn() + fVehicleGenerator->getFrequency());
+    }
 }
 
 void Street::sortVehicles() {

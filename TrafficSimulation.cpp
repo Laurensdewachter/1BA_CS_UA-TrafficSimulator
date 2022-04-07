@@ -90,7 +90,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
     }
 
     ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseInputFile()");
-    ENSURE(parseSucces == Success || parseSucces == ImportAborted, "The parser did not return a proper succes or aborted value");
+    ENSURE(parseSucces == Success || parseSucces == PartialImport || parseSucces == ImportAborted, "The parser did not return a proper succes or aborted value");
 
     return parseSucces;
 }
@@ -157,6 +157,7 @@ void TrafficSimulation::simulate() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
 
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
+        fStreets[i]->simGenerator(fTime);
         fStreets[i]->driveVehicles();
         fStreets[i]->simTrafficLights(fTime);
     }
@@ -170,6 +171,7 @@ void TrafficSimulation::clearSimulation() {
     for (unsigned int i = 0; i < fStreets.size(); i++) {
         delete fStreets[i];
     }
+    fStreets.clear();
 
     ENSURE(fStreets.empty(), "The streets vector wasn't empty at the end of clearSimulation()");
 }

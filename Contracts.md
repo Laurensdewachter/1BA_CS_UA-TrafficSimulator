@@ -117,6 +117,8 @@
   - Drives all vehicles on the street
 - `void simTrafficLights(double &fTime)`
   - Simulates the traffic lights on the street.
+- `void simGenerator(double &fTime)`
+  - Simulates the vehicle generator on the street.
 - `void sortVehicles()`
   - Sorts the vehicles on the street by their position (farthest first).
 
@@ -185,13 +187,17 @@
 - Attributes:
   - `std::string fStreet`
   - `int fFrequency`
-
+  - `double fTimeSinceLastSpawn`
 
 - `void setStreet(const std::string &s)`
   - set fStreet to s.
 - `void setFrequency(int f)`
   - set fFrequency to f.
+- `void setTimeSinceLastSpawn(double t)`
+  - set fTimeSinceLastSpawn to t.
 - `const std::string &getStreet() const`
   - Returns fStreet.
 - `int getFrequency() const`
   - Returns fFrequency.
+- `double getTimeSinceLastSpawn() const`
+  - Returns fTimeSinceLastSpawn.
