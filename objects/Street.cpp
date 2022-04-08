@@ -155,28 +155,32 @@ void Street::simTrafficLights(double &time) {
         Vehicle *closestVehicle = NULL;
         for (unsigned int v = 0; v < fVehicles.size(); v++) {
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
-                closestVehicle = fVehicles[v];
-            }
-
-            // Go to next traffic light if there is no vehicle before the traffic light
-            if (closestVehicle == NULL) {
-                continue;
-            }
-
-            // Traffic light is green
-            if (curTrafficLight->isGreen()) {
-                closestVehicle->setMaxSpeed(gMaxSpeed);
-            }
-
-            // Traffic light is red
-            else {
-                double distance = curTrafficLight->getPosition() - closestVehicle->getPosition();
-                if (distance > 0 && distance < gStopDistance) {
-                    closestVehicle->stop();
+                if (closestVehicle == NULL) {
+                    closestVehicle = fVehicles[v];
+                } else if (fVehicles[v]->getPosition() > closestVehicle->getPosition()) {
+                    closestVehicle = fVehicles[v];
                 }
-                else if (distance > 0 && distance < gBrakeDistance) {
-                    closestVehicle->brake();
-                }
+            }
+        }
+
+        // Go to next traffic light if there is no vehicle before the traffic light
+        if (closestVehicle == NULL) {
+            continue;
+        }
+
+        // Traffic light is green
+        if (curTrafficLight->isGreen()) {
+            closestVehicle->setMaxSpeed(gMaxSpeed);
+        }
+
+        // Traffic light is red
+        else {
+            double distance = curTrafficLight->getPosition() - closestVehicle->getPosition();
+            if (distance > 0 && distance < gStopDistance) {
+                closestVehicle->stop();
+            }
+            else if (distance > 0 && distance < gBrakeDistance) {
+                closestVehicle->brake();
             }
         }
     }
