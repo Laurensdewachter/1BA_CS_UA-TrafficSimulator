@@ -158,9 +158,11 @@ void Street::simTrafficLights(double &time) {
         Vehicle *closestVehicle = NULL;
         for (unsigned int v = 0; v < fVehicles.size(); v++) {
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
-                closestVehicle = fVehicles[v];
-            } else {
-                break;
+                if (closestVehicle == NULL) {
+                    closestVehicle = fVehicles[v];
+                } else if (fVehicles[v]->getPosition() > closestVehicle->getPosition()) {
+                    closestVehicle = fVehicles[v];
+                }
             }
         }
 
