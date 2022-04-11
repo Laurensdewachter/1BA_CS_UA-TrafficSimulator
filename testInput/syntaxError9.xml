@@ -4,8 +4,8 @@
         <lengte>2000</lengte>
     </BAAN>
     <VOERTUIG>
-        # missing `baan`
-        <positie>50</positie>
-        <type>auto</type>
+        <baan>Turnhoutsebaan</baan>
+        <positie>0</positie>
+        <type>vrachtwagen</type>
     </VOERTUIG>
 </SIMULATIE>

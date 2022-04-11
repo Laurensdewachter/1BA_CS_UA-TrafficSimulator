@@ -82,10 +82,11 @@ bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream
     } else if (type == "politiecombi") {
         fVehicle = new PoliceCar(street, position);
     } else {
-        errStream << "XML PARTIAL IMPORT: Expected <type> to be one of the following: auto, bus, brandweerwagen, ziekenwagen, politieCombi." << std::endl;
+        errStream << "XML PARTIAL IMPORT: Expected <type> to be one of the following: auto, bus, brandweerwagen, ziekenwagen, politiecombi." << std::endl;
         return false;
     }
 
+    ENSURE(fVehicle != NULL, "VehicleParser could not create a Vehicle");
     ENSURE(fVehicle->getStreet() == street, "parseVehicle() postcondition");
     ENSURE(fVehicle->getPosition() == position, "parseVehicle() postcondition");
 

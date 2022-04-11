@@ -6,5 +6,6 @@
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
         <positie>2001</positie>
+        <type>auto</type>
     </VOERTUIG>
 </SIMULATIE>

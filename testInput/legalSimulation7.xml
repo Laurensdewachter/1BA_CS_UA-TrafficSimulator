@@ -35,6 +35,7 @@
     <VOERTUIGGENERATOR>
         <baan>Middelheimlaan</baan>
         <frequentie>20</frequentie>
+        <type>auto</type>
     </VOERTUIGGENERATOR>
     <VERKEERSLICHT>
         <baan>Middelheimlaan</baan>

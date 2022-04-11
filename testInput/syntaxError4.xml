@@ -6,5 +6,6 @@
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
         # missing `positie`
+        <type>auto</type>
     </VOERTUIG>
 </SIMULATIE>

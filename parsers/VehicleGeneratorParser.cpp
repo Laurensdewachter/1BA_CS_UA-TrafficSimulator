@@ -25,9 +25,11 @@ bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
 
     TiXmlElement* baanElem = VOERTUIGGENERATOR->FirstChildElement("baan");
     TiXmlElement* frequencyElem = VOERTUIGGENERATOR->FirstChildElement("frequentie");
+    TiXmlElement* typeElem = VOERTUIGGENERATOR->FirstChildElement("type");
 
     std::string street;
     int frequency;
+    std::string type;
 
     bool wrongTypes = false;
     bool missingElements = false;
@@ -48,15 +50,27 @@ bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
             wrongTypes = true;
         }
     }
+    if (typeElem == NULL || typeElem->FirstChild() == NULL) {
+        errStream << "XML PARTIAL IMPORT: Expected <type> ... </type>." << std::endl;
+        missingElements = true;
+    } else {
+        TiXmlText* typeText = typeElem->FirstChild()->ToText();
+        type = typeText->Value();
+        if (type != "auto" && type != "bus" && type != "brandweerwagen" && type != "ziekenwagen" && type != "politiecombi") {
+            errStream << "XML PARTIAL IMPORT: Expected <type> to be one of the following: auto, bus, brandweerwagen, ziekenwagen, politiecombi." << std::endl;
+            return false;
+        }
+    }
 
     if (missingElements || wrongTypes) {
         return false;
     }
 
-    fVehicleGenerator = new VehicleGenerator();
+    fVehicleGenerator = new VehicleGenerator(street, frequency, type);
     fVehicleGenerator->setStreet(street);
     fVehicleGenerator->setFrequency(frequency);
 
+    ENSURE(fVehicleGenerator != NULL, "VehicleGeneratorParser could not create a VehicleGenerator");
     ENSURE(fVehicleGenerator->getStreet() == street, "parseVehicleGenerator() postcondition");
     ENSURE(fVehicleGenerator->getFrequency() == frequency, "parseVehicleGenerator() postcondition");
 

@@ -9,6 +9,10 @@
 #include "TrafficLight.h"
 #include "Vehicle.h"
 #include "Car.h"
+#include "Bus.h"
+#include "FireEngine.h"
+#include "Ambulance.h"
+#include "PoliceCar.h"
 #include "VehicleGenerator.h"
 #include "../DesignByContract.h"
 #include "../Variables.h"
@@ -198,7 +202,20 @@ void Street::simGenerator(double &time) {
         return;
     }
     if (fVehicleGenerator->getTimeSinceLastSpawn() < time) {
-        Vehicle* newVehicle = new Car(fName, 0);
+        Vehicle* newVehicle;
+        std::string type = fVehicleGenerator->getType();
+        if (type == "auto") {
+            newVehicle = new Car(fName, 0);
+        } else if (type == "bus") {
+            newVehicle = new Bus(fName, 0);
+        } else if (type == "brandweerwagen") {
+            newVehicle = new FireEngine(fName, 0);
+        } else if (type == "ziekenwagen") {
+            newVehicle = new Ambulance(fName, 0);
+        } else {
+            newVehicle = new PoliceCar(fName, 0);
+        }
+
         fVehicles.push_back(newVehicle);
 
         fVehicleGenerator->setTimeSinceLastSpawn(fVehicleGenerator->getTimeSinceLastSpawn() + fVehicleGenerator->getFrequency());

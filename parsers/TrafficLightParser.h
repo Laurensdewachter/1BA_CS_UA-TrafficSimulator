@@ -32,6 +32,7 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling parseTrafficLight()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * ENSURE(fTrafficLight != NULL, "TrafficLightParser could not create a TrafficLight")
      * ENSURE(fTrafficLight->getStreet() == fStreet, "parseTrafficLight() postcondition")
      * ENSURE(fTrafficLight->getPosition() == fPosition, "parseTrafficLight() postcondition")
      * ENSURE(fTrafficLight->getCycle() == fCycle, "parseTrafficLight() postcondition")

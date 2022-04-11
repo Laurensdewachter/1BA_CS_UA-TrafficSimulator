@@ -70,6 +70,7 @@ bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ost
     fTrafficLight->setPosition(position);
     fTrafficLight->setCycle(cycle);
 
+    ENSURE(fTrafficLight != NULL, "TrafficLightParser could not create a TrafficLight");
     ENSURE(fTrafficLight->getStreet() == street, "parseTrafficLight() postcondition");
     ENSURE(fTrafficLight->getPosition() == position, "parseTrafficLight() postcondition");
     ENSURE(fTrafficLight->getCycle() == cycle, "parseTrafficLight() postcondition");

@@ -32,6 +32,7 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling parseVehicleGenerator()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * ENSURE(fVehicleGenerator != NULL, "VehicleGeneratorParser could not create a VehicleGenerator")
      * ENSURE(vehicleGenerator->getStreet() == fStreet, "parseVehicleGenerator() postcondition")
      * ENSURE(vehicleGenerator->getFrequency() == fFrequency, "parseVehicleGenerator() postcondition")
      */
