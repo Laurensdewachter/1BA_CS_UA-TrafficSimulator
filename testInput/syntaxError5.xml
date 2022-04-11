@@ -7,5 +7,6 @@
         <baan>Turnhoutsebaan</baan>
         # frequentie should be an integer
         <frequentie>test</frequentie>
+        <type>auto</type>
     </VOERTUIGGENERATOR>
 </SIMULATIE>

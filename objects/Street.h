@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <vector>
-#include "../DesignByContract.h"
+
 class TrafficLight;
 class Vehicle;
 class VehicleGenerator;

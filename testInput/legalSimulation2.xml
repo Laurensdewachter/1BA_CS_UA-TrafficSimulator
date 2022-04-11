@@ -5,11 +5,12 @@
     </BAAN>
     <VOERTUIGGENERATOR>
         <baan>Turnhoutsebaan</baan>
-        <frequentie>10</frequentie>
+        <frequentie>4</frequentie>
+        <type>auto</type>
     </VOERTUIGGENERATOR>
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
-        <positie>0</positie>
+        <positie>150</positie>
         <cyclus>10</cyclus>
     </VERKEERSLICHT>
 </SIMULATIE>

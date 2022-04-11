@@ -34,10 +34,12 @@ TEST_F(TrafficSimulationOutputTest, OutputHappyDay) {
            << "<VOERTUIG>" << std::endl
            << "<baan>Middelheimlaan</baan>" << std::endl
            << "<positie>20</positie>" << std::endl
+           << "<type>auto</type>" <<std::endl
            << "</VOERTUIG>" << std::endl
            << "<VOERTUIG>" <<std::endl
            << "<baan>Middelheimlaan</baan >" << std::endl
            << "<positie>480</positie>" << std::endl
+           << "<type>auto</type>" <<std::endl
            << "</VOERTUIG>" << std::endl
            << "<VERKEERSLICHT>" << std::endl
            << "<baan>Middelheimlaan</baan>" << std::endl
@@ -47,12 +49,15 @@ TEST_F(TrafficSimulationOutputTest, OutputHappyDay) {
            << "<VOERTUIGGENERATOR>" << std::endl
            << "<baan>Middelheimlaan</baan>" << std::endl
            << "<frequentie>5</frequentie>" << std::endl
+           << "<type>auto</type>" <<std::endl
            << "</VOERTUIGGENERATOR>" << std::endl
            << "</SIMULATIE>" << std::endl;
     myFile.close();
 
-    std::fstream errStream;
+    std::ofstream errStream;
+    errStream.open("testOutput/HappyDayOutErrors.txt");
     EParserSucces parserSucces = sim.parseInputFile("testInput/HappyDayOut.xml", errStream);
+    errStream.close();
 
     EXPECT_TRUE(parserSucces == Success);
 

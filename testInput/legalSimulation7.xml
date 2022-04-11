@@ -6,17 +6,18 @@
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
         <positie>10</positie>
+        <type>auto</type>
     </VOERTUIG>
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
         <positie>0</positie>
+        <type>auto</type>
     </VOERTUIG>
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>240</positie>
         <cyclus>40</cyclus>
     </VERKEERSLICHT>
-
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>400</positie>
@@ -34,6 +35,7 @@
     <VOERTUIGGENERATOR>
         <baan>Middelheimlaan</baan>
         <frequentie>20</frequentie>
+        <type>auto</type>
     </VOERTUIGGENERATOR>
     <VERKEERSLICHT>
         <baan>Middelheimlaan</baan>
@@ -43,6 +45,7 @@
     <VOERTUIG>
         <baan>Middelheimlaan</baan>
         <positie>85</positie>
+        <type>auto</type>
     </VOERTUIG>
 
 

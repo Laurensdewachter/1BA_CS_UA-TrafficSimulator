@@ -10,10 +10,12 @@
     <VOERTUIG>
         <baan>Rode Dreef</baan>
         <positie>27</positie>
+        <type>brandweerwagen</type>
     </VOERTUIG>
     <VOERTUIGGENERATOR>
         <baan>Turnhoutsebaan</baan>
         <frequentie>10</frequentie>
+        <type>auto</type>
     </VOERTUIGGENERATOR>
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
@@ -28,9 +30,11 @@
     <VOERTUIG>
         <baan>Rode Dreef</baan>
         <positie>99</positie>
+        <type>auto</type>
     </VOERTUIG>
     <VOERTUIG>
         <baan>Rode Dreef</baan>
         <positie>50</positie>
+        <type>ziekenwagen</type>
     </VOERTUIG>
 </SIMULATIE>

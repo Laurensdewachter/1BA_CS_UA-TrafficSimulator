@@ -16,13 +16,16 @@ class VehicleGenerator {
 
     std::string fStreet;
     int fFrequency;
+    std::string fType;
+
     double fTimeSinceLastSpawn;
 
 public:
+
     /*
      * ENSURE(properlyInitialized(), "VehicleGenerator constructor did not end in an initialized state")
      */
-    VehicleGenerator();
+    VehicleGenerator(const std::string &street, int frequency, const std::string &type);
 
     virtual ~VehicleGenerator();
 
@@ -55,6 +58,8 @@ public:
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling getFrequency()")
      */
     int getFrequency() const;
+
+    const std::string &getType() const;
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling getTimeSinceLastSpawn()")

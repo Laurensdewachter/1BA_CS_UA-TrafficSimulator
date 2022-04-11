@@ -34,10 +34,12 @@ TEST_F(TrafficSimulationInputTest, InputHappyDay) {
            << "<VOERTUIG>" << std::endl
            << "<baan>Middelheimlaan</baan>" << std::endl
            << "<positie>20</positie>" << std::endl
+           << "<type>auto</type>" << std::endl
            << "</VOERTUIG>" << std::endl
            << "<VOERTUIG>" <<std::endl
            << "<baan>Middelheimlaan</baan >" << std::endl
            << "<positie>480</positie>" << std::endl
+           << "<type>bus</type>" << std::endl
            << "</VOERTUIG>" << std::endl
            << "<VERKEERSLICHT>" << std::endl
            << "<baan>Middelheimlaan</baan>" << std::endl
@@ -47,6 +49,7 @@ TEST_F(TrafficSimulationInputTest, InputHappyDay) {
            << "<VOERTUIGGENERATOR>" << std::endl
            << "<baan>Middelheimlaan</baan>" << std::endl
            << "<frequentie>5</frequentie>" << std::endl
+           << "<type>auto</type>" << std::endl
            << "</VOERTUIGGENERATOR>" << std::endl
            << "</SIMULATIE>" << std::endl;
     myFile.close();

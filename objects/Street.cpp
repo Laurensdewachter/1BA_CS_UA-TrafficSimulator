@@ -8,7 +8,14 @@
 #include "Street.h"
 #include "TrafficLight.h"
 #include "Vehicle.h"
+#include "Car.h"
+#include "Bus.h"
+#include "FireEngine.h"
+#include "Ambulance.h"
+#include "PoliceCar.h"
 #include "VehicleGenerator.h"
+#include "../DesignByContract.h"
+#include "../Variables.h"
 
 Street::Street() {
     fVehicleGenerator = NULL;
@@ -120,7 +127,7 @@ void Street::driveVehicles() {
     }
     for (unsigned int i = 0; i < fVehicles.size(); i++) {
         if (i == 0) {
-            fVehicles[i]->drive();
+            fVehicles[i]->drive(NULL);
             if (fVehicles[i]->getPosition() > fLength) {
                 this->removeVehicle();
             }
@@ -170,7 +177,7 @@ void Street::simTrafficLights(double &time) {
 
         // Traffic light is green
         if (curTrafficLight->isGreen()) {
-            closestVehicle->setMaxSpeed(gMaxSpeed);
+            closestVehicle->setMaxSpeed();
         }
 
         // Traffic light is red
@@ -194,10 +201,21 @@ void Street::simGenerator(double &time) {
     if (fVehicleGenerator == NULL) {
         return;
     }
-    if (fVehicleGenerator->getTimeSinceLastSpawn() < time && (fVehicles.empty() || fVehicles.back()->getPosition() > 2*gLength)) {
-        Vehicle* newVehicle = new Vehicle();
-        newVehicle->setStreet(fName);
-        newVehicle->setPosition(0);
+    if (fVehicleGenerator->getTimeSinceLastSpawn() < time) {
+        Vehicle* newVehicle;
+        std::string type = fVehicleGenerator->getType();
+        if (type == "auto") {
+            newVehicle = new Car(fName, 0);
+        } else if (type == "bus") {
+            newVehicle = new Bus(fName, 0);
+        } else if (type == "brandweerwagen") {
+            newVehicle = new FireEngine(fName, 0);
+        } else if (type == "ziekenwagen") {
+            newVehicle = new Ambulance(fName, 0);
+        } else {
+            newVehicle = new PoliceCar(fName, 0);
+        }
+
         fVehicles.push_back(newVehicle);
 
         fVehicleGenerator->setTimeSinceLastSpawn(fVehicleGenerator->getTimeSinceLastSpawn() + fVehicleGenerator->getFrequency());

@@ -6,6 +6,7 @@
     <VOERTUIGGENERATOR>
         <baan>Turnhoutsebaan</baan>
         <frequentie>5</frequentie>
+        <type>auto</type>
     </VOERTUIGGENERATOR>
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>

@@ -6,12 +6,13 @@
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
         <positie>10</positie>
+        <type>auto</type>
     </VOERTUIG>
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
         <positie>0</positie>
+        <type>auto</type>
     </VOERTUIG>
-
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>240</positie>
@@ -22,11 +23,9 @@
         <positie>400</positie>
         <cyclus>70</cyclus>
     </VERKEERSLICHT>
-
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
         <positie>90</positie>
         <cyclus>5</cyclus>
     </VERKEERSLICHT>
-
 </SIMULATIE>

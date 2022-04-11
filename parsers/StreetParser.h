@@ -32,6 +32,7 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * ENSURE(fStreet != NULL, "StreetParser could not create a Street")
      * ENSURE(fStreet->getName() == name, "parseStreet() postcondition")
      * ENSURE(fStreet->getLength() == length, "parseStreet() postcondition")
      */

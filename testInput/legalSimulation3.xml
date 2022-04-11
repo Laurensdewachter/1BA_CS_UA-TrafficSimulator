@@ -10,10 +10,12 @@
     <VOERTUIG>
         <baan>Rode Dreef</baan>
         <positie>27</positie>
+        <type>auto</type>
     </VOERTUIG>
     <VOERTUIGGENERATOR>
         <baan>Turnhoutsebaan</baan>
         <frequentie>10</frequentie>
+        <type>politiecombi</type>
     </VOERTUIGGENERATOR>
     <VERKEERSLICHT>
         <baan>Turnhoutsebaan</baan>
