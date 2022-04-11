@@ -35,7 +35,7 @@ void Ambulance::drive(Vehicle* vehicleInFront) {
 void Ambulance::brake() {
     REQUIRE(properlyInitialized(), "Ambulance wasn't initialized when calling brake()");
 
-    fMaxSpeed = ambulanceMaxBrakeFactor * ambulanceMaxSpeed;
+    fMaxSpeed = gSlowFactor * ambulanceMaxSpeed;
     if (fMaxSpeed == 0) {
         fMaxSpeed = 0.0000000000000000000001;
     }

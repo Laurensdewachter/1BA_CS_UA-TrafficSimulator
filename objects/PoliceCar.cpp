@@ -35,7 +35,7 @@ void PoliceCar::drive(Vehicle* vehicleInFront) {
 void PoliceCar::brake() {
     REQUIRE(properlyInitialized(), "PoliceCar wasn't initialized when calling brake()");
 
-    fMaxSpeed = policeCarMaxBrakeFactor * policeCarMaxSpeed;
+    fMaxSpeed = gSlowFactor * policeCarMaxSpeed;
     if (fMaxSpeed == 0) {
         fMaxSpeed = 0.0000000000000000000001;
     }

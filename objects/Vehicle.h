@@ -10,14 +10,6 @@
 
 #include <iostream>
 
-enum EVehicleType {
-    car,
-    bus,
-    fireEngine,
-    ambulance,
-    policeCar
-};
-
 class Vehicle {
 protected:
     Vehicle* _initCheck;
@@ -74,7 +66,7 @@ public:
      */
     double getLength() const;
 
-    virtual void drive(Vehicle* vehicleInFront = NULL) = 0;
+    virtual void drive(Vehicle* vehicleInFront) = 0;
 
     virtual void brake() = 0;
 

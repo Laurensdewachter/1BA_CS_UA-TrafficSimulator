@@ -19,7 +19,7 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "Car wasn't initialized when calling drive()")
      */
-    void drive(Vehicle* vehicleInFront = NULL);
+    void drive(Vehicle* vehicleInFront);
 
     /*
      * REQUIRE(properlyInitialized(), "Car wasn't initialized when calling brake()")

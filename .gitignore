@@ -2,5 +2,5 @@ cmake-build-debug/
 .idea/
 gtest/
 testOutput/
-pse-traffic-simulation-visualizer-main/
+visualizer/
 testInput/HappyDay*

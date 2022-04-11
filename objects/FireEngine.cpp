@@ -35,7 +35,7 @@ void FireEngine::drive(Vehicle* vehicleInFront) {
 void FireEngine::brake() {
     REQUIRE(properlyInitialized(), "FireEngine wasn't initialized when calling brake()");
 
-    fMaxSpeed = fireEngineMaxBrakeFactor * fireEngineMaxSpeed;
+    fMaxSpeed = gSlowFactor * fireEngineMaxSpeed;
     if (fMaxSpeed == 0) {
         fMaxSpeed = 0.0000000000000000000001;
     }

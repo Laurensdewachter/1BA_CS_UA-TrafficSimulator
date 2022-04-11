@@ -123,7 +123,7 @@ void Street::driveVehicles() {
     }
     for (unsigned int i = 0; i < fVehicles.size(); i++) {
         if (i == 0) {
-            fVehicles[i]->drive();
+            fVehicles[i]->drive(NULL);
             if (fVehicles[i]->getPosition() > fLength) {
                 this->removeVehicle();
             }
