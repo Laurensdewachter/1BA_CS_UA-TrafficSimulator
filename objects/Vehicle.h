@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : Vehicle.h
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is contains the `Vehicle` class
 // ===========================================================
 
@@ -9,16 +9,23 @@
 #define PSE_VEHICLE_H
 
 #include <iostream>
-#include <cmath>
-#include <algorithm>
-#include "../DesignByContract.h"
-#include "../Variables.h"
+
+enum EVehicleType {
+    car,
+    bus,
+    fireEngine,
+    ambulance,
+    policeCar
+};
 
 class Vehicle {
+protected:
     Vehicle* _initCheck;
 
     std::string fStreet;
     double fPosition;
+
+    double fLength;
     double fSpeed;
     double fAcceleration;
     double fMaxSpeed;
@@ -28,6 +35,8 @@ public:
      * ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state")
      */
     Vehicle();
+
+    Vehicle(const std::string &street, double position, double length, double maxSpeed);
 
     virtual ~Vehicle();
 
@@ -46,12 +55,6 @@ public:
     void setPosition(int p);
 
     /*
-    * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setMaxSpeed()")
-    * ENSURE(Vehicle::fMaxSpeed == m, "setMaxSpeed() postcondition")
-    */
-    void setMaxSpeed(double m);
-
-    /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getStreet()")
      */
     const std::string &getStreet() const;
@@ -67,19 +70,17 @@ public:
     double getSpeed() const;
 
     /*
-     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()")
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getLength()")
      */
-    void drive(Vehicle* vehicleInFront = NULL);
+    double getLength() const;
 
-    /*
-     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling brake()")
-     */
-    void brake();
+    virtual void drive(Vehicle* vehicleInFront = NULL) = 0;
 
-    /*
-     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling stop()")
-     */
-    void stop();
+    virtual void brake() = 0;
+
+    virtual void stop() = 0;
+
+    virtual void setMaxSpeed() = 0;
 };
 
 

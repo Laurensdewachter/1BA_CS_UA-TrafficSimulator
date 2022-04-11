@@ -8,7 +8,10 @@
 #include "Street.h"
 #include "TrafficLight.h"
 #include "Vehicle.h"
+#include "Car.h"
 #include "VehicleGenerator.h"
+#include "../DesignByContract.h"
+#include "../Variables.h"
 
 Street::Street() {
     fVehicleGenerator = NULL;
@@ -156,27 +159,29 @@ void Street::simTrafficLights(double &time) {
         for (unsigned int v = 0; v < fVehicles.size(); v++) {
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
                 closestVehicle = fVehicles[v];
+            } else {
+                break;
             }
+        }
 
-            // Go to next traffic light if there is no vehicle before the traffic light
-            if (closestVehicle == NULL) {
-                continue;
+        // Go to next traffic light if there is no vehicle before the traffic light
+        if (closestVehicle == NULL) {
+            continue;
+        }
+
+        // Traffic light is green
+        if (curTrafficLight->isGreen()) {
+            closestVehicle->setMaxSpeed();
+        }
+
+        // Traffic light is red
+        else {
+            double distance = curTrafficLight->getPosition() - closestVehicle->getPosition();
+            if (distance > 0 && distance < gStopDistance) {
+                closestVehicle->stop();
             }
-
-            // Traffic light is green
-            if (curTrafficLight->isGreen()) {
-                closestVehicle->setMaxSpeed(gMaxSpeed);
-            }
-
-            // Traffic light is red
-            else {
-                double distance = curTrafficLight->getPosition() - closestVehicle->getPosition();
-                if (distance > 0 && distance < gStopDistance) {
-                    closestVehicle->stop();
-                }
-                else if (distance > 0 && distance < gBrakeDistance) {
-                    closestVehicle->brake();
-                }
+            else if (distance > 0 && distance < gBrakeDistance) {
+                closestVehicle->brake();
             }
         }
     }
@@ -191,9 +196,7 @@ void Street::simGenerator(double &time) {
         return;
     }
     if (fVehicleGenerator->getTimeSinceLastSpawn() < time) {
-        Vehicle* newVehicle = new Vehicle();
-        newVehicle->setStreet(fName);
-        newVehicle->setPosition(0);
+        Vehicle* newVehicle = new Car(fName, 0);
         fVehicles.push_back(newVehicle);
 
         fVehicleGenerator->setTimeSinceLastSpawn(fVehicleGenerator->getTimeSinceLastSpawn() + fVehicleGenerator->getFrequency());

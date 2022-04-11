@@ -144,6 +144,9 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
                 onstream << " ]";
             }
         }
+        if (fStreets[i]->getTrafficLights().size() == 0) {
+            onstream << "]";
+        }
         if (i != fStreets.size()-1) {
             onstream << " }, ";
         }

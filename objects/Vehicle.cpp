@@ -1,17 +1,25 @@
 // ===========================================================
 // Name         : Vehicle.cpp
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.0
+// Version      : 1.1
 // Description  : This code is contains the `Vehicle` class
 // ===========================================================
 
 #include "Vehicle.h"
+#include "../DesignByContract.h"
+#include "../Variables.h"
 
-Vehicle::Vehicle() {
-    Vehicle::fSpeed = 0;
-    Vehicle::fAcceleration = 0;
-    Vehicle::fMaxSpeed = gMaxSpeed;
-    Vehicle::_initCheck = this;
+#include <cmath>
+
+Vehicle::Vehicle() : fSpeed(0), fAcceleration(0), fMaxSpeed(0) {
+    _initCheck = this;
+
+    ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state");
+}
+
+Vehicle::Vehicle(const std::string &street, double position, double length, double maxSpeed) : fStreet(street),
+            fPosition(position), fLength(length), fSpeed(0), fAcceleration(0), fMaxSpeed(maxSpeed) {
+    _initCheck = this;
 
     ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state");
 }
@@ -19,84 +27,45 @@ Vehicle::Vehicle() {
 Vehicle::~Vehicle() {}
 
 bool Vehicle::properlyInitialized() const {
-    return Vehicle::_initCheck == this;
+    return _initCheck == this;
 }
 
 void Vehicle::setStreet(const std::string &s) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()");
 
-    Vehicle::fStreet = s;
+    fStreet = s;
 
-    ENSURE(Vehicle::fStreet == s, "setStreet() postcondition");
+    ENSURE(fStreet == s, "setStreet() postcondition");
 }
 
 void Vehicle::setPosition(int p) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()");
 
-    Vehicle::fPosition = p;
+    fPosition = p;
 
-    ENSURE(Vehicle::fPosition == p, "setPosition() postcondition");
-}
-
-void Vehicle::setMaxSpeed(double m) {
-    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setMaxSpeed()");
-
-    Vehicle::fMaxSpeed = m;
-
-    ENSURE(Vehicle::fMaxSpeed == m, "setMaxSpeed() postcondition");
+    ENSURE(fPosition == p, "setPosition() postcondition");
 }
 
 const std::string &Vehicle::getStreet() const {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getStreet()");
 
-    return Vehicle::fStreet;
+    return fStreet;
 }
 
 double Vehicle::getPosition() const {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getPosition()");
 
-    return Vehicle::fPosition;
+    return fPosition;
 }
 
 double Vehicle::getSpeed() const {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getSpeed()");
 
-    return Vehicle::fSpeed;
+    return fSpeed;
 }
 
-void Vehicle::drive(Vehicle* vehicleInFront) {
-    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()");
+double Vehicle::getLength() const {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getLength()");
 
-    if (fSpeed + (fAcceleration*gSimulationTime) < 0) {
-        fPosition -= pow(fSpeed, 2)/(2*fAcceleration);
-        fSpeed = 0;
-    }
-    else {
-        fSpeed += fAcceleration*gSimulationTime;
-        fPosition += fSpeed*gSimulationTime + fAcceleration*(pow(gSimulationTime, 2)/2);
-    }
-    double delta = 0;
-    if (vehicleInFront != NULL) {
-        double deltaX = vehicleInFront->getPosition() - fPosition - gLength;
-        double deltaV = fSpeed - vehicleInFront->getSpeed();
-        delta = (gMinFollowDistance + std::max(0.0, (fSpeed+((fSpeed*deltaV)/(2*sqrt(gMaxAcceleration*gMaxBrakeFactor))))))/deltaX;
-    }
-    fAcceleration = gMaxAcceleration*(1 - pow(fSpeed/fMaxSpeed, 4) - pow(delta, 2));
-
-    // TODO: ask about ENSURE here
-}
-
-void Vehicle::brake() {
-    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling brake()");
-
-    fMaxSpeed = gBrakeFactor * gMaxSpeed;
-    if (fMaxSpeed == 0) {
-        fMaxSpeed = 0.0000000000000000000001;
-    }
-}
-
-void Vehicle::stop() {
-    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling stop()");
-
-    fAcceleration = -((gMaxBrakeFactor * fSpeed) / fMaxSpeed);
+    return fLength;
 }

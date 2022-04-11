@@ -1,7 +1,7 @@
 // ===========================================================
 // Name         : VehicleParser.h
 // Author       : Laurens De Wachter & Nabil El Ouaamari
-// Version      : 1.1
+// Version      : 1.2
 // Description  : This code is used to parse an XML file that contains a `Vehicle`.
 // ===========================================================
 
@@ -9,15 +9,14 @@
 #define PSE_VEHICLEPARSER_H
 
 #include <iostream>
-#include <sstream>
 #include "tinyxml/tinyxml.h"
-#include "../DesignByContract.h"
 
 class Vehicle;
 
 class VehicleParser {
-    Vehicle* fVehicle;
     VehicleParser* _initCheck;
+
+    Vehicle* fVehicle;
 
 public:
     /*
