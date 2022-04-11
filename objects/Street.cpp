@@ -161,6 +161,9 @@ void Street::simTrafficLights(double &time) {
         }
         Vehicle *closestVehicle = NULL;
         for (unsigned int v = 0; v < fVehicles.size(); v++) {
+            if (fVehicles[v]->hasPriority()) {
+                continue;
+            }
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
                 if (closestVehicle == NULL) {
                     closestVehicle = fVehicles[v];
@@ -220,6 +223,8 @@ void Street::simGenerator(double &time) {
 
         fVehicleGenerator->setTimeSinceLastSpawn(fVehicleGenerator->getTimeSinceLastSpawn() + fVehicleGenerator->getFrequency());
     }
+
+    // TODO: ask about ENSURE here
 }
 
 void Street::sortVehicles() {

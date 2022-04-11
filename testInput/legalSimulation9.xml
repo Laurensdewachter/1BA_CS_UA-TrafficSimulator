@@ -1,0 +1,21 @@
+<SIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>500</lengte>
+    </BAAN>
+    <VOERTUIG>
+        <baan>Turnhoutsebaan</baan>
+        <positie>0</positie>
+        <type>auto</type>
+    </VOERTUIG>
+    <VOERTUIG>
+        <baan>Turnhoutsebaan</baan>
+        <positie>20</positie>
+        <type>ziekenwagen</type>
+    </VOERTUIG>
+    <VERKEERSLICHT>
+        <baan>Turnhoutsebaan</baan>
+        <positie>150</positie>
+        <cyclus>40</cyclus>
+    </VERKEERSLICHT>
+</SIMULATIE>

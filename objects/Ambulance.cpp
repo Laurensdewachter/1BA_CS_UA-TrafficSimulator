@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-Ambulance::Ambulance(const std::string &street, double position) : Vehicle(street, position, ambulanceLength, ambulanceMaxSpeed) {
+Ambulance::Ambulance(const std::string &street, double position) : Vehicle(street, position, ambulanceLength, ambulanceMaxSpeed, true) {
     // TODO: ask if initcheck should be of super- or subclass
 
     ENSURE(properlyInitialized(), "Ambulance constructor did not end in an initialized state");

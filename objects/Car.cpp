@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-Car::Car(const std::string &street, double position) : Vehicle(street, position, carLength, carMaxSpeed) {
+Car::Car(const std::string &street, double position) : Vehicle(street, position, carLength, carMaxSpeed, false) {
     // TODO: ask if initcheck should be of super- or subclass
 
     ENSURE(properlyInitialized(), "Car constructor did not end in an initialized state");
