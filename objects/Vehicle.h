@@ -17,6 +17,8 @@ protected:
     std::string fStreet;
     double fPosition;
 
+    bool fHasPriority;
+
     double fLength;
     double fSpeed;
     double fAcceleration;
@@ -28,23 +30,11 @@ public:
      */
     Vehicle();
 
-    Vehicle(const std::string &street, double position, double length, double maxSpeed);
+    Vehicle(const std::string &street, double position, double length, double maxSpeed, bool hasPriority);
 
     virtual ~Vehicle();
 
     bool properlyInitialized() const;
-
-    /*
-     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()")
-     * ENSURE(Vehicle::fStreet == s, "setStreet() postcondition")
-     */
-    void setStreet(const std::string &s);
-
-    /*
-     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()")
-     * ENSURE(Vehicle::fPosition == p, "setPosition() postcondition")
-     */
-    void setPosition(int p);
 
     /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getStreet()")
@@ -65,6 +55,11 @@ public:
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getLength()")
      */
     double getLength() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling hasPriority()")
+     */
+    bool hasPriority() const;
 
     virtual void drive(Vehicle* vehicleInFront) = 0;
 

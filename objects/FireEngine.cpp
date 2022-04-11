@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-FireEngine::FireEngine(const std::string &street, double position) : Vehicle(street, position, fireEngineLength, fireEngineMaxSpeed) {
+FireEngine::FireEngine(const std::string &street, double position) : Vehicle(street, position, fireEngineLength, fireEngineMaxSpeed, true) {
     // TODO: ask if initcheck should be of super- or subclass
 
     ENSURE(properlyInitialized(), "FireEngine constructor did not end in an initialized state");
