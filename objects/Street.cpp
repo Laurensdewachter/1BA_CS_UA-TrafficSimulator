@@ -156,7 +156,7 @@ void Street::simTrafficLights(double &time) {
         }
         Vehicle *closestVehicle = NULL;
         for (unsigned int v = 0; v < fVehicles.size(); v++) {
-            if (fVehicles[v]->getType() == fireEngine || fVehicles[v]->getType() == ambulance || fVehicles[v]->getType() == policeCar) {
+            if (fVehicles[v]->getType() == FireEngine || fVehicles[v]->getType() == Ambulance || fVehicles[v]->getType() == PoliceCar) {
                 continue;
             }
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
@@ -203,15 +203,15 @@ void Street::simGenerator(double &time) {
         Vehicle* newVehicle;
         std::string type = fVehicleGenerator->getType();
         if (type == "auto") {
-            newVehicle = new Vehicle(fName, 0, car);
+            newVehicle = new Vehicle(fName, 0, Car);
         } else if (type == "bus") {
-            newVehicle = new Vehicle(fName, 0, bus);
+            newVehicle = new Vehicle(fName, 0, Bus);
         } else if (type == "brandweerwagen") {
-            newVehicle = new Vehicle(fName, 0, fireEngine);
+            newVehicle = new Vehicle(fName, 0, FireEngine);
         } else if (type == "ziekenwagen") {
-            newVehicle = new Vehicle(fName, 0, ambulance);
+            newVehicle = new Vehicle(fName, 0, Ambulance);
         } else {
-            newVehicle = new Vehicle(fName, 0, policeCar);
+            newVehicle = new Vehicle(fName, 0, PoliceCar);
         }
 
         fVehicles.push_back(newVehicle);

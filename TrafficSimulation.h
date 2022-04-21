@@ -66,6 +66,16 @@ public:
      */
     void clearSimulation();
 
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreets()")
+     */
+    const std::vector<Street *> &getStreets() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getTime()")
+     */
+    double getTime() const;
+
 private:
     Street* getStreet(const std::string &name) const;
 };
