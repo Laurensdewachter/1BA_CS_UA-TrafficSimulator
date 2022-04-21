@@ -9,6 +9,45 @@
 #define PSE_VEHICLE_H
 
 #include <iostream>
+#include <map>
+
+enum EVehicleType {
+    car,
+    bus,
+    fireEngine,
+    ambulance,
+    policeCar
+};
+
+const double carLength = 4.0;
+const double carMaxSpeed = 16.6;
+const double carMaxAcceleration = 1.44;
+const double carMaxBrakeFactor = 4.61;
+const double carMinFollowDistance = 4.0;
+
+const double busLength = 12.0;
+const double busMaxSpeed = 11.4;
+const double busMaxAcceleration = 1.22;
+const double busMaxBrakeFactor = 4.29;
+const double busMinFollowDistance = 12.0;
+
+const double fireEngineLength = 10.0;
+const double fireEngineMaxSpeed = 14.6;
+const double fireEngineMaxAcceleration = 1.33;
+const double fireEngineMaxBrakeFactor = 4.56;
+const double fireEngineMinFollowDistance = 10.0;
+
+const double ambulanceLength = 8.0;
+const double ambulanceMaxSpeed = 15.5;
+const double ambulanceMaxAcceleration = 1.44;
+const double ambulanceMaxBrakeFactor = 4.47;
+const double ambulanceMinFollowDistance = 8.0;
+
+const double policeCarLength = 6.0;
+const double policeCarMaxSpeed = 17.2;
+const double policeCarMaxAcceleration = 1.55;
+const double policeCarMaxBrakeFactor = 4.92;
+const double policeCarMinFollowDistance = 6.0;
 
 class Vehicle {
 protected:
@@ -16,21 +55,18 @@ protected:
 
     std::string fStreet;
     double fPosition;
+    EVehicleType fType;
 
-    bool fHasPriority;
-
-    double fLength;
     double fSpeed;
     double fAcceleration;
     double fMaxSpeed;
 
 public:
+
     /*
      * ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state")
      */
-    Vehicle();
-
-    Vehicle(const std::string &street, double position, double length, double maxSpeed, bool hasPriority);
+    Vehicle(const std::string &street, double position, EVehicleType type);
 
     virtual ~Vehicle();
 
@@ -57,17 +93,32 @@ public:
     double getLength() const;
 
     /*
-     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling hasPriority()")
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getType()")
      */
-    bool hasPriority() const;
+    EVehicleType getType() const;
 
-    virtual void drive(Vehicle* vehicleInFront) = 0;
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()")
+     * ENSURE(fPosition >= startPosition, "drive() postcondition")
+     */
+    void drive(Vehicle* vehicleInFront);
 
-    virtual void brake() = 0;
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling brake()")
+     * ENSURE(fMaxSpeed <= maxSpeed, "brake() postcondition")
+     * ENSURE(fMaxSpeed <= startMaxSpeed, "brake() postcondition")
+     */
+    void brake();
 
-    virtual void stop() = 0;
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling stop()")
+     */
+    void stop();
 
-    virtual void setMaxSpeed() = 0;
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setMaxSpeed()")
+     */
+    void setMaxSpeed();
 };
 
 

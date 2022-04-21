@@ -8,11 +8,6 @@
 #include "Street.h"
 #include "TrafficLight.h"
 #include "Vehicle.h"
-#include "Car.h"
-#include "Bus.h"
-#include "FireEngine.h"
-#include "Ambulance.h"
-#include "PoliceCar.h"
 #include "VehicleGenerator.h"
 #include "../DesignByContract.h"
 #include "../Variables.h"
@@ -161,7 +156,7 @@ void Street::simTrafficLights(double &time) {
         }
         Vehicle *closestVehicle = NULL;
         for (unsigned int v = 0; v < fVehicles.size(); v++) {
-            if (fVehicles[v]->hasPriority()) {
+            if (fVehicles[v]->getType() == fireEngine || fVehicles[v]->getType() == ambulance || fVehicles[v]->getType() == policeCar) {
                 continue;
             }
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
@@ -208,15 +203,15 @@ void Street::simGenerator(double &time) {
         Vehicle* newVehicle;
         std::string type = fVehicleGenerator->getType();
         if (type == "auto") {
-            newVehicle = new Car(fName, 0);
+            newVehicle = new Vehicle(fName, 0, car);
         } else if (type == "bus") {
-            newVehicle = new Bus(fName, 0);
+            newVehicle = new Vehicle(fName, 0, bus);
         } else if (type == "brandweerwagen") {
-            newVehicle = new FireEngine(fName, 0);
+            newVehicle = new Vehicle(fName, 0, fireEngine);
         } else if (type == "ziekenwagen") {
-            newVehicle = new Ambulance(fName, 0);
+            newVehicle = new Vehicle(fName, 0, ambulance);
         } else {
-            newVehicle = new PoliceCar(fName, 0);
+            newVehicle = new Vehicle(fName, 0, policeCar);
         }
 
         fVehicles.push_back(newVehicle);

@@ -128,7 +128,30 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
         << "\"cars\": [ ";
         for (unsigned int k = 0; k < fStreets[i]->getVehicles().size(); k++) {
             Vehicle* curVehicle = fStreets[i]->getVehicles()[k];
-            onstream << "{\"x\": " << curVehicle->getPosition() << "}";
+            onstream << "{\"x\": " << curVehicle->getPosition();
+            EVehicleType curType = curVehicle->getType();
+            switch (curType) {
+                case car: {
+                    onstream << ", \"type\": \"car\"}";
+                    break;
+                }
+                case bus: {
+                    onstream << ", \"type\": \"bus\"}";
+                    break;
+                }
+                case fireEngine: {
+                    onstream << ", \"type\": \"firetruck\"}";
+                    break;
+                }
+                case ambulance: {
+                    onstream << ", \"type\": \"ambulance\"}";
+                    break;
+                }
+                case policeCar: {
+                    onstream << ", \"type\": \"police_cruiser\"}";
+                    break;
+                }
+            }
             if (k != fStreets[i]->getVehicles().size()-1) {
                 onstream << ", ";
             }
