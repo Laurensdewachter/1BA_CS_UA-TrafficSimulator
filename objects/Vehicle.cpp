@@ -15,11 +15,25 @@ Vehicle::Vehicle(const std::string &street, double position, EVehicleType type) 
             fStreet(street), fPosition(position), fType(type), fSpeed(0), fAcceleration(0) {
 
     switch (fType) {
-        case car: fMaxSpeed = carMaxSpeed;
-        case bus: fMaxSpeed = busMaxSpeed;
-        case fireEngine: fMaxSpeed = fireEngineMaxSpeed;
-        case ambulance: fMaxSpeed = ambulanceMaxSpeed;
-        case policeCar: fMaxSpeed = policeCarMaxSpeed;
+        case Car: {
+            fMaxSpeed = carMaxSpeed;
+        }
+        case Bus: {
+            fMaxSpeed = busMaxSpeed;
+            break;
+        }
+        case FireEngine: {
+            fMaxSpeed = fireEngineMaxSpeed;
+            break;
+        }
+        case Ambulance: {
+            fMaxSpeed = ambulanceMaxSpeed;
+            break;
+        }
+        case PoliceCar: {
+            fMaxSpeed = policeCarMaxSpeed;
+            break;
+        }
     }
 
     _initCheck = this;
@@ -53,11 +67,11 @@ double Vehicle::getSpeed() const {
 
 double Vehicle::getLength() const {
     switch (fType) {
-        case car: return carLength;
-        case bus: return busLength;
-        case fireEngine: return fireEngineLength;
-        case ambulance: return ambulanceLength;
-        case policeCar: return policeCarLength;
+        case Car: return carLength;
+        case Bus: return busLength;
+        case FireEngine: return fireEngineLength;
+        case Ambulance: return ambulanceLength;
+        case PoliceCar: return policeCarLength;
     }
     return -1;
 }
@@ -78,31 +92,31 @@ void Vehicle::drive(Vehicle* vehicleInFront) {
     double maxBrakeFactor;
 
     switch (fType) {
-        case car: {
+        case Car: {
             minFollowDistance = carMinFollowDistance;
             maxAcceleration = carMaxAcceleration;
             maxBrakeFactor = carMaxBrakeFactor;
             break;
         }
-        case bus: {
+        case Bus: {
             minFollowDistance = busMinFollowDistance;
             maxAcceleration = busMaxAcceleration;
             maxBrakeFactor = busMaxBrakeFactor;
             break;
         }
-        case fireEngine: {
+        case FireEngine: {
             minFollowDistance = fireEngineMinFollowDistance;
             maxAcceleration = fireEngineMaxAcceleration;
             maxBrakeFactor = fireEngineMaxBrakeFactor;
             break;
         }
-        case ambulance: {
+        case Ambulance: {
             minFollowDistance = ambulanceMinFollowDistance;
             maxAcceleration = ambulanceMaxAcceleration;
             maxBrakeFactor = ambulanceMaxBrakeFactor;
             break;
         }
-        case policeCar: {
+        case PoliceCar: {
             minFollowDistance = policeCarMinFollowDistance;
             maxAcceleration = policeCarMaxAcceleration;
             maxBrakeFactor = policeCarMaxBrakeFactor;
@@ -139,23 +153,23 @@ void Vehicle::brake() {
     double maxSpeed;
 
     switch (fType) {
-        case car: {
+        case Car: {
             maxSpeed = carMaxSpeed;
             break;
         }
-        case bus: {
+        case Bus: {
             maxSpeed = busMaxSpeed;
             break;
         }
-        case fireEngine: {
+        case FireEngine: {
             maxSpeed = fireEngineMaxSpeed;
             break;
         }
-        case ambulance: {
+        case Ambulance: {
             maxSpeed = ambulanceMaxSpeed;
             break;
         }
-        case policeCar: {
+        case PoliceCar: {
             maxSpeed = policeCarMaxSpeed;
             break;
         }
@@ -173,28 +187,26 @@ void Vehicle::brake() {
 void Vehicle::stop() {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling stop()");
 
-    double startAcceleration = fAcceleration;
-
     double maxBrakeFactor;
 
     switch (fType) {
-        case car: {
+        case Car: {
             maxBrakeFactor = carMaxBrakeFactor;
             break;
         }
-        case bus: {
+        case Bus: {
             maxBrakeFactor = busMaxBrakeFactor;
             break;
         }
-        case fireEngine: {
+        case FireEngine: {
             maxBrakeFactor = fireEngineMaxBrakeFactor;
             break;
         }
-        case ambulance: {
+        case Ambulance: {
             maxBrakeFactor = ambulanceMaxBrakeFactor;
             break;
         }
-        case policeCar: {
+        case PoliceCar: {
             maxBrakeFactor = policeCarMaxBrakeFactor;
             break;
         }
@@ -207,23 +219,23 @@ void Vehicle::setMaxSpeed() {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setMaxSpeed()");
 
     switch (fType) {
-        case car: {
+        case Car: {
             fMaxSpeed = carMaxSpeed;
             break;
         }
-        case bus: {
+        case Bus: {
             fMaxSpeed = busMaxSpeed;
             break;
         }
-        case fireEngine: {
+        case FireEngine: {
             fMaxSpeed = fireEngineMaxSpeed;
             break;
         }
-        case ambulance: {
+        case Ambulance: {
             fMaxSpeed = ambulanceMaxSpeed;
             break;
         }
-        case policeCar: {
+        case PoliceCar: {
             fMaxSpeed = policeCarMaxSpeed;
             break;
         }

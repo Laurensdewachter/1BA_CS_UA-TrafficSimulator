@@ -12,11 +12,11 @@
 #include <map>
 
 enum EVehicleType {
-    car,
-    bus,
-    fireEngine,
-    ambulance,
-    policeCar
+    Car,
+    Bus,
+    FireEngine,
+    Ambulance,
+    PoliceCar
 };
 
 const double carLength = 4.0;

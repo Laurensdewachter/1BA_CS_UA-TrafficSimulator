@@ -60,7 +60,6 @@ TEST_F(TrafficSimulationOutputTest, OutputHappyDay) {
     errStream.close();
 
     EXPECT_TRUE(parserSucces == Success);
-
     EXPECT_TRUE(FileIsEmpty("testOutput/HappyDayOutErrors.txt"));
 
     myFile.open("testOutput/HappyDayOut.txt");
@@ -79,9 +78,7 @@ TEST_F(TrafficSimulationOutputTest, correctOutput) {
 
     int fileCounter = 1;
     std::string filename = "testInput/legalSimulation" + ToString(fileCounter) + ".xml";
-
     std::string writeOutName = "testOutput/writeOut" + ToString(fileCounter) + ".txt";
-
     std::string compareFilename = "testInput/expectedWriteOut" + ToString(fileCounter) + ".txt";
 
     while (FileExists(filename)) {

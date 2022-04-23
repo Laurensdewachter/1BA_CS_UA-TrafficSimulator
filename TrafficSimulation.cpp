@@ -131,23 +131,23 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
             onstream << "{\"x\": " << curVehicle->getPosition();
             EVehicleType curType = curVehicle->getType();
             switch (curType) {
-                case car: {
+                case Car: {
                     onstream << ", \"type\": \"car\"}";
                     break;
                 }
-                case bus: {
+                case Bus: {
                     onstream << ", \"type\": \"bus\"}";
                     break;
                 }
-                case fireEngine: {
+                case FireEngine: {
                     onstream << ", \"type\": \"firetruck\"}";
                     break;
                 }
-                case ambulance: {
+                case Ambulance: {
                     onstream << ", \"type\": \"ambulance\"}";
                     break;
                 }
-                case policeCar: {
+                case PoliceCar: {
                     onstream << ", \"type\": \"police_cruiser\"}";
                     break;
                 }
@@ -200,6 +200,16 @@ void TrafficSimulation::clearSimulation() {
     fStreets.clear();
 
     ENSURE(fStreets.empty(), "The streets vector wasn't empty at the end of clearSimulation()");
+}
+
+const std::vector<Street *> &TrafficSimulation::getStreets() const {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreets()");
+    return fStreets;
+}
+
+double TrafficSimulation::getTime() const {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getTime()");
+    return fTime;
 }
 
 Street *TrafficSimulation::getStreet(const std::string &name) const {

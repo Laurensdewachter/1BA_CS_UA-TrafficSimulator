@@ -1,0 +1,20 @@
+<VERKEERSSIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>400</lengte>
+    </BAAN>
+    <VOERTUIGGENERATOR>
+        <baan>Turnhoutsebaan</baan>
+        <frequentie>10</frequentie>
+        <type>auto</type>
+    </VOERTUIGGENERATOR>
+    <BAAN>
+        <naam>Middelheimlaan</naam>
+        <lengte>400</lengte>
+    </BAAN>
+    <VOERTUIGGENERATOR>
+        <baan>Middelheimlaan</baan>
+        <frequentie>15</frequentie>
+        <type>politiecombi</type>
+    </VOERTUIGGENERATOR>
+</VERKEERSSIMULATIE>

@@ -59,9 +59,9 @@ TEST_F(TrafficSimulationInputTest, InputHappyDay) {
     EParserSucces parserSucces = sim.parseInputFile("testInput/HappyDayIn.xml", errStream);
     errStream.close();
 
-    EXPECT_TRUE(parserSucces == Success);
-
+    EXPECT_EQ(Success, parserSucces);
     EXPECT_TRUE(FileIsEmpty("testOutput/HappyDayInErrors.txt"));
+    EXPECT_FALSE(sim.getStreets().empty());
 
     sim.clearSimulation();
 }
@@ -82,13 +82,14 @@ TEST_F(TrafficSimulationInputTest, InputLegalSimulations) {
         errStream.close();
 
         EXPECT_TRUE(parserSucces == Success);
-
         ASSERT_TRUE(FileIsEmpty("testOutput/legalOut.txt"));
+        ASSERT_FALSE(sim.getStreets().empty());
 
         fileCounter++;
         fileName = "testInput/legalSimulation" + ToString(fileCounter) + ".xml";
 
         sim.clearSimulation();
+        EXPECT_TRUE(sim.getStreets().empty());
     }
 }
 
@@ -121,6 +122,7 @@ TEST_F(TrafficSimulationInputTest, InputXMLSyntaxErrors) {
         compareFilename = "testInput/syntaxError" + ToString(fileCounter) + ".txt";
 
         sim.clearSimulation();
+        EXPECT_TRUE(sim.getStreets().empty());
     }
 }
 
@@ -149,5 +151,6 @@ TEST_F(TrafficSimulationInputTest, InputConsistencyErrors) {
         errStreamName = "testOutput/consistencyError" + ToString(fileCounter) + ".txt";
 
         sim.clearSimulation();
+        EXPECT_TRUE(sim.getStreets().empty());
     }
 }
