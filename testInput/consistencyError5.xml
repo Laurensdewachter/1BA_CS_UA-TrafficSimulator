@@ -1,0 +1,16 @@
+<SIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>2000</lengte>
+    </BAAN>
+    <VERKEERSLICHT>
+        <baan>Turnhoutsebaan</baan>
+        <positie>2001</positie>
+        <cyclus>10</cyclus>
+    </VERKEERSLICHT>
+    <BUSHALTE>
+        <baan>Turnhoutsebaan</baan>
+        <positie>2001</positie>
+        <wachttijd>5</wachttijd>
+    </BUSHALTE>
+</SIMULATIE>

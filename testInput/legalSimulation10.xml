@@ -1,0 +1,21 @@
+<SIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>500</lengte>
+    </BAAN>
+    <VOERTUIGGENERATOR>
+        <baan>Turnhoutsebaan</baan>
+        <frequentie>10</frequentie>
+        <type>bus</type>
+    </VOERTUIGGENERATOR>
+    <VERKEERSLICHT>
+        <baan>Turnhoutsebaan</baan>
+        <positie>150</positie>
+        <cyclus>40</cyclus>
+    </VERKEERSLICHT>
+    <BUSHALTE>
+        <baan>Turnhoutsebaan</baan>
+        <positie>300</positie>
+        <wachttijd>8</wachttijd>
+    </BUSHALTE>
+</SIMULATIE>

@@ -8,10 +8,10 @@
 #include "TrafficLight.h"
 #include "../Variables.h"
 
-TrafficLight::TrafficLight() {
+TrafficLight::TrafficLight(const std::string &street, int position, int cycle) : fStreet(street), fPosition(position), fCycle(cycle) {
     fIsgreen = true;
     fLastUpdateTime = 0;
-    TrafficLight::_initCheck = this;
+    _initCheck = this;
 
     ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
 }
@@ -20,30 +20,6 @@ TrafficLight::~TrafficLight() {}
 
 bool TrafficLight::properlyInitialized() const {
     return TrafficLight::_initCheck == this;
-}
-
-void TrafficLight::setStreet(const std::string &s) {
-    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setStreet()");
-
-    TrafficLight::fStreet = s;
-
-    ENSURE(this->getStreet() == s, "setStreet() postcondition");
-}
-
-void TrafficLight::setPosition(int p) {
-    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setPosition()");
-
-    TrafficLight::fPosition = p;
-
-    ENSURE(this->getPosition() == p, "setPosition() postcondition");
-}
-
-void TrafficLight::setCycle(int c) {
-    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setCycle()");
-
-    TrafficLight::fCycle = c;
-
-    ENSURE(this->getCycle() == c, "setCycle() postcondition");
 }
 
 void TrafficLight::setLastUpdateTime(double u) {

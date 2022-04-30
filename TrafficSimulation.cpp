@@ -11,6 +11,7 @@
 #include "objects/TrafficLight.h"
 #include "objects/Vehicle.h"
 #include "objects/VehicleGenerator.h"
+#include "objects/BusStop.h"
 
 TrafficSimulation::TrafficSimulation() {
     TrafficSimulation::fTime = 0;
@@ -38,6 +39,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
     std::vector<TrafficLight*> trafficLights = parser.getTrafficLights();
     std::vector<Vehicle*> vehicles = parser.getVehicles();
     std::vector<VehicleGenerator*> vehicleGenerators = parser.getVehicleGenerators();
+    std::vector<BusStop*> busStops = parser.getBusStops();
 
     for (long unsigned int i = 0; i < trafficLights.size(); i++) {
         TrafficLight* curTrafficLight = trafficLights[i];
@@ -79,6 +81,17 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
         Street* curStreet = getStreet(curVehicleGenerator->getStreet());
         if (curStreet != NULL && !curStreet->hasVehicleGenerator()) {
             curStreet->setVehicleGenerator(curVehicleGenerator);
+        } else {
+            errStream << "XML IMPORT ABORT: The simulation is not consistent." << std::endl;
+            return ImportAborted;
+        }
+    }
+
+    for (long unsigned int i = 0; i < busStops.size(); i++) {
+        BusStop* curBusStop = busStops[i];
+        Street* curStreet = getStreet(curBusStop->getStreet());
+        if (curStreet != NULL && curBusStop->getPosition() < curStreet->getLength()) {
+            curStreet->addBusStop(curBusStop);
         } else {
             errStream << "XML IMPORT ABORT: The simulation is not consistent." << std::endl;
             return ImportAborted;

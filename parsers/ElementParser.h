@@ -13,10 +13,6 @@
 #include <vector>
 #include "tinyxml/tinyxml.h"
 #include "../DesignByContract.h"
-#include "StreetParser.h"
-#include "TrafficLightParser.h"
-#include "VehicleParser.h"
-#include "VehicleGeneratorParser.h"
 
 enum EParserSucces {
     Success,
@@ -28,6 +24,7 @@ class Street;
 class TrafficLight;
 class Vehicle;
 class VehicleGenerator;
+class BusStop;
 
 class ElementParser {
     TiXmlElement* root;
@@ -38,6 +35,7 @@ class ElementParser {
     std::vector<TrafficLight*> fTrafficLights;
     std::vector<Vehicle*> fVehicles;
     std::vector<VehicleGenerator*> fVehicleGenerators;
+    std::vector<BusStop*> fBusStops;
 
 public:
     /*
@@ -76,6 +74,11 @@ public:
      * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()")
      */
     std::vector<VehicleGenerator*> getVehicleGenerators() const;
+
+    /*
+     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getBusStops()")
+     */
+    std::vector<BusStop*> getBusStops() const;
 };
 
 
