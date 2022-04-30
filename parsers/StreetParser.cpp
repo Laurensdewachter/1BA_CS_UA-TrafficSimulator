@@ -53,9 +53,7 @@ bool StreetParser::parseStreet(TiXmlElement* BAAN, std::ostream &errStream) {
         return false;
     }
 
-    fStreet = new Street();
-    fStreet->setName(name);
-    fStreet->setLength(length);
+    fStreet = new Street(name, length);
 
     ENSURE(fStreet != NULL, "StreetParser could not create a Street");
     ENSURE(fStreet->getName() == name, "parseStreet() postcondition");

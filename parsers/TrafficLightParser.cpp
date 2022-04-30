@@ -9,7 +9,8 @@
 #include "../objects/TrafficLight.h"
 
 TrafficLightParser::TrafficLightParser() {
-    TrafficLightParser::_initCheck = this;
+    _initCheck = this;
+
     ENSURE(properlyInitialized(), "TrafficLightParser constructor did not end in an initialized state");
 }
 
@@ -65,10 +66,7 @@ bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ost
         return false;
     }
 
-    fTrafficLight = new TrafficLight();
-    fTrafficLight->setStreet(street);
-    fTrafficLight->setPosition(position);
-    fTrafficLight->setCycle(cycle);
+    fTrafficLight = new TrafficLight(street, position, cycle);
 
     ENSURE(fTrafficLight != NULL, "TrafficLightParser could not create a TrafficLight");
     ENSURE(fTrafficLight->getStreet() == street, "parseTrafficLight() postcondition");

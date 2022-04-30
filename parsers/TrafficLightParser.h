@@ -16,8 +16,9 @@
 class TrafficLight;
 
 class TrafficLightParser {
-    TrafficLight* fTrafficLight;
     TrafficLightParser* _initCheck;
+
+    TrafficLight* fTrafficLight;
 
 public:
     /*
@@ -33,9 +34,9 @@ public:
      * REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling parseTrafficLight()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good")
      * ENSURE(fTrafficLight != NULL, "TrafficLightParser could not create a TrafficLight")
-     * ENSURE(fTrafficLight->getStreet() == fStreet, "parseTrafficLight() postcondition")
-     * ENSURE(fTrafficLight->getPosition() == fPosition, "parseTrafficLight() postcondition")
-     * ENSURE(fTrafficLight->getCycle() == fCycle, "parseTrafficLight() postcondition")
+     * ENSURE(fTrafficLight->getStreet() == street, "parseTrafficLight() postcondition")
+     * ENSURE(fTrafficLight->getPosition() == position, "parseTrafficLight() postcondition")
+     * ENSURE(fTrafficLight->getCycle() == cycle, "parseTrafficLight() postcondition")
      */
     bool parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ostream &errStream);
 
