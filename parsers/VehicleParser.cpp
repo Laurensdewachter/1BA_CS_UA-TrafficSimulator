@@ -61,6 +61,7 @@ bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream
         missingElements = true;
     } else {
         type = typeElem->FirstChild()->ToText()->Value();
+        std::cout << "type: " << type << std::endl;
     }
 
     if (missingElements || wrongTypes) {
