@@ -15,7 +15,7 @@ link_directories(gtest/lib)
 set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp parsers/tinyxml/tinyxml.cpp parsers/tinyxml/tinyxmlparser.cpp
         parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinystr.cpp
         parsers/ElementParser.cpp objects/Street.cpp objects/TrafficLight.cpp objects/Vehicle.cpp parsers/StreetParser.cpp
-        parsers/TrafficLightParser.cpp parsers/VehicleParser.cpp parsers/VehicleGeneratorParser.cpp
+        parsers/TrafficLightParser.cpp parsers/VehicleParser.cpp parsers/VehicleGeneratorParser.cpp parsers/CrossroadParser.cpp
         objects/VehicleGenerator.cpp TrafficSimulation.cpp)
 
 # Set source files for DEBUG target
@@ -23,7 +23,8 @@ set(DEBUG_SOURCE_FILES tests/TrafficSimulationTests.cpp parsers/tinyxml/tinyxml.
         parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinystr.cpp tests/TrafficSimulationInputTests.cpp
         Utils.cpp TrafficSimulation.cpp parsers/ElementParser.cpp parsers/VehicleParser.cpp parsers/VehicleGeneratorParser.cpp
         parsers/StreetParser.cpp parsers/TrafficLightParser.cpp objects/Street.cpp objects/TrafficLight.cpp objects/Vehicle.cpp
-        objects/VehicleGenerator.cpp tests/TrafficSimulationOutputTests.cpp tests/TrafficSimulationDomainTests.cpp)
+        objects/VehicleGenerator.cpp tests/TrafficSimulationOutputTests.cpp tests/TrafficSimulationDomainTests.cpp parsers/CrossroadParser.cpp
+        )
 
 # Create RELEASE target
 add_executable(TrafficSimulation ${RELEASE_SOURCE_FILES})

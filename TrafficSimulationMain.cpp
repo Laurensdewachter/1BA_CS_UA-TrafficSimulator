@@ -50,6 +50,7 @@ int main(int argc, char** argv) {
             for (int i = 0; i < repetitions; i++) {
                 sim.simulate();
                 //sim.visualize();
+                //sim.writeOn();
             }
         } else {
             std::cout << "both a file and the amount of repetitions must be given" <<std::endl;

@@ -66,6 +66,15 @@ void Street::addVehicle(Vehicle *v) {
     ENSURE(fVehicles.size() == vehiclesSize+1, "addVehicle() postcondition");
 }
 
+void Street::addCrossroad(int position, Street *st) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addCrossroad()");
+
+    unsigned int crossroadSize = fCrossroads.size();
+    fCrossroads[position] = st;
+
+    ENSURE(fCrossroads.size() == crossroadSize+1, "addCrossroad() postcondition");
+}
+
 void Street::setVehicleGenerator(VehicleGenerator *vg) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicleGenerator()");
 
@@ -106,6 +115,12 @@ std::vector<Vehicle*> Street::getVehicles() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getVehicles()");
 
     return fVehicles;
+}
+
+std::map<int, Street *> Street::getCrossroads() const {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getCrossroads()");
+
+    return fCrossroads;
 }
 
 bool Street::hasVehicleGenerator() const {

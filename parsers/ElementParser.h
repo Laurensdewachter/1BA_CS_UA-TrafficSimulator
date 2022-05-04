@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include "tinyxml/tinyxml.h"
 #include "../DesignByContract.h"
 #include "StreetParser.h"
@@ -40,7 +41,6 @@ class ElementParser {
     std::vector<TrafficLight*> fTrafficLights;
     std::vector<Vehicle*> fVehicles;
     std::vector<VehicleGenerator*> fVehicleGenerators;
-    std::vector<Crossroad*> fCrossroads;
 
 public:
     /*
@@ -81,10 +81,7 @@ public:
     std::vector<VehicleGenerator*> getVehicleGenerators() const;
 
 
-    /*
-     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getCrossroads()")
-     */
-    std::vector<Crossroad*> getCrossroads() const;
+
 };
 
 

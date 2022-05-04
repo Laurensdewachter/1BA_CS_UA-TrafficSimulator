@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 class TrafficLight;
 class Vehicle;
@@ -24,6 +25,7 @@ class Street {
     std::vector<TrafficLight*> fTrafficLights;
     std::vector<Vehicle*> fVehicles;
     VehicleGenerator* fVehicleGenerator;
+    std::map<int,Street*> fCrossroads; // positie waar die kruist, pointer naar street dat wordt gekruist
 
 public:
     /*
@@ -60,6 +62,12 @@ public:
     void addVehicle(Vehicle* v);
 
     /*
+    * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addCrossroad()")
+    * ENSURE(fVehicles.size() >= 1, "addCrossroad() postcondition")
+    */
+    void addCrossroad(int position, Street* st);
+
+    /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicleGenerator()")
      * ENSURE(fVehicleGenerator == vg, "addVehicleGenerator() postcondition")
      */
@@ -90,6 +98,12 @@ public:
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getVehicles()")
      */
     std::vector<Vehicle*> getVehicles() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getCrossroads()")
+     */
+    std::map<int,Street*> getCrossroads() const;
+
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling hasVehicleGenerator()")

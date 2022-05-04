@@ -82,10 +82,9 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
                     continue;
                 }
                 if (type == "KRUISPUNT"){
-                    std::cout << "kruispunt detected" <<std::endl;
                     CrossroadParser cParser;
-                    if (cParser.parseCrossroad(elem,errStream)) {
-                        fCrossroads.push_back(cParser.getCrossroad());
+                    if (cParser.parseCrossroad(elem,errStream,this)) {
+
                     }else {
                         endResult = PartialImport;
                     }
@@ -126,9 +125,4 @@ std::vector<Vehicle*> ElementParser::getVehicles() const {
 std::vector<VehicleGenerator*> ElementParser::getVehicleGenerators() const {
     ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()");
     return ElementParser::fVehicleGenerators;
-}
-
-std::vector<Crossroad*> ElementParser::getCrossroads() const {
-    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getCrossroads()");
-    return ElementParser::fCrossroads;
 }

@@ -9,11 +9,11 @@
 #include "tinyxml/tinyxml.h"
 #include <sstream>
 
-class Crossroad;
+class Street;
+class ElementParser;
 
 class CrossroadParser {
     CrossroadParser* _initCheck;
-    Crossroad* fCrossroad;
 
 public:
     /*
@@ -31,13 +31,10 @@ public:
      * ENSURE(fCrossroad != NULL, "CrossroadParser could not create a Crossroad")
      * ENSURE(fCrossroad->getStreets() == fStreets, "parseCrossroad() postcondition")
      */
-    bool parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errStream);
+    bool parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errStream,ElementParser* streets);
 
-    /*
-    * REQUIRE(properlyInitialized(), "CrossroadParser wasn't initialized when calling getCrossroad()")
-    * REQUIRE(fCrossroad != NULL, "CrossroadParser had no crossroad when calling getCrossroad()")
-    */
-    Crossroad *getCrossroad() const;
+
+    bool isDigits(std::string &input) const;
 };
 
 
