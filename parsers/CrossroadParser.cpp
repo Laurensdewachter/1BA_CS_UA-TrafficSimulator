@@ -95,10 +95,10 @@ bool CrossroadParser::parseCrossroad(TiXmlElement *KRUISPUNT, std::ostream &errS
         return false;
     }
 
-    std::cout << "__ Kruispunt __" <<std::endl;
-    std::cout << "Baan : " << firstStreet << " -> Positie: " << firstPosition << std::endl;
-    std::cout << "Baan : " << secondStreet << " -> Positie: " << secondPosition << std::endl;
-    std::cout << std::endl;
+//    std::cout << "__ Kruispunt __" <<std::endl;
+//    std::cout << "Baan : " << firstStreet << " -> Positie: " << firstPosition << std::endl;
+//    std::cout << "Baan : " << secondStreet << " -> Positie: " << secondPosition << std::endl;
+//    std::cout << std::endl;
 
 
     bool exists1 = false; bool exists2 = false;

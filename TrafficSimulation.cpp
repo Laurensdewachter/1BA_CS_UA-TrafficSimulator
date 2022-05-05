@@ -5,6 +5,7 @@
 // Description  : This code is contains the `TrafficSimulation` class
 // ===========================================================
 
+#include <iomanip>
 #include "TrafficSimulation.h"
 #include "Variables.h"
 #include "objects/Street.h"
@@ -177,6 +178,66 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
     onstream << "} ] }" << std::endl;
 
     ENSURE(onstream.good(), "The outputStream wasn't good at the end of visualize()");
+}
+
+void TrafficSimulation::graph(std::ostream &onstream) const {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling graph()");
+    REQUIRE(onstream.good(), "The outputStream wasn't good when calling graph()");
+    std::string verkeerslichten = " > verkeerslichten";
+    std::string bushaltes = " > bushaltes";
+
+    for(int i = 0; i<(int)getStreets().size(); i++){
+        std::vector<Vehicle*> vehicles = getStreets()[i]->getVehicles();
+        std::vector<TrafficLight*> lights = getStreets()[i]->getTrafficLights();
+        std::vector<BusStop*> busstops; getStreets()[i]->getBusStops();
+        
+        std::vector<int> sizes; sizes.push_back(fStreets[i]->getName().size()); sizes.push_back(bushaltes.size()); sizes.push_back(verkeerslichten.size());
+        int alignment = *max_element(sizes.begin(),sizes.end()) + 2;
+
+        std::string line1 = "==================================================";
+        std::string line2 = "                                                  ";
+        std::string line3 = "                                                  ";
+
+        std::vector<int> haltePos;
+        for(int s = 0; s < (int)getStreets()[i]->getLength()/10;s++){
+            for(int j = 0; j < (int)vehicles.size(); j++){
+
+                if(s == (int)vehicles[j]->getPosition()/10){
+                    line1[s] = vehicles[j]->getAcronym(vehicles[j]->getType());
+                }
+            }
+
+            for(int l = 0; l < (int)lights.size(); l++){
+
+                if(s == (int)lights[l]->getPosition()/10){
+                    char state = 'R';
+
+                    if(lights[l]->isGreen()){state = 'G';}
+
+                    line2[s] = state;
+                }
+            }
+
+//            for(int b = 0; b<(int))
+
+        }
+
+
+
+
+        onstream << std::left;
+
+        onstream.width(alignment); onstream  << fStreets[i]->getName()  << "| " << line1 << std::endl;
+        onstream.width(alignment); onstream  << verkeerslichten         << "| " << line2 << std::endl;
+        onstream.width(alignment); onstream  << bushaltes               << "| " << line3 << std::endl;
+
+        onstream  << std::endl;
+
+    }
+
+
+
+    ENSURE(onstream.good(), "The outputStream wasn't good at the end of graph()");
 }
 
 void TrafficSimulation::simulate() {

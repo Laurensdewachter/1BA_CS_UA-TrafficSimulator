@@ -3,14 +3,7 @@
         <naam>Turnhoutsebaan</naam>
         <lengte>500</lengte>
     </BAAN>
-    <BAAN>
-        <naam>Floralienlaan</naam>
-        <lengte>500</lengte>
-    </BAAN>
-    <BAAN>
-        <naam>Beukenlaan</naam>
-        <lengte>500</lengte>
-    </BAAN>
+
 
     <VOERTUIG>
         <baan>Turnhoutsebaan</baan>
@@ -28,11 +21,10 @@
         <positie>200</positie>
         <cyclus>20</cyclus>
     </VERKEERSLICHT>
-
-
-    <KRUISPUNT>
-        <baan positie="400">Turnhoutsebaan</baan>
-        <baan positie="500">Floralienlaan</baan>
-    </KRUISPUNT>
+    <VERKEERSLICHT>
+        <baan>Turnhoutsebaan</baan>
+        <positie>100</positie>
+        <cyclus>10</cyclus>
+    </VERKEERSLICHT>
 
 </SIMULATIE>

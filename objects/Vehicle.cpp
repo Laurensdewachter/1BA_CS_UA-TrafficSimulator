@@ -82,6 +82,35 @@ EVehicleType Vehicle::getType() const {
     return fType;
 }
 
+char Vehicle::getAcronym(int indexOfEnum) const {
+    char typeOfVehicle;
+
+    switch (indexOfEnum){
+        case 0:
+            typeOfVehicle = 'A'; // Auto
+            break;
+        case 1:
+            typeOfVehicle = 'B'; // Bus
+            break;
+        case 2:
+            typeOfVehicle = 'F'; // FireEngine
+            break;
+        case 3:
+            typeOfVehicle = 'A'; // Ambulance
+            break;
+        case 4:
+            typeOfVehicle = 'P'; // PoliceCar
+            break;
+
+        default:
+            typeOfVehicle = 'X';
+            break;
+    }
+
+    return typeOfVehicle;
+
+}
+
 void Vehicle::drive(Vehicle* vehicleInFront) {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()");
 
