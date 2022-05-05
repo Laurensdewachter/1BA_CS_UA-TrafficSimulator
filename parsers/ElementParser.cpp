@@ -12,6 +12,7 @@
 #include "VehicleParser.h"
 #include "VehicleGeneratorParser.h"
 #include "BusStopParser.h"
+#include "CrossroadParser.h"
 
 ElementParser::ElementParser() {
     _initCheck = this;
@@ -38,8 +39,7 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
     if (root == NULL) {
         errStream << "XML PARTIAL IMPORT: No root element." << std::endl;
         endResult = PartialImport;
-    }
-    else {
+    } else {
         TiXmlElement *elem = root->FirstChildElement();
         while (elem != NULL) {
             try {
@@ -49,8 +49,7 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
                     StreetParser sParser;
                     if (sParser.parseStreet(elem, errStream)) {
                         fStreets.push_back(sParser.getStreet());
-                    }
-                    else {
+                    } else {
                         endResult = PartialImport;
                     }
                     elem = elem->NextSiblingElement();
@@ -86,19 +85,23 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
                     elem = elem->NextSiblingElement();
                     continue;
                 }
-                if (type == "KRUISPUNT"){
-                    CrossroadParser cParser;
-                    if (cParser.parseCrossroad(elem,errStream,this)) {
-
-                    } else {
-                        endResult = PartialImport;
-                    }
-                    elem = elem->NextSiblingElement();
-                    continue;
                 if (type == "BUSHALTE") {
                     BusStopParser bsParser;
                     if (bsParser.parseBusStop(elem, errStream)) {
                         fBusStops.push_back(bsParser.getBusStop());
+                    } else {
+                        endResult = PartialImport;
+                    }
+                        elem = elem->NextSiblingElement();
+                        continue;
+                }
+                if (type == "KRUISPUNT") {
+                    CrossroadParser cParser;
+                    if (cParser.parseCrossroad(elem, errStream)) {
+                        std::pair<std::pair<std::string, unsigned int>, std::pair<std::string, unsigned int> > crossroadPair;
+                        crossroadPair.first = cParser.getStreet1();
+                        crossroadPair.second = cParser.getStreet2();
+                        fCrossroads.push_back(crossroadPair);
                     } else {
                         endResult = PartialImport;
                     }
@@ -107,45 +110,51 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
                 }
                 errStream << "XML IMPORT: Unexpected element <" << type << ">." << std::endl;
 
-            } catch (std::exception &e) {
-                errStream << "XML PARTIAL IMPORT: " << e.what() << "." << std::endl;
-                endResult = PartialImport;
-            }
+            } catch (std::exception & e) {
+                    errStream << "XML PARTIAL IMPORT: " << e.what() << "." << std::endl;
+                    endResult = PartialImport;
+                }
 
-            elem = elem->NextSiblingElement();
+                elem = elem->NextSiblingElement();
+            }
         }
-    }
     doc.Clear();
 
     return endResult;
 }
 
 std::vector<Street*> ElementParser::getStreets() const {
-    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()");
+    REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()");
 
     return fStreets;
 }
 
 std::vector<TrafficLight*> ElementParser::getTrafficLights() const {
-    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getTrafficLights()");
+    REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getTrafficLights()");
 
     return fTrafficLights;
 }
 
 std::vector<Vehicle*> ElementParser::getVehicles() const {
-    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicles()");
+    REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicles()");
 
     return fVehicles;
 }
 
 std::vector<VehicleGenerator*> ElementParser::getVehicleGenerators() const {
-    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()");
+    REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()");
 
     return fVehicleGenerators;
 }
 
 std::vector<BusStop *> ElementParser::getBusStops() const {
-    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getBusStops()");
+    REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getBusStops()");
 
     return fBusStops;
+}
+
+const std::vector<std::pair<std::pair<std::string, unsigned int>, std::pair<std::string, unsigned int> > > &ElementParser::getCrossroads() const {
+    REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getCrossroads()");
+
+    return fCrossroads;
 }

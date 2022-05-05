@@ -17,14 +17,14 @@ set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp parsers/tinyxml/tinyxml.cpp p
         parsers/ElementParser.cpp objects/Street.cpp objects/TrafficLight.cpp objects/Vehicle.cpp parsers/StreetParser.cpp
         parsers/TrafficLightParser.cpp parsers/VehicleParser.cpp parsers/VehicleGeneratorParser.cpp
         objects/VehicleGenerator.cpp TrafficSimulation.cpp objects/BusStop.cpp objects/BusStop.h parsers/BusStopParser.cpp parsers/BusStopParser.h
-        parsers/CrossroadParser.cpp)
+        parsers/CrossroadParser.cpp objects/Crossroad.cpp objects/Crossroad.h)
 
 # Set source files for DEBUG target
 set(DEBUG_SOURCE_FILES tests/TrafficSimulationTests.cpp parsers/tinyxml/tinyxml.cpp parsers/tinyxml/tinyxmlparser.cpp
         parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinyxmlerror.cpp parsers/tinyxml/tinystr.cpp tests/TrafficSimulationInputTests.cpp
         Utils.cpp TrafficSimulation.cpp parsers/ElementParser.cpp parsers/VehicleParser.cpp parsers/VehicleGeneratorParser.cpp
         parsers/StreetParser.cpp parsers/TrafficLightParser.cpp objects/Street.cpp objects/TrafficLight.cpp objects/Vehicle.cpp
-        objects/VehicleGenerator.cpp tests/TrafficSimulationOutputTests.cpp tests/TrafficSimulationDomainTests.cpp objects/BusStop.cpp objects/BusStop.h parsers/BusStopParser.cpp parsers/BusStopParser.h parsers/CrossroadParser.cpp)
+        objects/VehicleGenerator.cpp tests/TrafficSimulationOutputTests.cpp tests/TrafficSimulationDomainTests.cpp objects/BusStop.cpp objects/BusStop.h parsers/BusStopParser.cpp parsers/BusStopParser.h parsers/CrossroadParser.cpp objects/Crossroad.cpp objects/Crossroad.h)
 
 # Create RELEASE target
 add_executable(TrafficSimulation ${RELEASE_SOURCE_FILES})

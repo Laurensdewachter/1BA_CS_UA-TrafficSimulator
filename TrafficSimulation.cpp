@@ -41,6 +41,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
     std::vector<Vehicle*> vehicles = parser.getVehicles();
     std::vector<VehicleGenerator*> vehicleGenerators = parser.getVehicleGenerators();
     std::vector<BusStop*> busStops = parser.getBusStops();
+    std::vector<std::pair<std::pair<std::string, unsigned int>, std::pair<std::string, unsigned int> > > crossroads = parser.getCrossroads();
 
     for (long unsigned int i = 0; i < trafficLights.size(); i++) {
         TrafficLight* curTrafficLight = trafficLights[i];
@@ -97,6 +98,19 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
             errStream << "XML IMPORT ABORT: The simulation is not consistent." << std::endl;
             return ImportAborted;
         }
+    }
+
+    for (long unsigned int i = 0; i < crossroads.size(); i++) {
+        std::pair<std::string, unsigned int> curPair1 = crossroads[i].first;
+        std::pair<std::string, unsigned int> curPair2 = crossroads[i].second;
+        Street* curStreet1 = getStreet(curPair1.first);
+        Street* curStreet2 = getStreet(curPair2.first);
+        if (curStreet1 == NULL || curStreet2 == NULL || (int) curPair1.second > curStreet1->getLength() || (int) curPair2.second > curStreet2->getLength()) {
+            errStream << "XML IMPORT ABORT: The simulation is not consistent." << std::endl;
+            return ImportAborted;
+        }
+        curStreet1->addCrossroad(curStreet2, curPair1.second);
+        curStreet2->addCrossroad(curStreet1, curPair2.second);
     }
 
     for (unsigned int i = 0; i < fStreets.size(); i++) {

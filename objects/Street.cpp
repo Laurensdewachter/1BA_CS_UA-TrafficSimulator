@@ -60,11 +60,14 @@ void Street::addBusStop(BusStop *b) {
     ENSURE(fBusStops.size() == busStopsSize+1, "addBusStop() postcondition");
 }
 
-void Street::addCrossroad(int position, Street *st) {
+void Street::addCrossroad(Street* crossingStreet, unsigned int position) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addCrossroad()");
 
     unsigned int crossroadSize = fCrossroads.size();
-    fCrossroads[position] = st;
+    std::pair<Street*, unsigned int> addPair;
+    addPair.first = crossingStreet;
+    addPair.second = position;
+    fCrossroads.push_back(addPair);
 
     ENSURE(fCrossroads.size() == crossroadSize+1, "addCrossroad() postcondition");
 }
@@ -111,7 +114,13 @@ std::vector<Vehicle*> Street::getVehicles() const {
     return fVehicles;
 }
 
-std::map<int, Street *> Street::getCrossroads() const {
+std::vector<BusStop*> Street::getBusStops() const {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getBusStops()");
+
+    return fBusStops;
+}
+
+std::vector<std::pair<Street*, unsigned int> > Street::getCrossroads() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getCrossroads()");
 
     return fCrossroads;

@@ -38,6 +38,7 @@ class ElementParser {
     std::vector<Vehicle*> fVehicles;
     std::vector<VehicleGenerator*> fVehicleGenerators;
     std::vector<BusStop*> fBusStops;
+    std::vector<std::pair<std::pair<std::string, unsigned int>, std::pair<std::string, unsigned int> > > fCrossroads;
 
 public:
     /*
@@ -50,38 +51,40 @@ public:
     bool properlyInitialized() const;
 
     /*
-     * This method loads an XML file and immediately parses it using the individual parsers for each element type.
-     * Returns true when the file was loaded successfully.
      * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling parseFile()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good")
      */
     EParserSucces parseFile(const std::string &filename, std::ostream &errStream);
 
     /*
-     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()")
+     * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()")
      */
     std::vector<Street*> getStreets() const;
 
     /*
-     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getTrafficLights()")
+     * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getTrafficLights()")
      */
     std::vector<TrafficLight*> getTrafficLights() const;
 
     /*
-     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicles()")
+     * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicles()")
      */
     std::vector<Vehicle*> getVehicles() const;
 
     /*
-     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()")
+     * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()")
      */
     std::vector<VehicleGenerator*> getVehicleGenerators() const;
 
     /*
-     * ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getBusStops()")
+     * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getBusStops()")
      */
     std::vector<BusStop*> getBusStops() const;
-};
 
+    /*
+     * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getCrossroads()")
+     */
+    const std::vector<std::pair<std::pair<std::string, unsigned int>, std::pair<std::string, unsigned int> > > &getCrossroads() const;
+};
 
 #endif
