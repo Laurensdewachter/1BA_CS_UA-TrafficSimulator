@@ -86,6 +86,15 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
                     elem = elem->NextSiblingElement();
                     continue;
                 }
+                if (type == "KRUISPUNT"){
+                    CrossroadParser cParser;
+                    if (cParser.parseCrossroad(elem,errStream,this)) {
+
+                    } else {
+                        endResult = PartialImport;
+                    }
+                    elem = elem->NextSiblingElement();
+                    continue;
                 if (type == "BUSHALTE") {
                     BusStopParser bsParser;
                     if (bsParser.parseBusStop(elem, errStream)) {

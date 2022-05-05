@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include "tinyxml/tinyxml.h"
 #include "../DesignByContract.h"
 
@@ -25,6 +26,7 @@ class TrafficLight;
 class Vehicle;
 class VehicleGenerator;
 class BusStop;
+class Crossroad;
 
 class ElementParser {
     TiXmlElement* root;

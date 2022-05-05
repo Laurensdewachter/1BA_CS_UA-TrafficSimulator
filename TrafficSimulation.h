@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <algorithm>
 #include "DesignByContract.h"
 #include "parsers/ElementParser.h"
 
@@ -54,6 +55,13 @@ public:
      * ENSURE(onstream.good(), "The outputStream wasn't good at the end of visualize()")
      */
     void visualize(std::ostream &onstream = std::cout) const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling graph()")
+     * REQUIRE(onstream.good(), "The outputStream wasn't good when calling graph()")
+     * ENSURE(onstream.good(), "The outputStream wasn't good at the end of graph()")
+     */
+    void graph(std::ostream &onstream = std::cout) const;
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()")

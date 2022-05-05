@@ -98,6 +98,11 @@ public:
     EVehicleType getType() const;
 
     /*
+    * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getAcronym()")
+    */
+    char getAcronym(int indexOfEnum) const;
+
+    /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling drive()")
      * ENSURE(fPosition >= startPosition, "drive() postcondition")
      */

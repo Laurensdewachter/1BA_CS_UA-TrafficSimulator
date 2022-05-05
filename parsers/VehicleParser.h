@@ -15,7 +15,6 @@ class Vehicle;
 
 class VehicleParser {
     VehicleParser* _initCheck;
-
     Vehicle* fVehicle;
 
 public:
