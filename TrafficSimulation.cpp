@@ -223,9 +223,7 @@ void TrafficSimulation::graph(std::ostream &onstream) const {
 
         int streetlength = (int)getStreets()[i]->getLength()/10;
 
-        std::string line1; //TODO: zet lengte van dit gelijk aan straatlengte/10, want straat van 600 zal nu niet lukken als iets tussen 50-60 zit
-        std::string line2;
-        std::string line3;
+        std::string line1; std::string line2; std::string line3;
 
         for(int stl = 0; stl<streetlength;stl++){
             line1 += "="; line2 += " "; line3 += " ";
