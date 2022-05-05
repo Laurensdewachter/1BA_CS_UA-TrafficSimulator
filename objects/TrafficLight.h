@@ -24,29 +24,11 @@ public:
     /*
      * ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
      */
-    TrafficLight();
+    TrafficLight(const std::string &street, int position, int cycle);
 
     virtual ~TrafficLight();
 
     bool properlyInitialized() const;
-
-    /*
-     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setStreet()")
-     * ENSURE(this->getStreet() == s, "setStreet() postcondition")
-     */
-    void setStreet(const std::string &s);
-
-    /*
-     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setPosition()")
-     * ENSURE(this->getPosition() == p, "setPosition() postcondition")
-     */
-    void setPosition(int p);
-
-    /*
-     * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setCycle()")
-     * ENSURE(this->getCycle() == c, "setCycle() postcondition")
-     */
-    void setCycle(int c);
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLastUpdateTime()")

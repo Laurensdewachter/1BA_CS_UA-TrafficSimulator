@@ -1,7 +1,5 @@
 # Traffic Simulation
 
-### [Contracts](Contracts.md)
-
 ### Tests
 The tests need the directories `testInput` & `testOutput` to run.  
 - `testInput` contains all the files that are compared to the test results and therefore need to be established before

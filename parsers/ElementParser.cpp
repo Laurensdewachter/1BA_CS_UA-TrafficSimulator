@@ -7,9 +7,14 @@
 // ===========================================================
 
 #include "ElementParser.h"
+#include "StreetParser.h"
+#include "TrafficLightParser.h"
+#include "VehicleParser.h"
+#include "VehicleGeneratorParser.h"
+#include "BusStopParser.h"
 
 ElementParser::ElementParser() {
-    ElementParser::_initCheck = this;
+    _initCheck = this;
     ENSURE(properlyInitialized(), "ElementParser constructor did not end in an initialized state");
 }
 
@@ -85,13 +90,21 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
                     CrossroadParser cParser;
                     if (cParser.parseCrossroad(elem,errStream,this)) {
 
-                    }else {
+                    } else {
+                        endResult = PartialImport;
+                    }
+                    elem = elem->NextSiblingElement();
+                    continue;
+                if (type == "BUSHALTE") {
+                    BusStopParser bsParser;
+                    if (bsParser.parseBusStop(elem, errStream)) {
+                        fBusStops.push_back(bsParser.getBusStop());
+                    } else {
                         endResult = PartialImport;
                     }
                     elem = elem->NextSiblingElement();
                     continue;
                 }
-
                 errStream << "XML IMPORT: Unexpected element <" << type << ">." << std::endl;
 
             } catch (std::exception &e) {
@@ -109,20 +122,30 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
 
 std::vector<Street*> ElementParser::getStreets() const {
     ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()");
-    return ElementParser::fStreets;
+
+    return fStreets;
 }
 
 std::vector<TrafficLight*> ElementParser::getTrafficLights() const {
     ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getTrafficLights()");
-    return ElementParser::fTrafficLights;
+
+    return fTrafficLights;
 }
 
 std::vector<Vehicle*> ElementParser::getVehicles() const {
     ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicles()");
-    return ElementParser::fVehicles;
+
+    return fVehicles;
 }
 
 std::vector<VehicleGenerator*> ElementParser::getVehicleGenerators() const {
     ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getVehicleGenerators()");
-    return ElementParser::fVehicleGenerators;
+
+    return fVehicleGenerators;
+}
+
+std::vector<BusStop *> ElementParser::getBusStops() const {
+    ENSURE(properlyInitialized(), "ElementParser wasn't initialized when calling getBusStops()");
+
+    return fBusStops;
 }

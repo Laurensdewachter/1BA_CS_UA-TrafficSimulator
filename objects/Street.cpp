@@ -12,9 +12,9 @@
 #include "../DesignByContract.h"
 #include "../Variables.h"
 
-Street::Street() {
+Street::Street(const std::string &name, int length) : fName(name), fLength(length) {
     fVehicleGenerator = NULL;
-    Street::_initCheck = this;
+    _initCheck = this;
 
     ENSURE(properlyInitialized(), "Street constructor did not end in an initialized state");
 }
@@ -33,28 +33,13 @@ bool Street::properlyInitialized() const {
     return Street::_initCheck == this;
 }
 
-void Street::setName(const std::string &n) {
-    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setName()");
-
-    Street::fName = n;
-
-    ENSURE(this->getName() == n, "setName() postcondition");
-}
-
-void Street::setLength(int l) {
-    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setLength()");
-
-    Street::fLength = l;
-
-    ENSURE(this->getLength() == l, "setLength() postcondition");
-}
-
 void Street::addTrafficLight(TrafficLight *t) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addTrafficLight()");
 
+    unsigned int trafficLightsSize = fTrafficLights.size();
     fTrafficLights.push_back(t);
 
-    ENSURE(!fTrafficLights.empty(), "addTrafficLight() postcondition");
+    ENSURE(fTrafficLights.size() == trafficLightsSize+1, "addTrafficLight() postcondition");
 }
 
 void Street::addVehicle(Vehicle *v) {
@@ -64,6 +49,15 @@ void Street::addVehicle(Vehicle *v) {
     fVehicles.push_back(v);
 
     ENSURE(fVehicles.size() == vehiclesSize+1, "addVehicle() postcondition");
+}
+
+void Street::addBusStop(BusStop *b) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addBusStop()");
+
+    unsigned int busStopsSize = fBusStops.size();
+    fBusStops.push_back(b);
+
+    ENSURE(fBusStops.size() == busStopsSize+1, "addBusStop() postcondition");
 }
 
 void Street::addCrossroad(int position, Street *st) {

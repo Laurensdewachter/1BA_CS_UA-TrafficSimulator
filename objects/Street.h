@@ -15,7 +15,7 @@
 class TrafficLight;
 class Vehicle;
 class VehicleGenerator;
-class TrafficSimulation;
+class BusStop;
 
 class Street {
     Street* _initCheck;
@@ -24,6 +24,7 @@ class Street {
     int fLength;
     std::vector<TrafficLight*> fTrafficLights;
     std::vector<Vehicle*> fVehicles;
+    std::vector<BusStop*> fBusStops;
     VehicleGenerator* fVehicleGenerator;
     std::map<int,Street*> fCrossroads; // positie waar die kruist, pointer naar street dat wordt gekruist
 
@@ -31,40 +32,34 @@ public:
     /*
      * ENSURE(properlyInitialized(), "Street constructor did not end in an initialized state")
      */
-    Street();
+    Street(const std::string &name, int length);
 
     virtual ~Street();
 
     bool properlyInitialized() const;
 
     /*
-     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setName()")
-     * ENSURE(this->getName() == n, "setName() postcondition")
-     */
-    void setName(const std::string &n);
-
-    /*
-     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling setLength()")
-     * ENSURE(this->getLength() == l, "setLength() postcondition")
-     */
-    void setLength(int l);
-
-    /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addTrafficLight()")
-     * ENSURE(!fTrafficLights.empty(), "addTrafficLight() postcondition")
+     *     ENSURE(fTrafficLights.size() == trafficLightsSize+1, "addTrafficLight() postcondition")
      */
     void addTrafficLight(TrafficLight* t);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicle()")
-     * ENSURE(fVehicles.size() >= 1, "addVehicle() postcondition")
+     *     ENSURE(fVehicles.size() == vehiclesSize+1, "addVehicle() postcondition")
      */
     void addVehicle(Vehicle* v);
 
+     /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addBusStop()")
+     * ENSURE(fBusStops.size() == busStopsSize+1, "addBusStop() postcondition")
+     */
+    void addBusStop(BusStop* b);
+  
     /*
-    * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addCrossroad()")
-    * ENSURE(fVehicles.size() >= 1, "addCrossroad() postcondition")
-    */
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addCrossroad()")
+     * ENSURE(fVehicles.size() >= 1, "addCrossroad() postcondition")
+     */
     void addCrossroad(int position, Street* st);
 
     /*
