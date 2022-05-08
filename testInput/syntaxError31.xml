@@ -3,9 +3,9 @@
         <naam>Turnhoutsebaan</naam>
         <lengte>300</lengte>
     </BAAN>
-    <VOERTUIG>
-        <baan>Turnhoutsebaan</baan
-        <positie>0</positie>
+    <VOERTUIGGENERATOR>
+        <baan>Turnhoutsebaan</baan>
+        <frequentie10</frequentie>
         <type>auto</type>
-    </VOERTUIG>
+    </VOERTUIGGENERATOR>
 </SIMULATIE>

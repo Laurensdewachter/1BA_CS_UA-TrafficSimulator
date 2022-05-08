@@ -1,1 +1,1 @@
-XML PARTIAL IMPORT: Expected <type> to be one of the following: auto, bus, brandweerwagen, ziekenwagen, politiecombi.
+XML IMPORT ABORTED: Error reading end tag.

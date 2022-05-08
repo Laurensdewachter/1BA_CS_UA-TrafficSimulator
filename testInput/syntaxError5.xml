@@ -1,12 +1,6 @@
 <SIMULATIE>
     <BAAN>
-        <naam>Turnhoutsebaan</naam>
-        <lengte>2000</lengte>
+        naam>Turnhoutsebaan</naam>
+        <lengte>300</lengte>
     </BAAN>
-    <VOERTUIGGENERATOR>
-        <baan>Turnhoutsebaan</baan>
-        # frequentie should be an integer
-        <frequentie>test</frequentie>
-        <type>auto</type>
-    </VOERTUIGGENERATOR>
 </SIMULATIE>

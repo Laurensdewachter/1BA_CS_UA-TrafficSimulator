@@ -4,7 +4,7 @@
         <lengte>300</lengte>
     </BAAN>
     <VOERTUIG>
-        <baan>Turnhoutsebaan</baan
+        # missing street
         <positie>0</positie>
         <type>auto</type>
     </VOERTUIG>
