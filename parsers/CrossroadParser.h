@@ -1,19 +1,25 @@
-//
-// Created by sunaj on 28/04/22.
-//
+// ===========================================================
+// Name         : CrossroadParser.h
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is used to parse an XML file that contains either a `Crossroad`.
+// ===========================================================
 
 #ifndef TRAFFICSIMULATION_CROSSROADPARSER_H
 #define TRAFFICSIMULATION_CROSSROADPARSER_H
 
 #include <iostream>
+#include <map>
 #include "tinyxml/tinyxml.h"
-#include <sstream>
 
 class Street;
 class ElementParser;
 
 class CrossroadParser {
     CrossroadParser* _initCheck;
+
+    std::pair<std::string, unsigned int> fStreet1;
+    std::pair<std::string, unsigned int> fStreet2;
 
 public:
     /*
@@ -28,14 +34,18 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "CrossroadParser wasn't initialized when calling parseCrossroad()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good")
-     * ENSURE(fCrossroad != NULL, "CrossroadParser could not create a Crossroad")
-     * ENSURE(fCrossroad->getStreets() == fStreets, "parseCrossroad() postcondition")
      */
-    bool parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errStream,ElementParser* streets);
+    bool parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errStream);
 
+    /*
+     * REQUIRE(properlyInitialized(), "CrossroadParser wasn't initialized when calling getStreet1()")
+     */
+    const std::pair<std::string, unsigned int> &getStreet1() const;
 
-    bool isDigits(std::string &input) const;
+    /*
+     * REQUIRE(properlyInitialized(), "CrossroadParser wasn't initialized when calling getStreet2()")
+     */
+    const std::pair<std::string, unsigned int> &getStreet2() const;
 };
 
-
-#endif //TRAFFICSIMULATION_CROSSROADPARSER_H
+#endif

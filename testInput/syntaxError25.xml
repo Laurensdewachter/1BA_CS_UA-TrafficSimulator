@@ -1,0 +1,11 @@
+<SIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>300</lengte>
+    </BAAN>
+    <VERKEERSLICHT>
+        <baan>Turnhoutsebaan</baan>
+        # missing position
+        <cyclus>10</cyclus>
+    </VERKEERSLICHT>
+</SIMULATIE>

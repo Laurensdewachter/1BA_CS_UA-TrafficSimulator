@@ -1,0 +1,14 @@
+<SIMULATIE>
+    <BAAN>
+        <naam>Turnhoutsebaan</naam>
+        <lengte>2000</lengte>
+    </BAAN>
+    <BAAN>
+        <naam>Middelheimbaan</naam>
+        <lengte>500</lengte>
+    </BAAN>
+    <KRUISPUNT>
+        <baan positie="1000">Turnhoutsebaan</baan>
+        <baan positie="1500">Middelheimbaan</baan>
+    </KRUISPUNT>
+</SIMULATIE>

@@ -7,7 +7,11 @@
 
 #include "VehicleParser.h"
 #include "../DesignByContract.h"
-#include "../objects/Vehicle.h"
+#include "../objects/vehicles/Car.h"
+#include "../objects/vehicles/Bus.h"
+#include "../objects/vehicles/FireEngine.h"
+#include "../objects/vehicles/Ambulance.h"
+#include "../objects/vehicles/PoliceCar.h"
 
 #include <sstream>
 
@@ -68,15 +72,15 @@ bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream
     }
 
     if (type == "auto") {
-        fVehicle = new Vehicle(street, position, Car);
+        fVehicle = new Car(street, position);
     } else if (type == "bus") {
-        fVehicle = new Vehicle(street, position, Bus);
+        fVehicle = new Bus(street, position);
     } else if (type == "brandweerwagen") {
-        fVehicle = new Vehicle(street, position, FireEngine);
+        fVehicle = new FireEngine(street, position);
     } else if (type == "ziekenwagen") {
-        fVehicle = new Vehicle(street, position, Ambulance);
+        fVehicle = new Ambulance(street, position);
     } else if (type == "politiecombi") {
-        fVehicle = new Vehicle(street, position, PoliceCar);
+        fVehicle = new PoliceCar(street, position);
     } else {
         errStream << "XML PARTIAL IMPORT: Expected <type> to be one of the following: auto, bus, brandweerwagen, ziekenwagen, politiecombi." << std::endl;
         return false;

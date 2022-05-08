@@ -8,6 +8,11 @@
 #include "Street.h"
 #include "TrafficLight.h"
 #include "Vehicle.h"
+#include "vehicles/Car.h"
+#include "vehicles/Bus.h"
+#include "vehicles/FireEngine.h"
+#include "vehicles/Ambulance.h"
+#include "vehicles/PoliceCar.h"
 #include "VehicleGenerator.h"
 #include "../DesignByContract.h"
 #include "../Variables.h"
@@ -60,11 +65,14 @@ void Street::addBusStop(BusStop *b) {
     ENSURE(fBusStops.size() == busStopsSize+1, "addBusStop() postcondition");
 }
 
-void Street::addCrossroad(int position, Street *st) {
+void Street::addCrossroad(Street* crossingStreet, unsigned int position) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addCrossroad()");
 
     unsigned int crossroadSize = fCrossroads.size();
-    fCrossroads[position] = st;
+    std::pair<Street*, unsigned int> addPair;
+    addPair.first = crossingStreet;
+    addPair.second = position;
+    fCrossroads.push_back(addPair);
 
     ENSURE(fCrossroads.size() == crossroadSize+1, "addCrossroad() postcondition");
 }
@@ -111,7 +119,13 @@ std::vector<Vehicle*> Street::getVehicles() const {
     return fVehicles;
 }
 
-std::map<int, Street *> Street::getCrossroads() const {
+std::vector<BusStop*> Street::getBusStops() const {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getBusStops()");
+
+    return fBusStops;
+}
+
+std::vector<std::pair<Street*, unsigned int> > Street::getCrossroads() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getCrossroads()");
 
     return fCrossroads;
@@ -145,7 +159,6 @@ void Street::driveVehicles() {
 
 void Street::simTrafficLights(double &time) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simTrafficLights()");
-
     if (fTrafficLights.empty()) {
         return;
     }
@@ -165,7 +178,7 @@ void Street::simTrafficLights(double &time) {
         }
         Vehicle *closestVehicle = NULL;
         for (unsigned int v = 0; v < fVehicles.size(); v++) {
-            if (fVehicles[v]->getType() == FireEngine || fVehicles[v]->getType() == Ambulance || fVehicles[v]->getType() == PoliceCar) {
+            if (fVehicles[v]->hasPriority()) {
                 continue;
             }
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
@@ -212,15 +225,15 @@ void Street::simGenerator(double &time) {
         Vehicle* newVehicle;
         std::string type = fVehicleGenerator->getType();
         if (type == "auto") {
-            newVehicle = new Vehicle(fName, 0, Car);
+            newVehicle = new Car(fName, 0);
         } else if (type == "bus") {
-            newVehicle = new Vehicle(fName, 0, Bus);
+            newVehicle = new Bus(fName, 0);
         } else if (type == "brandweerwagen") {
-            newVehicle = new Vehicle(fName, 0, FireEngine);
+            newVehicle = new FireEngine(fName, 0);
         } else if (type == "ziekenwagen") {
-            newVehicle = new Vehicle(fName, 0, Ambulance);
+            newVehicle = new Ambulance(fName, 0);
         } else {
-            newVehicle = new Vehicle(fName, 0, PoliceCar);
+            newVehicle = new PoliceCar(fName, 0);
         }
 
         fVehicles.push_back(newVehicle);
