@@ -34,7 +34,7 @@ bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
     bool wrongTypes = false;
     bool missingElements = false;
     if (baanElem == NULL || baanElem->FirstChild() == NULL) {
-        errStream << "XML PARTIAL IMPORT: Expected <baan> .. </baan>." << std::endl;
+        errStream << "XML PARTIAL IMPORT: Expected <baan> ... </baan>." << std::endl;
         missingElements = true;
     } else {
         TiXmlText* streetText = baanElem->FirstChild()->ToText();

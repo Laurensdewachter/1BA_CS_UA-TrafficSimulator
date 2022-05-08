@@ -157,28 +157,21 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
         for (unsigned int k = 0; k < fStreets[i]->getVehicles().size(); k++) {
             Vehicle* curVehicle = fStreets[i]->getVehicles()[k];
             onstream << "{\"x\": " << curVehicle->getPosition();
-            EVehicleType curType = curVehicle->getType();
-            switch (curType) {
-                case Car: {
-                    onstream << ", \"type\": \"car\"}";
-                    break;
-                }
-                case Bus: {
-                    onstream << ", \"type\": \"bus\"}";
-                    break;
-                }
-                case FireEngine: {
-                    onstream << ", \"type\": \"firetruck\"}";
-                    break;
-                }
-                case Ambulance: {
-                    onstream << ", \"type\": \"ambulance\"}";
-                    break;
-                }
-                case PoliceCar: {
-                    onstream << ", \"type\": \"police_cruiser\"}";
-                    break;
-                }
+            std::string curType = curVehicle->getType();
+            if (curType == "Car") {
+                onstream << ", \"type\": \"car\"}";
+            }
+            else if (curType == "Bus") {
+                onstream << ", \"type\": \"bus\"}";
+            }
+            else if (curType == "FireEngine") {
+                onstream << ", \"type\": \"firetruck\"}";
+            }
+            else if (curType == "Ambulance") {
+                onstream << ", \"type\": \"ambulance\"}";
+            }
+            else {
+                onstream << ", \"type\": \"police_cruiser\"}";
             }
             if (k != fStreets[i]->getVehicles().size()-1) {
                 onstream << ", ";
@@ -195,14 +188,18 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
                 onstream << " ]";
             }
         }
-        if (fStreets[i]->getTrafficLights().size() == 0) {
-            onstream << "]";
+        if (fStreets[i]->getTrafficLights().empty()) {
+            onstream << "] ";
         }
         if (i != fStreets.size()-1) {
             onstream << " }, ";
         }
     }
-    onstream << "} ] }" << std::endl;
+    if (fStreets.empty()) {
+        onstream << "] }";
+    } else {
+        onstream << "} ] }" << std::endl;
+    }
 
     ENSURE(onstream.good(), "The outputStream wasn't good at the end of visualize()");
 }
@@ -210,6 +207,7 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
 void TrafficSimulation::graph(std::ostream &onstream) const {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling graph()");
     REQUIRE(onstream.good(), "The outputStream wasn't good when calling graph()");
+
     std::string verkeerslichten = " > verkeerslichten";
     std::string bushaltes = " > bushaltes";
 
@@ -228,9 +226,8 @@ void TrafficSimulation::graph(std::ostream &onstream) const {
         std::vector<int> haltePos;
         for(int s = 0; s < (int)getStreets()[i]->getLength()/10;s++){
             for(int j = 0; j < (int)vehicles.size(); j++){
-
                 if(s == (int)vehicles[j]->getPosition()/10){
-                    line1[s] = vehicles[j]->getAcronym(vehicles[j]->getType());
+                    line1[s] = vehicles[j]->getAcronym();
                 }
             }
 
@@ -244,25 +241,14 @@ void TrafficSimulation::graph(std::ostream &onstream) const {
                     line2[s] = state;
                 }
             }
-
-//            for(int b = 0; b<(int))
-
         }
 
-
-
-
         onstream << std::left;
-
         onstream.width(alignment); onstream  << fStreets[i]->getName()  << "| " << line1 << std::endl;
         onstream.width(alignment); onstream  << verkeerslichten         << "| " << line2 << std::endl;
         onstream.width(alignment); onstream  << bushaltes               << "| " << line3 << std::endl;
-
         onstream  << std::endl;
-
     }
-
-
 
     ENSURE(onstream.good(), "The outputStream wasn't good at the end of graph()");
 }
