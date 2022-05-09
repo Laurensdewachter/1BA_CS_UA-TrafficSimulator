@@ -42,7 +42,7 @@ bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ost
         street = streetText->Value();
     }
     if (positionElem == NULL || positionElem->FirstChild() == NULL) {
-        errStream << "XML PARTIAL IMPORT: Expected <positie> .. </positie>." << std::endl;
+        errStream << "XML PARTIAL IMPORT: Expected <positie> ... </positie>." << std::endl;
         missingElements = true;
     } else {
         std::string positionString = positionElem->FirstChild()->ToText()->Value();
@@ -52,7 +52,7 @@ bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ost
         }
     }
     if (cycleElem == NULL || cycleElem->FirstChild() == NULL) {
-        errStream << "XML PARTIAL IMPORT: Expected <cyclus> .. </cyclus>." << std::endl;
+        errStream << "XML PARTIAL IMPORT: Expected <cyclus> ... </cyclus>." << std::endl;
         missingElements = true;
     } else {
         std::string cycleString = cycleElem->FirstChild()->ToText()->Value();

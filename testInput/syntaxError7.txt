@@ -1,1 +1,1 @@
-XML PARTIAL IMPORT: Expected <cyclus> to be an integer.
+XML PARTIAL IMPORT: Expected <naam> ... </naam>.

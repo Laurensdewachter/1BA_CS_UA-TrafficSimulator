@@ -15,6 +15,7 @@ class Vehicle;
 
 class VehicleParser {
     VehicleParser* _initCheck;
+
     Vehicle* fVehicle;
 
 public:
@@ -42,6 +43,5 @@ public:
      */
     Vehicle *getVehicle() const;
 };
-
 
 #endif

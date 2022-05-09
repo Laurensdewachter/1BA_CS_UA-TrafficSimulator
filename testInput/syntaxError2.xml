@@ -1,11 +1,6 @@
 <SIMULATIE>
     <BAAN>
         <naam>Turnhoutsebaan</naam>
-        <lengte>2000</lengte>
+        <lengte>300</lengte
     </BAAN>
-    <VOERTUIG>
-        # missing `baan`
-        <positie>50</positie>
-        <type>auto</type>
-    </VOERTUIG>
 </SIMULATIE>

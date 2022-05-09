@@ -78,7 +78,7 @@ bool CrossroadParser::parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errS
         return false;
     }
 
-    TiXmlAttribute* positionAtr2 = baanElem1->FirstAttribute();
+    TiXmlAttribute* positionAtr2 = baanElem2->FirstAttribute();
     if (positionAtr2 == NULL || positionAtr1->Name() != compareString) {
         errStream << "XML PARTIAL IMPORT: Expected <baan positie=\"...\"> ... </baan>" << std::endl;
         missingElements = true;
