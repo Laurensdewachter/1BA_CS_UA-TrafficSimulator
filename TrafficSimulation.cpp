@@ -214,16 +214,19 @@ void TrafficSimulation::graph(std::ostream &onstream) const {
     for(int i = 0; i<(int)getStreets().size(); i++){
         std::vector<Vehicle*> vehicles = getStreets()[i]->getVehicles();
         std::vector<TrafficLight*> lights = getStreets()[i]->getTrafficLights();
-        std::vector<BusStop*> busstops; getStreets()[i]->getBusStops();
+        std::vector<BusStop*> busstops = getStreets()[i]->getBusStops();
         
         std::vector<int> sizes; sizes.push_back(fStreets[i]->getName().size()); sizes.push_back(bushaltes.size()); sizes.push_back(verkeerslichten.size());
         int alignment = *max_element(sizes.begin(),sizes.end()) + 2;
 
-        std::string line1 = "==================================================";
-        std::string line2 = "                                                  ";
-        std::string line3 = "                                                  ";
+        int streetlength = (int)getStreets()[i]->getLength()/10;
 
-        std::vector<int> haltePos;
+        std::string line1; std::string line2; std::string line3;
+
+        for(int stl = 0; stl<streetlength;stl++){
+            line1 += "="; line2 += " "; line3 += " ";
+        }
+
         for(int s = 0; s < (int)getStreets()[i]->getLength()/10;s++){
             for(int j = 0; j < (int)vehicles.size(); j++){
                 if(s == (int)vehicles[j]->getPosition()/10){
@@ -241,6 +244,12 @@ void TrafficSimulation::graph(std::ostream &onstream) const {
                     line2[s] = state;
                 }
             }
+
+            for(int b = 0; b<(int)busstops.size();b++){
+                line3[busstops[b]->getPosition()/10] = 'B';
+                line2[busstops[b]->getPosition()/10] = '|';
+            }
+
         }
 
         onstream << std::left;
