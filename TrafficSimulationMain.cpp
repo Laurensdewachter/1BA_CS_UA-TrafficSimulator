@@ -16,6 +16,7 @@ int main(int argc, char** argv) {
         int repetitions = -1;
         bool visualize = false;
         bool graph = false;
+        bool simpleGraph = false;
         bool help = false;
         for (long unsigned int i = 0; i < args.size(); i++) {
             if (args[i] == "-h" || args[i] == "--help") {
@@ -53,6 +54,9 @@ int main(int argc, char** argv) {
                 } else if (args[i] == "-g") {
                     graph = true;
                     continue;
+                } else if (args[i] == "-sg") {
+                    simpleGraph = true;
+                    continue;
                 } else {
                     std::cout << "Argument " << args[i] << " not recognized. Use \"-h\" for help." << std::endl;
                 }
@@ -62,7 +66,7 @@ int main(int argc, char** argv) {
         TrafficSimulation sim;
         if (fileName != "noFile" && repetitions != -1) {
             sim.parseInputFile(fileName);
-
+            std::ofstream file("temp.txt");
             for (int k = 0; k < repetitions; k++) {
                 sim.simulate();
                 if (visualize) {
@@ -71,8 +75,11 @@ int main(int argc, char** argv) {
                 if (graph) {
                     sim.graph();
                 }
-                //sim.writeOn();
+                if (simpleGraph) {
+                    sim.writeOn(file);
+                }
             }
+            file.close();
         } else if (!help) {
             std::cout << "both a file and the amount of repetitions must be given" <<std::endl;
         }

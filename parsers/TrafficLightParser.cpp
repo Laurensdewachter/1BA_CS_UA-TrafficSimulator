@@ -60,6 +60,10 @@ bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ost
             errStream << "XML PARTIAL IMPORT: Expected <cyclus> to be an integer." << std::endl;
             wrongTypes = true;
         }
+        if (cycle <= 0) {
+            errStream << "XML PARTIAL IMPORT: Expected <cyclus> to be a positive integer." << std::endl;
+            wrongTypes = true;
+        }
     }
 
     if (missingElements || wrongTypes) {

@@ -49,6 +49,10 @@ bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
             errStream << "XML PARTIAL IMPORT: Expected <frequentie> to be an integer." << std::endl;
             wrongTypes = true;
         }
+        if (frequency <= 0) {
+            errStream << "XML PARTIAL IMPORT: Expected <frequentie> to be a positive integer." << std::endl;
+            wrongTypes = true;
+        }
     }
     if (typeElem == NULL || typeElem->FirstChild() == NULL) {
         errStream << "XML PARTIAL IMPORT: Expected <type> ... </type>." << std::endl;

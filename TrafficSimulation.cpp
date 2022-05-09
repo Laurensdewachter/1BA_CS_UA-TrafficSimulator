@@ -196,7 +196,7 @@ void TrafficSimulation::visualize(std::ostream &onstream) const {
         }
     }
     if (fStreets.empty()) {
-        onstream << "] }";
+        onstream << "] }" << std::endl;
     } else {
         onstream << "} ] }" << std::endl;
     }

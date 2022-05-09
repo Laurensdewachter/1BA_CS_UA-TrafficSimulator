@@ -34,9 +34,43 @@ TEST_F(TrafficSimulationDomainTests, HappyDay) {
     EXPECT_EQ(Success, parserSucces);
     EXPECT_TRUE(FileIsEmpty("testOutput/legalOut.txt"));
 
+    double currentTime = 0;
     for (int i = 0; i < 2000; i++) {
-
+        sim.simulate();
+        EXPECT_EQ(currentTime + gSimulationTime, sim.getTime());
+        currentTime += gSimulationTime;
     }
+
+    sim.clearSimulation();
+    EXPECT_TRUE(sim.getStreets().empty());
+}
+
+TEST_F(TrafficSimulationDomainTests, writeOn) {
+    EXPECT_TRUE(sim.properlyInitialized());
+    EXPECT_TRUE(DirectoryExists("testInput"));
+
+    std::ofstream errStream;
+    errStream.open("testOutput/legalOut.txt");
+    EParserSucces parserSucces = sim.parseInputFile("testInput/writeOn.xml", errStream);
+    errStream.close();
+
+    EXPECT_EQ(Success, parserSucces);
+    EXPECT_TRUE(FileIsEmpty("testOutput/legalOut.txt"));
+
+    std::ofstream writeOnFile;
+    writeOnFile.open("testOutput/writeOn.txt");
+
+    double currentTime = 0;
+    for (int i = 0; i < 2000; i++) {
+        sim.simulate();
+        EXPECT_EQ(currentTime + gSimulationTime, sim.getTime());
+        currentTime += gSimulationTime;
+
+        sim.writeOn(writeOnFile);
+    }
+
+    writeOnFile.close();
+    EXPECT_TRUE(FileCompare("testOutput/writeOn.txt", "testInput/writeOn.txt"));
 
     sim.clearSimulation();
     EXPECT_TRUE(sim.getStreets().empty());
