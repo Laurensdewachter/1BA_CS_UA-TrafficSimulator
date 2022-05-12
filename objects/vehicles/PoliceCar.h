@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : PoliceCar.h
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `PoliceCar` subclass
+// ===========================================================
+
 #ifndef TRAFFICSIMULATION_POLICECAR_H
 #define TRAFFICSIMULATION_POLICECAR_H
 

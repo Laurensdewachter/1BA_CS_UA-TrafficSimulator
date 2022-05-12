@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : Bus.h
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `Bus` subclass
+// ===========================================================
+
 #ifndef TRAFFICSIMULATION_BUS_H
 #define TRAFFICSIMULATION_BUS_H
 

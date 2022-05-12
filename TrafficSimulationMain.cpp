@@ -66,7 +66,6 @@ int main(int argc, char** argv) {
         TrafficSimulation sim;
         if (fileName != "noFile" && repetitions != -1) {
             sim.parseInputFile(fileName);
-            std::ofstream file("temp.txt");
             for (int k = 0; k < repetitions; k++) {
                 sim.simulate();
                 if (visualize) {
@@ -76,10 +75,9 @@ int main(int argc, char** argv) {
                     sim.graph();
                 }
                 if (simpleGraph) {
-                    sim.writeOn(file);
+                    sim.writeOn();
                 }
             }
-            file.close();
         } else if (!help) {
             std::cout << "both a file and the amount of repetitions must be given" <<std::endl;
         }

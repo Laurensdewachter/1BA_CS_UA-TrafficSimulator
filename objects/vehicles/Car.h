@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : Car.h
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `Car` subclass
+// ===========================================================
+
 #ifndef TRAFFICSIMULATION_CAR_H
 #define TRAFFICSIMULATION_CAR_H
 

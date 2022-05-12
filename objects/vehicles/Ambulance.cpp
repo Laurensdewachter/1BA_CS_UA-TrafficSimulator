@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : Ambulance.cpp
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `Ambulance` subclass
+// ===========================================================
+
 #include "Ambulance.h"
 #include "../../Variables.h"
 #include <cmath>

@@ -143,18 +143,24 @@ void Street::driveVehicles() {
     if (fVehicles.empty()) {
         return;
     }
+
+    std::vector<double> originalPositions;
     for (unsigned int i = 0; i < fVehicles.size(); i++) {
+        originalPositions.push_back(fVehicles[i]->getPosition());
         if (i == 0) {
             fVehicles[i]->drive(NULL);
             if (fVehicles[i]->getPosition() > fLength) {
                 this->removeVehicle();
+                originalPositions.erase(originalPositions.begin());
             }
             continue;
         }
         fVehicles[i]->drive(fVehicles[i-1]);
     }
 
-    // TODO: ask about ENSURE here
+    for (unsigned int i = 0; i < fVehicles.size(); i++) {
+        ENSURE(fVehicles[i]->getPosition() >= originalPositions[i], "originalPositions() postcondition");
+    }
 }
 
 void Street::simTrafficLights(double &time) {
@@ -182,9 +188,7 @@ void Street::simTrafficLights(double &time) {
                 continue;
             }
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
-                if (closestVehicle == NULL) {
-                    closestVehicle = fVehicles[v];
-                } else if (fVehicles[v]->getPosition() > closestVehicle->getPosition()) {
+                if (closestVehicle == NULL || fVehicles[v]->getPosition() > closestVehicle->getPosition()) {
                     closestVehicle = fVehicles[v];
                 }
             }
@@ -212,16 +216,23 @@ void Street::simTrafficLights(double &time) {
         }
     }
 
-    // TODO: ask about ENSURE here
+    // TODO: add ENSURE here
 }
 
 void Street::simGenerator(double &time) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simGenerator()");
 
+    long unsigned int startSize = fVehicles.size();
+
     if (fVehicleGenerator == NULL) {
+        ENSURE(fVehicles.size() == startSize, "simGenerator() postcondition");
         return;
     }
+
+    bool spawn = false;
     if (fVehicleGenerator->getTimeSinceLastSpawn() < time) {
+        spawn = true;
+
         Vehicle* newVehicle;
         std::string type = fVehicleGenerator->getType();
         if (type == "auto") {
@@ -241,7 +252,12 @@ void Street::simGenerator(double &time) {
         fVehicleGenerator->setTimeSinceLastSpawn(fVehicleGenerator->getTimeSinceLastSpawn() + fVehicleGenerator->getFrequency());
     }
 
-    // TODO: ask about ENSURE here
+    if (spawn) {
+        ENSURE(fVehicles.size() == startSize+1, "simGenerator() postcondition");
+    }
+    else {
+        ENSURE(fVehicles.size() == startSize, "simGenerator() postcondition");
+    }
 }
 
 void Street::sortVehicles() {
