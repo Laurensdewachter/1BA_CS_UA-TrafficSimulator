@@ -5,6 +5,7 @@
 // Description  : This code is contains the `Street` class
 // ===========================================================
 
+#include <cstdlib>
 #include "Street.h"
 #include "TrafficLight.h"
 #include "Vehicle.h"

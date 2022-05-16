@@ -3,50 +3,34 @@
         <naam>Turnhoutsebaan</naam>
         <lengte>500</lengte>
     </BAAN>
-    <VERKEERSLICHT>
-        <baan>Turnhoutsebaan</baan>
-        <positie>150</positie>
-        <cyclus>40</cyclus>
-    </VERKEERSLICHT>
-    <VERKEERSLICHT>
-        <baan>Turnhoutsebaan</baan>
-        <positie>450</positie>
-        <cyclus>10</cyclus>
-    </VERKEERSLICHT>
-    <BUSHALTE>
-        <baan>Turnhoutsebaan</baan>
-        <positie>300</positie>
-        <wachttijd>8</wachttijd>
-    </BUSHALTE>
-    <VOERTUIG>
-        <baan>Turnhoutsebaan</baan>
-        <positie>10</positie>
-        <type>auto</type>
-    </VOERTUIG>
-    <VOERTUIG>
-        <baan>Turnhoutsebaan</baan>
-        <positie>0</positie>
-        <type>politiecombi</type>
-    </VOERTUIG>
-
-
     <BAAN>
         <naam>Middelheimbaan</naam>
-        <lengte>300</lengte>
+        <lengte>500</lengte>
     </BAAN>
-    <VERKEERSLICHT>
-        <baan>Middelheimbaan</baan>
-        <positie>250</positie>
-        <cyclus>10</cyclus>
-    </VERKEERSLICHT>
+    <BAAN>
+        <naam>Ruggeveldlaan</naam>
+        <lengte>500</lengte>
+    </BAAN>
     <VOERTUIG>
         <baan>Middelheimbaan</baan>
         <positie>0</positie>
-        <type>politiecombi</type>
+        <type>auto</type>
     </VOERTUIG>
-    <BUSHALTE>
-        <baan>Middelheimbaan</baan>
-        <positie>150</positie>
-        <wachttijd>8</wachttijd>
-    </BUSHALTE>
+
+    <KRUISPUNT>
+        <baan positie="150">Turnhoutsebaan</baan>
+        <baan positie="50">Middelheimbaan</baan>
+    </KRUISPUNT>
+
+    <KRUISPUNT>
+        <baan positie="250">Turnhoutsebaan</baan>
+        <baan positie="290">Middelheimbaan</baan>
+    </KRUISPUNT>
+
+    <KRUISPUNT>
+        <baan positie="300">Middelheimbaan</baan>
+        <baan positie="100">Ruggeveldlaan</baan>
+    </KRUISPUNT>
+
+
 </SIMULATIE>

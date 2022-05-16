@@ -10,7 +10,9 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <map>
+#include <ctime>
 #include <fstream>
 #include <algorithm>
 #include "DesignByContract.h"
@@ -67,6 +69,11 @@ public:
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()")
      */
     void simulate();
+
+    /*
+    * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simCrossroads()")
+    */
+    void simCrossroads();
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()")

@@ -264,15 +264,87 @@ void TrafficSimulation::graph(std::ostream &onstream) const {
 
 void TrafficSimulation::simulate() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
-
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
         fStreets[i]->simGenerator(fTime);
+        simCrossroads();
         fStreets[i]->driveVehicles();
         fStreets[i]->simTrafficLights(fTime);
     }
     fTime += gSimulationTime;
 }
+void TrafficSimulation::simCrossroads() {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simCrossroads()");
 
+
+    for(int i = 0; i<(int)fStreets.size();i++){
+        for(int j = 0; j<(int)fStreets[i]->getVehicles().size();j++){
+
+            double pos_vehicle      = fStreets[i]->getVehicles()[j]->getPosition();
+            std::string str_vehicle = fStreets[i]->getVehicles()[j]->getStreet();
+
+            for(int c = 0; c<(int)fStreets[i]->getCrossroads().size();c++){
+
+                double pos_crossroad        = fStreets[i]->getCrossroads()[c].second;
+                std::string str_crossroad   = fStreets[i]->getCrossroads()[c].first->getName();
+
+                if(pos_crossroad-1 <= pos_vehicle && pos_vehicle <= pos_crossroad-.1 && pos_vehicle <= pos_crossroad ){
+
+                    std::cout << "RIDING: (" << pos_vehicle << ", " << str_vehicle <<
+                    ") GOING TO: (" << fStreets[i]->getCrossroads()[c].first->getCrossroads()[c].second << ", "<<fStreets[i]->getCrossroads()[c].first->getName() <<
+                    ") AT POS: "<< pos_crossroad << std::endl;
+
+                    if(rand() % 2 == 1){ // ALS gekozen kijk dan na of dat baan niet "eindigt"
+
+                        std::cout << "CROSSROAD CHOSEN" <<std::endl;
+
+                        fStreets[i]->getVehicles()[j]->setStreet(fStreets[i]->getCrossroads()[c].first->getName());
+                        fStreets[i]->getVehicles()[j]->setPosition(fStreets[i]->getCrossroads()[j].first->getCrossroads()[c].second); // MAP met straatnaam en pos
+
+                    }else{
+                        std::cout << "CROSSROAD SKIPPED" <<std::endl;
+
+                        fStreets[i]->getVehicles()[j]->setPosition(fStreets[i]->getVehicles()[j]->getPosition()+1);
+
+                    }
+                    std::cout << "-> NEW: (" << fStreets[i]->getVehicles()[j]->getPosition() << ", " << fStreets[i]->getVehicles()[j]->getStreet() << ")" <<std::endl;
+                    std::cout << std::endl;
+                }
+
+            }
+
+        }
+
+    }
+}
+//void TrafficSimulation::simCrossroads() {
+//    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simCrossroads()");
+//
+//    for(int s = 0; s<(int)fStreets.size();s++){
+//
+//        for(int c = 0; c<(int)fStreets[s]->getCrossroads().size();c++){
+//
+//            for(int v = 0; v<(int)fStreets[s]->getCrossroads()[c].first->getVehicles().size();v++){
+//
+//                double posVeh =fStreets[s]->getCrossroads()[c].first->getVehicles()[v]->getPosition();
+//                std::string strVeh =fStreets[s]->getCrossroads()[c].first->getVehicles()[v]->getStreet();
+//
+//                double posCros =fStreets[s]->getCrossroads()[c].second;
+//                std::string strCros =fStreets[s]->getCrossroads()[c].first->getName();
+//
+//                if(posCros-1 <= posVeh && posCros >= posVeh && posVeh <= posCros){
+//
+//                    std::cout << "RIDING (" << strVeh << ", "<< posVeh << ")    ->    ("<< strCros << ", " << posCros << ")" << std::endl;
+//
+//
+//                }
+//
+//
+//            }
+//        }
+//
+//
+//    }
+//}
 void TrafficSimulation::clearSimulation() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
 

@@ -48,6 +48,16 @@ public:
     double getSpeed() const;
 
     /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()")
+     */
+    void setPosition(double newPosition);
+
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()")
+     */
+    void setStreet(std::string newStreet);
+
+    /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getLength()")
      */
     virtual double getLength() const = 0;

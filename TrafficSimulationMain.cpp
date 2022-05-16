@@ -67,6 +67,7 @@ int main(int argc, char** argv) {
         if (fileName != "noFile" && repetitions != -1) {
             sim.parseInputFile(fileName);
             std::ofstream file("temp.txt");
+            srand(time(NULL));
             for (int k = 0; k < repetitions; k++) {
                 sim.simulate();
                 if (visualize) {
