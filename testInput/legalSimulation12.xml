@@ -21,12 +21,6 @@
         <baan positie="150">Turnhoutsebaan</baan>
         <baan positie="50">Middelheimbaan</baan>
     </KRUISPUNT>
-
-    <KRUISPUNT>
-        <baan positie="250">Turnhoutsebaan</baan>
-        <baan positie="290">Middelheimbaan</baan>
-    </KRUISPUNT>
-
     <KRUISPUNT>
         <baan positie="300">Middelheimbaan</baan>
         <baan positie="100">Ruggeveldlaan</baan>

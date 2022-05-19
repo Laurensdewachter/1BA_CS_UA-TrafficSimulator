@@ -91,6 +91,10 @@ public:
      */
     double getTime() const;
 
+    bool contains(int pos_veh,std::map<Street*,int> kruispunten);
+
+    int findPosition(Street * street, std::map<Street*,int> kruispunten);
+
 private:
     Street* getStreet(const std::string &name) const;
 };

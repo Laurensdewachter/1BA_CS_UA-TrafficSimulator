@@ -12,7 +12,7 @@
 #include <cmath>
 
 Vehicle::Vehicle(const std::string &street, double position) :
-            fStreet(street), fPosition(position), fSpeed(0), fAcceleration(0) {
+            fStreet(street), fPosition(position), fSpeed(0), fAcceleration(0),fTookTurn(0) {
 
     _initCheck = this;
 
@@ -54,3 +54,15 @@ void Vehicle::setStreet(std::string newStreet) {
 
     this->fStreet = newStreet;
 }
+
+bool Vehicle::hasTurned() {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling hasTurned()");
+
+    return fTookTurn;
+}
+void Vehicle::setTurn(bool state) {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setTurn()");
+
+    fTookTurn = state;
+}
+

@@ -70,10 +70,8 @@ void Street::addCrossroad(Street* crossingStreet, unsigned int position) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addCrossroad()");
 
     unsigned int crossroadSize = fCrossroads.size();
-    std::pair<Street*, unsigned int> addPair;
-    addPair.first = crossingStreet;
-    addPair.second = position;
-    fCrossroads.push_back(addPair);
+
+    fCrossroads.insert(std::pair<Street*,int>(crossingStreet,position));
 
     ENSURE(fCrossroads.size() == crossroadSize+1, "addCrossroad() postcondition");
 }
@@ -126,10 +124,26 @@ std::vector<BusStop*> Street::getBusStops() const {
     return fBusStops;
 }
 
-std::vector<std::pair<Street*, unsigned int> > Street::getCrossroads() const {
+std::map<Street*,int> Street::getCrossroads() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getCrossroads()");
 
     return fCrossroads;
+}
+
+Vehicle *Street::CreateTypeVehicle(std::string type,std::string street,int position) {
+    Vehicle* newVehicle;
+    if (type == "auto") {
+        newVehicle = new Car(street, position);
+    } else if (type == "bus") {
+        newVehicle = new Bus(street, position);
+    } else if (type == "brandweerwagen") {
+        newVehicle = new FireEngine(street, position);
+    } else if (type == "ziekenwagen") {
+        newVehicle = new Ambulance(street, position);
+    } else {
+        newVehicle = new PoliceCar(street, position);
+    }
+    return newVehicle;
 }
 
 bool Street::hasVehicleGenerator() const {
