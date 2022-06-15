@@ -112,7 +112,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling driveVehicles()")
-     * for (unsigned int i = 0; i < fVehicles.size(); i++) ENSURE(fVehicles[i]->getPosition() >= originalPositions[i], "originalPositions() postcondition")
+     * for (unsigned int i = 0; i < fVehicles.size(); i++) ENSURE(fVehicles[i]->getPosition() >= originalPositions[i] - 0.001, "driveVehicles() postcondition")
      */
     void driveVehicles();
 

@@ -152,6 +152,7 @@ void Street::driveVehicles() {
             if (fVehicles[i]->getPosition() > fLength) {
                 this->removeVehicle();
                 originalPositions.erase(originalPositions.begin());
+                i -= 1;
             }
             continue;
         }
@@ -159,7 +160,7 @@ void Street::driveVehicles() {
     }
 
     for (unsigned int i = 0; i < fVehicles.size(); i++) {
-        ENSURE(fVehicles[i]->getPosition() >= originalPositions[i], "originalPositions() postcondition");
+        ENSURE(fVehicles[i]->getPosition() >= originalPositions[i] - 0.001, "driveVehicles() postcondition");
     }
 }
 
