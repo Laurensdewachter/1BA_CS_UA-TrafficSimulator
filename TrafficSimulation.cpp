@@ -270,6 +270,7 @@ void TrafficSimulation::simulate() {
         fStreets[i]->simGenerator(fTime);
         fStreets[i]->driveVehicles();
         fStreets[i]->simTrafficLights(fTime);
+        fStreets[i]->simBusStops(fTime);
     }
 
     fTime += gSimulationTime;

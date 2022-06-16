@@ -6,15 +6,17 @@
 // ===========================================================
 
 #include <cstdlib>
+#include <algorithm>
 #include "Street.h"
 #include "TrafficLight.h"
+#include "VehicleGenerator.h"
+#include "BusStop.h"
 #include "Vehicle.h"
 #include "vehicles/Car.h"
 #include "vehicles/Bus.h"
 #include "vehicles/FireEngine.h"
 #include "vehicles/Ambulance.h"
 #include "vehicles/PoliceCar.h"
-#include "VehicleGenerator.h"
 #include "../DesignByContract.h"
 #include "../Variables.h"
 
@@ -158,18 +160,25 @@ void Street::driveVehicles() {
     if (fVehicles.empty()) {
         return;
     }
+
+    std::vector<double> originalPositions;
     for (unsigned int i = 0; i < fVehicles.size(); i++) {
+        originalPositions.push_back(fVehicles[i]->getPosition());
         if (i == 0) {
             fVehicles[i]->drive(NULL);
             if (fVehicles[i]->getPosition() > fLength) {
                 this->removeVehicle();
+                originalPositions.erase(originalPositions.begin());
+                i -= 1;
             }
             continue;
         }
         fVehicles[i]->drive(fVehicles[i-1]);
     }
 
-    // TODO: ask about ENSURE here
+    for (unsigned int i = 0; i < fVehicles.size(); i++) {
+        ENSURE(fVehicles[i]->getPosition() >= originalPositions[i] - 0.001, "driveVehicles() postcondition");
+    }
 }
 
 void Street::simTrafficLights(double &time) {
@@ -197,9 +206,7 @@ void Street::simTrafficLights(double &time) {
                 continue;
             }
             if (fVehicles[v]->getPosition() < curTrafficLight->getPosition()) {
-                if (closestVehicle == NULL) {
-                    closestVehicle = fVehicles[v];
-                } else if (fVehicles[v]->getPosition() > closestVehicle->getPosition()) {
+                if (closestVehicle == NULL || fVehicles[v]->getPosition() > closestVehicle->getPosition()) {
                     closestVehicle = fVehicles[v];
                 }
             }
@@ -227,16 +234,23 @@ void Street::simTrafficLights(double &time) {
         }
     }
 
-    // TODO: ask about ENSURE here
+    // TODO: add ENSURE here
 }
 
 void Street::simGenerator(double &time) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simGenerator()");
 
+    long unsigned int startSize = fVehicles.size();
+
     if (fVehicleGenerator == NULL) {
+        ENSURE(fVehicles.size() == startSize, "simGenerator() postcondition");
         return;
     }
+
+    bool spawn = false;
     if (fVehicleGenerator->getTimeSinceLastSpawn() < time) {
+        spawn = true;
+
         Vehicle* newVehicle;
         std::string type = fVehicleGenerator->getType();
         if (type == "auto") {
@@ -256,7 +270,57 @@ void Street::simGenerator(double &time) {
         fVehicleGenerator->setTimeSinceLastSpawn(fVehicleGenerator->getTimeSinceLastSpawn() + fVehicleGenerator->getFrequency());
     }
 
-    // TODO: ask about ENSURE here
+    if (spawn) {
+        ENSURE(fVehicles.size() == startSize+1, "simGenerator() postcondition");
+    }
+    else {
+        ENSURE(fVehicles.size() == startSize, "simGenerator() postcondition");
+    }
+}
+
+void Street::simBusStops(double &time) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simBusStops()");
+    if (fBusStops.empty()) {
+        return;
+    }
+
+    for (unsigned int i = 0; i < fBusStops.size(); i++) {
+        BusStop *curBusStop = fBusStops[i];
+        std::vector<Vehicle*> arrivedBusses = curBusStop->getArrivedBusses();
+
+        if (fVehicles.empty()) {
+            return;
+        }
+        Vehicle *closestBus = NULL;
+        for (unsigned int v = 0; v < fVehicles.size(); v++) {
+            if (fVehicles[v]->getType() != "Bus") {
+                continue;
+            }
+            if (fVehicles[v]->getPosition() < curBusStop->getPosition()) {
+                if ((closestBus == NULL || fVehicles[v]->getPosition() > closestBus->getPosition())
+                        && std::find(arrivedBusses.begin(), arrivedBusses.end(), fVehicles[v]) == arrivedBusses.end()) {
+                    closestBus = fVehicles[v];
+                }
+            }
+        }
+        if (closestBus == NULL) {
+            continue;
+        }
+
+        Bus* closestBusType = dynamic_cast<Bus*>(closestBus);
+
+        double distance = curBusStop->getPosition() - closestBus->getPosition();
+        if (distance > 0 && distance < gStopDistance) {
+            closestBus->stop();
+            closestBusType->addWaitTime(gSimulationTime);
+        }
+        else if (distance > 0 && distance < gBrakeDistance) {
+            closestBus->brake();
+        }
+        if (closestBusType->getWaitTime() > curBusStop->getWaitTime()) {
+            curBusStop->addArrivedBus(closestBusType);
+        }
+    }
 }
 
 void Street::sortVehicles() {
