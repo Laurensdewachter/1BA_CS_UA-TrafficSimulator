@@ -5,11 +5,13 @@
 // Description  : This code is used to parse an XML file that contains a `TrafficLight`.
 // ===========================================================
 
+#include <sstream>
 #include "TrafficLightParser.h"
+#include "../DesignByContract.h"
 #include "../objects/TrafficLight.h"
 
 TrafficLightParser::TrafficLightParser() {
-    _initCheck = this;
+    TrafficLightParser::_initCheck = this;
 
     ENSURE(properlyInitialized(), "TrafficLightParser constructor did not end in an initialized state");
 }
@@ -22,7 +24,7 @@ bool TrafficLightParser::properlyInitialized() const {
 
 bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling parseTrafficLight()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseTrafficLight()");
 
     TiXmlElement* streetElem = VERKEERSLICHT->FirstChildElement("baan");
     TiXmlElement* positionElem = VERKEERSLICHT->FirstChildElement("positie");
@@ -76,6 +78,7 @@ bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ost
     ENSURE(fTrafficLight->getStreet() == street, "parseTrafficLight() postcondition");
     ENSURE(fTrafficLight->getPosition() == position, "parseTrafficLight() postcondition");
     ENSURE(fTrafficLight->getCycle() == cycle, "parseTrafficLight() postcondition");
+    ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseTrafficLight()");
 
     return true;
 }
@@ -83,5 +86,6 @@ bool TrafficLightParser::parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ost
 TrafficLight* TrafficLightParser::getTrafficLight() const {
     REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling getTrafficLight()");
     REQUIRE(fTrafficLight != NULL, "TrafficLightParser had no traffic light when calling getTrafficLight()");
+
     return fTrafficLight;
 }

@@ -19,7 +19,7 @@ ENSURE()
 CrossroadParser::~CrossroadParser() {}
 
 bool CrossroadParser::properlyInitialized() const {
-    return _initCheck == this;
+    return CrossroadParser::_initCheck == this;
 }
 
 bool CrossroadParser::parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errStream) {

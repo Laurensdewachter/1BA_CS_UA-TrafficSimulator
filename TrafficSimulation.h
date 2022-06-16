@@ -75,7 +75,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()")
-     * 
+     *
      * ENSURE(fStreets.empty(), "The streets vector wasn't empty at the end of clearSimulation()")
      */
     void clearSimulation();

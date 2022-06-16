@@ -12,6 +12,7 @@
 
 StreetParser::StreetParser() {
     StreetParser::_initCheck = this;
+
     ENSURE(properlyInitialized(), "StreetParser constructor did not end in an initialized state");
 }
 

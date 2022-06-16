@@ -8,10 +8,7 @@
 #ifndef PSE_TRAFFICLIGHTPARSER_H
 #define PSE_TRAFFICLIGHTPARSER_H
 
-#include <iostream>
-#include <sstream>
 #include "tinyxml/tinyxml.h"
-#include "../DesignByContract.h"
 
 class TrafficLight;
 
@@ -32,11 +29,13 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLightParser wasn't initialized when calling parseTrafficLight()")
-     * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseTrafficLight()")
+     *
      * ENSURE(fTrafficLight != NULL, "TrafficLightParser could not create a TrafficLight")
      * ENSURE(fTrafficLight->getStreet() == street, "parseTrafficLight() postcondition")
      * ENSURE(fTrafficLight->getPosition() == position, "parseTrafficLight() postcondition")
      * ENSURE(fTrafficLight->getCycle() == cycle, "parseTrafficLight() postcondition")
+     * ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseTrafficLight()")
      */
     bool parseTrafficLight(TiXmlElement* VERKEERSLICHT, std::ostream &errStream);
 
