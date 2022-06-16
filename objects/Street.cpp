@@ -33,6 +33,9 @@ Street::~Street() {
     for (unsigned int i = 0; i < fVehicles.size(); i++) {
         delete fVehicles[i];
     }
+    for (unsigned int i = 0; i < fBusStops.size(); i++) {
+        delete fBusStops[i];
+    }
     delete fVehicleGenerator;
 }
 

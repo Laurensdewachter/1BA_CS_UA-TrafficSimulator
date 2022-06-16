@@ -21,7 +21,9 @@ TrafficSimulation::TrafficSimulation() {
     ENSURE(properlyInitialized(), "TrafficSimulation constructor did not end in an initialized state");
 }
 
-TrafficSimulation::~TrafficSimulation() {}
+TrafficSimulation::~TrafficSimulation() {
+    clearSimulation();
+}
 
 bool TrafficSimulation::properlyInitialized() const {
     return TrafficSimulation::_initCheck == this;
