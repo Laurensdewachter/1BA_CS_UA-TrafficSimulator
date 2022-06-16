@@ -17,12 +17,19 @@ const double busMaxBrakeFactor = 4.29;
 const double busMinFollowDistance = 12.0;
 
 class Bus : public Vehicle{
+    double fWaitTime;
 public:
     Bus(const std::string &street, double position);
 
     ~Bus();
 
     double getLength() const;
+
+    double getWaitTime() const;
+
+    void addWaitTime(double time);
+
+    void clearWaitTime();
 
     std::string getType() const;
 

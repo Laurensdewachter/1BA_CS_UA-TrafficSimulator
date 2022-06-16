@@ -9,7 +9,9 @@
 #define TRAFFICSIMULATION_BUSSTOP_H
 
 #include <iostream>
+#include <vector>
 #include "../DesignByContract.h"
+#include "Vehicle.h"
 
 class BusStop {
     BusStop* _initCheck;
@@ -17,6 +19,7 @@ class BusStop {
     std::string fStreet;
     int fPosition;
     int fWaitTime;
+    std::vector<Vehicle*> arrivedBusses;
 
 public:
     /*
@@ -42,6 +45,16 @@ public:
      * REQUIRE(properlyInitialized(), "BusStop wasn't initialized when calling getWaitTime()")
      */
     int getWaitTime() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "BusStop wasn't initialized when calling getArrivedBusses()")
+     */
+    std::vector<Vehicle*> getArrivedBusses() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "BusStop wasn't initialized when calling addArrivedBus()")
+     */
+    void addArrivedBus(Vehicle* bus);
 };
 
 

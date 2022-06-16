@@ -5,15 +5,17 @@
 // Description  : This code is contains the `Street` class
 // ===========================================================
 
+#include <algorithm>
 #include "Street.h"
 #include "TrafficLight.h"
+#include "VehicleGenerator.h"
+#include "BusStop.h"
 #include "Vehicle.h"
 #include "vehicles/Car.h"
 #include "vehicles/Bus.h"
 #include "vehicles/FireEngine.h"
 #include "vehicles/Ambulance.h"
 #include "vehicles/PoliceCar.h"
-#include "VehicleGenerator.h"
 #include "../DesignByContract.h"
 #include "../Variables.h"
 
@@ -258,6 +260,51 @@ void Street::simGenerator(double &time) {
     }
     else {
         ENSURE(fVehicles.size() == startSize, "simGenerator() postcondition");
+    }
+}
+
+void Street::simBusStops(double &time) {
+    REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simBusStops()");
+    if (fBusStops.empty()) {
+        return;
+    }
+
+    for (unsigned int i = 0; i < fBusStops.size(); i++) {
+        BusStop *curBusStop = fBusStops[i];
+        std::vector<Vehicle*> arrivedBusses = curBusStop->getArrivedBusses();
+
+        if (fVehicles.empty()) {
+            return;
+        }
+        Vehicle *closestBus = NULL;
+        for (unsigned int v = 0; v < fVehicles.size(); v++) {
+            if (fVehicles[v]->getType() != "Bus") {
+                continue;
+            }
+            if (fVehicles[v]->getPosition() < curBusStop->getPosition()) {
+                if ((closestBus == NULL || fVehicles[v]->getPosition() > closestBus->getPosition())
+                        && std::find(arrivedBusses.begin(), arrivedBusses.end(), fVehicles[v]) == arrivedBusses.end()) {
+                    closestBus = fVehicles[v];
+                }
+            }
+        }
+        if (closestBus == NULL) {
+            continue;
+        }
+
+        Bus* closestBusType = dynamic_cast<Bus*>(closestBus);
+
+        double distance = curBusStop->getPosition() - closestBus->getPosition();
+        if (distance > 0 && distance < gStopDistance) {
+            closestBus->stop();
+            closestBusType->addWaitTime(gSimulationTime);
+        }
+        else if (distance > 0 && distance < gBrakeDistance) {
+            closestBus->brake();
+        }
+        if (closestBusType->getWaitTime() > curBusStop->getWaitTime()) {
+            curBusStop->addArrivedBus(closestBusType);
+        }
     }
 }
 

@@ -19,6 +19,18 @@ double Bus::getLength() const {
     return busLength;
 }
 
+double Bus::getWaitTime() const {
+    return fWaitTime;
+}
+
+void Bus::addWaitTime(double time) {
+    fWaitTime += time;
+}
+
+void Bus::clearWaitTime() {
+    fWaitTime = 0;
+}
+
 std::string Bus::getType() const {
     return "Bus";
 }

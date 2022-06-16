@@ -129,6 +129,11 @@ public:
     void simGenerator(double &time);
 
     /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simBusStops()")
+     */
+    void simBusStops(double &time);
+
+    /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()")
      * ENSURE(!fVehicles.empty(), "sortVehicles() postcondition")
      */

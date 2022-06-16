@@ -25,11 +25,12 @@ int main(int argc, char** argv) {
                 << "This program runs a traffic simulation based on a given xml-file." << std::endl <<std::endl
                 << "Required arguments:" << std::endl
                 << "\t-f FILENAME\t\t\tthe xml-file that contains the simulation specifications" << std::endl
-                << "\t-r REPETITIONS\t\tthe amount of times the simulation should be run" <<std::endl <<std::endl
+                << "\t-r REPETITIONS\t\t\tthe amount of times the simulation should be run" <<std::endl <<std::endl
                 << "Optional arguments:" << std::endl
-                << "\t-v\t\t\t\t\toutput to use together with the python visualizer" << std::endl
-                << "\t-g\t\t\t\t\tget a graphical representation in the terminal" << std::endl
-                << "\t-h, --help\t\t\tshow this help message and exit" << std::endl;
+                << "\t-v\t\t\t\toutput to use together with the python visualizer" << std::endl
+                << "\t-g\t\t\t\tget a graphical representation in the terminal" << std::endl
+                << "\t-h, --help\t\t\tshow this help message and exit" << std::endl
+                << "\t-sg\t\t\t\tget a simple graphical representation in the terminal" << std::endl;
                 break;
             } else {
                 if (args[i] == "-f") {

@@ -33,3 +33,13 @@ int BusStop::getWaitTime() const {
     REQUIRE(properlyInitialized(), "BusStop wasn't initialized when calling getWaitTime()");
     return fWaitTime;
 }
+
+std::vector<Vehicle *> BusStop::getArrivedBusses() const {
+    REQUIRE(properlyInitialized(), "BusStop wasn't initialized when calling getArrivedBusses()");
+    return arrivedBusses;
+}
+
+void BusStop::addArrivedBus(Vehicle *bus) {
+    REQUIRE(properlyInitialized(), "BusStop wasn't initialized when calling addArrivedBus()");
+    arrivedBusses.push_back(bus);
+}
