@@ -8,10 +8,7 @@
 #ifndef PSE_STREETPARSER_H
 #define PSE_STREETPARSER_H
 
-#include <iostream>
-#include <sstream>
 #include "tinyxml/tinyxml.h"
-#include "../DesignByContract.h"
 
 class Street;
 
@@ -31,10 +28,12 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()")
-     * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseStreet()")
+     *
      * ENSURE(fStreet != NULL, "StreetParser could not create a Street")
      * ENSURE(fStreet->getName() == name, "parseStreet() postcondition")
      * ENSURE(fStreet->getLength() == length, "parseStreet() postcondition")
+     * ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseStreet()")
      */
     bool parseStreet(TiXmlElement* BAAN, std::ostream &errStream);
 

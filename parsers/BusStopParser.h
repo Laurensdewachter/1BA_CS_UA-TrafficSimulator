@@ -8,7 +8,6 @@
 #ifndef TRAFFICSIMULATION_BUSSTOPPARSER_H
 #define TRAFFICSIMULATION_BUSSTOPPARSER_H
 
-#include <fstream>
 #include "tinyxml/tinyxml.h"
 
 class BusStop;

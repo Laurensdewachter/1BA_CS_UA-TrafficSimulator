@@ -5,7 +5,9 @@
 // Description  : This code is used to parse an XML file that contains a `Street`.
 // ===========================================================
 
+#include <sstream>
 #include "StreetParser.h"
+#include "../DesignByContract.h"
 #include "../objects/Street.h"
 
 StreetParser::StreetParser() {
@@ -21,7 +23,7 @@ bool StreetParser::properlyInitialized() const {
 
 bool StreetParser::parseStreet(TiXmlElement* BAAN, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling parseStreet()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseStreet()");
 
     TiXmlElement* nameElem = BAAN->FirstChildElement("naam");
     TiXmlElement* lengthElem = BAAN->FirstChildElement("lengte");
@@ -58,6 +60,7 @@ bool StreetParser::parseStreet(TiXmlElement* BAAN, std::ostream &errStream) {
     ENSURE(fStreet != NULL, "StreetParser could not create a Street");
     ENSURE(fStreet->getName() == name, "parseStreet() postcondition");
     ENSURE(fStreet->getLength() == length, "parseStreet() postcondition");
+    ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseStreet()");
 
     return true;
 }
@@ -65,5 +68,6 @@ bool StreetParser::parseStreet(TiXmlElement* BAAN, std::ostream &errStream) {
 Street* StreetParser::getStreet() const {
     REQUIRE(properlyInitialized(), "StreetParser wasn't initialized when calling getStreet()");
     REQUIRE(fStreet != NULL, "StreetParser had no street when calling getStreet()");
+
     return fStreet;
 }
