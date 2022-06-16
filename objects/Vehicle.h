@@ -20,7 +20,7 @@ protected:
     double fSpeed;
     double fAcceleration;
     double fMaxSpeed;
-
+    double fTookTurn;
 public:
 
     /*
@@ -46,6 +46,16 @@ public:
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getPosition()")
      */
     double getSpeed() const;
+
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()")
+     */
+    void setPosition(double newPosition);
+
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()")
+     */
+    void setStreet(std::string newStreet);
 
     /*
      * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getLength()")
@@ -83,6 +93,12 @@ public:
     virtual void setMaxSpeed() = 0;
 
     virtual bool hasPriority() const = 0;
+
+    virtual bool hasTurned();
+
+    virtual void setTurn(bool state);
+
+
 };
 
 #endif

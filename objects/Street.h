@@ -26,7 +26,8 @@ class Street {
     std::vector<Vehicle*> fVehicles;
     std::vector<BusStop*> fBusStops;
     VehicleGenerator* fVehicleGenerator;
-    std::vector<std::pair<Street*, unsigned int> > fCrossroads;
+    std::map<Street*,int> fCrossroads;
+
 
 public:
     /*
@@ -102,8 +103,12 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getCrossroads()")
      */
-    std::vector<std::pair<Street*, unsigned int> > getCrossroads() const;
+    std::map<Street*,int> getCrossroads() const;
 
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling CreateTypeVehicle()")
+     */
+    Vehicle * CreateTypeVehicle(std::string type,std::string street, int position);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling hasVehicleGenerator()")
