@@ -8,12 +8,8 @@
 #ifndef PSE_TRAFFICSIMULATION_H
 #define PSE_TRAFFICSIMULATION_H
 
-#include <iostream>
 #include <vector>
-#include <map>
 #include <fstream>
-#include <algorithm>
-#include "DesignByContract.h"
 #include "parsers/ElementParser.h"
 
 class Street;
@@ -30,6 +26,9 @@ public:
      */
     TrafficSimulation();
 
+    /*
+     * ENSURE(fStreets.empty(), "TrafficSimulation destructor did not end in an empty state")
+     */
     virtual ~TrafficSimulation();
 
     bool properlyInitialized() const;
@@ -37,10 +36,11 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling parseInputFile()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good when calling parseInputFile()")
+     *
      * ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseInputFile()")
-     * ENSURE(parseSucces == Success || parseSucces == ImportAborted, "The parser did not return a proper succes or aborted value")
+     * ENSURE(parseSucces == Success || parseSucces == ImportAborted, "The parser did not return a proper success or aborted value")
      */
-    EParserSucces parseInputFile(const std::string &filename, std::ostream &errStream = std::cerr);
+    EParserSuccess parseInputFile(const std::string &filename, std::ostream &errStream = std::cerr);
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling writeOn()")
@@ -65,6 +65,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()")
+     * ENSURE(fStreets.size() == beginSize, "The number of streets changed when calling simulate()")
      */
     void simulate();
 
@@ -85,7 +86,7 @@ public:
     double getTime() const;
 
 private:
-    Street* getStreet(const std::string &name) const;
+    Street* getStreetFromString(const std::string &name) const;
 };
 
 

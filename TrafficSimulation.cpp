@@ -5,8 +5,10 @@
 // Description  : This code is contains the `TrafficSimulation` class
 // ===========================================================
 
-#include <iomanip>
+#include <iostream>
+#include <algorithm>
 #include "TrafficSimulation.h"
+#include "DesignByContract.h"
 #include "Variables.h"
 #include "objects/Street.h"
 #include "objects/TrafficLight.h"
@@ -23,20 +25,22 @@ TrafficSimulation::TrafficSimulation() {
 
 TrafficSimulation::~TrafficSimulation() {
     clearSimulation();
+
+    ENSURE(fStreets.empty(), "TrafficSimulation destructor did not end in an empty state");
 }
 
 bool TrafficSimulation::properlyInitialized() const {
     return TrafficSimulation::_initCheck == this;
 }
 
-EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std::ostream &errStream) {
+EParserSuccess TrafficSimulation::parseInputFile(const std::string &filename, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling parseInputFile()");
     REQUIRE(errStream.good(), "The errorStream wasn't good when calling parseInputFile()");
 
-    EParserSucces parseSucces = Success;
+    EParserSuccess parseSuccess = Success;
 
     ElementParser parser;
-    parseSucces = parser.parseFile(filename, errStream);
+    parseSuccess = parser.parseFile(filename, errStream);
 
     TrafficSimulation::fStreets = parser.getStreets();
     std::vector<TrafficLight*> trafficLights = parser.getTrafficLights();
@@ -47,7 +51,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
 
     for (long unsigned int i = 0; i < trafficLights.size(); i++) {
         TrafficLight* curTrafficLight = trafficLights[i];
-        Street* curStreet = getStreet(curTrafficLight->getStreet());
+        Street* curStreet = getStreetFromString(curTrafficLight->getStreet());
         if (curStreet != NULL && curTrafficLight->getPosition() < curStreet->getLength()) {
             std::vector<TrafficLight*> trafficLightsOnStreet = curStreet->getTrafficLights();
             bool validTrafficLight = true;
@@ -71,7 +75,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
 
     for (long unsigned int i = 0; i < vehicles.size(); i++) {
         Vehicle* curVehicle = vehicles[i];
-        Street* curStreet = getStreet(curVehicle->getStreet());
+        Street* curStreet = getStreetFromString(curVehicle->getStreet());
         if (curStreet != NULL && curVehicle->getPosition() < curStreet->getLength()) {
             curStreet->addVehicle(curVehicle);
         } else {
@@ -82,7 +86,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
 
     for (long unsigned int i = 0; i < vehicleGenerators.size(); i++) {
         VehicleGenerator* curVehicleGenerator = vehicleGenerators[i];
-        Street* curStreet = getStreet(curVehicleGenerator->getStreet());
+        Street* curStreet = getStreetFromString(curVehicleGenerator->getStreet());
         if (curStreet != NULL && !curStreet->hasVehicleGenerator()) {
             curStreet->setVehicleGenerator(curVehicleGenerator);
         } else {
@@ -93,7 +97,7 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
 
     for (long unsigned int i = 0; i < busStops.size(); i++) {
         BusStop* curBusStop = busStops[i];
-        Street* curStreet = getStreet(curBusStop->getStreet());
+        Street* curStreet = getStreetFromString(curBusStop->getStreet());
         if (curStreet != NULL && curBusStop->getPosition() < curStreet->getLength()) {
             curStreet->addBusStop(curBusStop);
         } else {
@@ -105,8 +109,8 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
     for (long unsigned int i = 0; i < crossroads.size(); i++) {
         std::pair<std::string, unsigned int> curPair1 = crossroads[i].first;
         std::pair<std::string, unsigned int> curPair2 = crossroads[i].second;
-        Street* curStreet1 = getStreet(curPair1.first);
-        Street* curStreet2 = getStreet(curPair2.first);
+        Street* curStreet1 = getStreetFromString(curPair1.first);
+        Street* curStreet2 = getStreetFromString(curPair2.first);
         if (curStreet1 == NULL || curStreet2 == NULL || (int) curPair1.second > curStreet1->getLength() || (int) curPair2.second > curStreet2->getLength()) {
             errStream << "XML IMPORT ABORT: The simulation is not consistent." << std::endl;
             return ImportAborted;
@@ -120,9 +124,9 @@ EParserSucces TrafficSimulation::parseInputFile(const std::string &filename, std
     }
 
     ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseInputFile()");
-    ENSURE(parseSucces == Success || parseSucces == PartialImport || parseSucces == ImportAborted, "The parser did not return a proper succes or aborted value");
+    ENSURE(parseSuccess == Success || parseSuccess == PartialImport || parseSuccess == ImportAborted, "The parser did not return a proper success or aborted value");
 
-    return parseSucces;
+    return parseSuccess;
 }
 
 void TrafficSimulation::writeOn(std::ostream &onstream) const {
@@ -267,6 +271,7 @@ void TrafficSimulation::graph(std::ostream &onstream) const {
 void TrafficSimulation::simulate() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()");
 
+    unsigned int beginSize = fStreets.size();
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
         fStreets[i]->simGenerator(fTime);
         fStreets[i]->driveVehicles();
@@ -274,6 +279,8 @@ void TrafficSimulation::simulate() {
         fStreets[i]->simBusStops(fTime);
     }
     fTime += gSimulationTime;
+
+    ENSURE(fStreets.size() == beginSize, "The number of streets changed when calling simulate()");
 }
 
 void TrafficSimulation::clearSimulation() {
@@ -290,15 +297,17 @@ void TrafficSimulation::clearSimulation() {
 
 const std::vector<Street *> &TrafficSimulation::getStreets() const {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getStreets()");
+
     return fStreets;
 }
 
 double TrafficSimulation::getTime() const {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getTime()");
+
     return fTime;
 }
 
-Street *TrafficSimulation::getStreet(const std::string &name) const {
+Street *TrafficSimulation::getStreetFromString(const std::string &name) const {
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
         if (fStreets[i]->getName() == name) {
             return fStreets[i];
