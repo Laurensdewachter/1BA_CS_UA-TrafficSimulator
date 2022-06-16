@@ -8,10 +8,8 @@
 #ifndef TRAFFICSIMULATION_BUSSTOPPARSER_H
 #define TRAFFICSIMULATION_BUSSTOPPARSER_H
 
-#include <iostream>
-#include <sstream>
+#include <fstream>
 #include "tinyxml/tinyxml.h"
-#include "../DesignByContract.h"
 
 class BusStop;
 
@@ -33,6 +31,7 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "BusStopParser wasn't initialized when calling parseBusStop()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     *
      * ENSURE(fBusStop != NULL, "BusStopParser could not create a BusStop");
      * ENSURE(fBusStop->getStreet() == street, "parseBusStop() postcondition");
      * ENSURE(fBusStop->getPosition() == position, "parseBusStop() postcondition");

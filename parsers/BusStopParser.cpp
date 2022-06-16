@@ -5,11 +5,13 @@
 // Description  : This code is used to parse an XML file that contains a `BusStop`.
 // ===========================================================
 
+#include <sstream>
 #include "BusStopParser.h"
+#include "../DesignByContract.h"
 #include "../objects/BusStop.h"
 
 BusStopParser::BusStopParser() {
-    _initCheck = this;
+    BusStopParser::_initCheck = this;
 
     ENSURE(properlyInitialized(), "BusStopParser constructor did not end in an initialized state");
 }
@@ -79,5 +81,6 @@ bool BusStopParser::parseBusStop(TiXmlElement *BUSHALTE, std::ostream &errStream
 BusStop* BusStopParser::getBusStop() const {
     REQUIRE(properlyInitialized(), "BusStopParser wasn't initialized when calling getBusStop()");
     REQUIRE(fBusStop != NULL, "BusStopParser had no bus stop when calling getBusStop()");
+
     return fBusStop;
 }

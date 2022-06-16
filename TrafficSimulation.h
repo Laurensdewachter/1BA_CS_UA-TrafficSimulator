@@ -45,6 +45,7 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling writeOn()")
      * REQUIRE(onstream.good(), "The outputStream wasn't good when calling writeOn()")
+     *
      * ENSURE(onstream.good(), "The outputStream wasn't good at the end of writeOn()")
      */
     void writeOn(std::ostream &onstream = std::cout) const;
@@ -52,6 +53,7 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling visualize()")
      * REQUIRE(onstream.good(), "The outputStream wasn't good when calling visualize()")
+     *
      * ENSURE(onstream.good(), "The outputStream wasn't good at the end of visualize()")
      */
     void visualize(std::ostream &onstream = std::cout) const;
@@ -59,18 +61,21 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling graph()")
      * REQUIRE(onstream.good(), "The outputStream wasn't good when calling graph()")
+     *
      * ENSURE(onstream.good(), "The outputStream wasn't good at the end of graph()")
      */
     void graph(std::ostream &onstream = std::cout) const;
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simulate()")
+     *
      * ENSURE(fStreets.size() == beginSize, "The number of streets changed when calling simulate()")
      */
     void simulate();
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()")
+     * 
      * ENSURE(fStreets.empty(), "The streets vector wasn't empty at the end of clearSimulation()")
      */
     void clearSimulation();
