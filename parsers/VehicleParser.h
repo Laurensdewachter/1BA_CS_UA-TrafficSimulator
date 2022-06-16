@@ -30,10 +30,12 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling parseVehicle()")
-     * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseVehicle()")
+     *
      * ENSURE(fVehicle != NULL, "VehicleParser could not create a Vehicle")
      * ENSURE(fVehicle->getStreet() == fStreet, "parseVehicle() postcondition")
      * ENSURE(fVehicle->getPosition() == fPosition, "parseVehicle() postcondition")
+     * ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseVehicle()")
      */
     bool parseVehicle(TiXmlElement* VOERTUIG, std::ostream &errStream);
 
@@ -43,5 +45,6 @@ public:
      */
     Vehicle *getVehicle() const;
 };
+
 
 #endif

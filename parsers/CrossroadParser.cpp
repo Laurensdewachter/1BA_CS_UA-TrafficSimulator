@@ -12,7 +12,7 @@
 
 CrossroadParser::CrossroadParser() {
     CrossroadParser::_initCheck = this;
-ENSURE()
+
     ENSURE(properlyInitialized(), "CrossroadParser constructor did not end in an initialized state");
 }
 

@@ -17,6 +17,7 @@
 
 VehicleParser::VehicleParser() {
     VehicleParser::_initCheck = this;
+
     ENSURE(properlyInitialized(), "VehicleParser constructor did not end in an initialized state");
 }
 
@@ -28,7 +29,7 @@ bool VehicleParser::properlyInitialized() const {
 
 bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling parseVehicle()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseVehicle()");
 
     TiXmlElement* baanElem = VOERTUIG->FirstChildElement("baan");
     TiXmlElement* positionElem = VOERTUIG->FirstChildElement("positie");
@@ -89,6 +90,7 @@ bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream
     ENSURE(fVehicle != NULL, "VehicleParser could not create a Vehicle");
     ENSURE(fVehicle->getStreet() == street, "parseVehicle() postcondition");
     ENSURE(fVehicle->getPosition() == position, "parseVehicle() postcondition");
+    ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseVehicle()");
 
     return true;
 }
@@ -96,5 +98,6 @@ bool VehicleParser::parseVehicle(TiXmlElement *VOERTUIG, std::ostream &errStream
 Vehicle *VehicleParser::getVehicle() const {
     REQUIRE(properlyInitialized(), "VehicleParser wasn't initialized when calling getVehicle()");
     REQUIRE(fVehicle != NULL, "VehicleParser had no vehicle when calling getVehicle()");
+
     return fVehicle;
 }
