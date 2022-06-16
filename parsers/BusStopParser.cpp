@@ -24,7 +24,7 @@ bool BusStopParser::properlyInitialized() const {
 
 bool BusStopParser::parseBusStop(TiXmlElement *BUSHALTE, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "BusStopParser wasn't initialized when calling parseBusStop()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseBusStop()");
 
     TiXmlElement* streetElem = BUSHALTE->FirstChildElement("baan");
     TiXmlElement* positionElem = BUSHALTE->FirstChildElement("positie");
@@ -74,6 +74,8 @@ bool BusStopParser::parseBusStop(TiXmlElement *BUSHALTE, std::ostream &errStream
     ENSURE(fBusStop->getStreet() == street, "parseBusStop() postcondition");
     ENSURE(fBusStop->getPosition() == position, "parseBusStop() postcondition");
     ENSURE(fBusStop->getWaitTime() == waitTime, "parseBusStop() postcondition");
+
+    ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseBusStop()");
 
     return true;
 }

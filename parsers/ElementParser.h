@@ -11,11 +11,9 @@
 
 #include <iostream>
 #include <vector>
-#include <map>
 #include "tinyxml/tinyxml.h"
-#include "../DesignByContract.h"
 
-enum EParserSucces {
+enum EParserSuccess {
     Success,
     PartialImport,
     ImportAborted
@@ -52,9 +50,11 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling parseFile()")
-     * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseFile()")
+     *
+     * ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseFile()")
      */
-    EParserSucces parseFile(const std::string &filename, std::ostream &errStream);
+    EParserSuccess parseFile(const std::string &filename, std::ostream &errStream);
 
     /*
      * REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling getStreets()")
@@ -86,5 +86,6 @@ public:
      */
     const std::vector<std::pair<std::pair<std::string, unsigned int>, std::pair<std::string, unsigned int> > > &getCrossroads() const;
 };
+
 
 #endif

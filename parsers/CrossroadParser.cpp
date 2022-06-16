@@ -12,7 +12,7 @@
 
 CrossroadParser::CrossroadParser() {
     CrossroadParser::_initCheck = this;
-
+ENSURE()
     ENSURE(properlyInitialized(), "CrossroadParser constructor did not end in an initialized state");
 }
 
@@ -24,7 +24,7 @@ bool CrossroadParser::properlyInitialized() const {
 
 bool CrossroadParser::parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "CrossroadParser wasn't initialized when calling parseCrossroad()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseCrossroad()");
 
     TiXmlElement* baanElem1 = KRUISPUNT->FirstChildElement("baan");
 
@@ -96,12 +96,14 @@ bool CrossroadParser::parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errS
     fStreet2.first = street2;
     fStreet2.second = position2;
 
-    REQUIRE(!fStreet1.first.empty(), "The first street is empty");
-    REQUIRE(!fStreet2.first.empty(), "The first street is empty");
-    REQUIRE(fStreet1.first == street1, "The first street is not the same as the first street in the XML");
-    REQUIRE(fStreet2.first == street2, "The second street is not the same as the second street in the XML");
-    REQUIRE(fStreet1.second == position1, "The first position is not the same as the first position in the XML");
-    REQUIRE(fStreet2.second == position2, "The second position is not the same as the second position in the XML");
+    ENSURE(!fStreet1.first.empty(), "The first street is empty");
+    ENSURE(!fStreet2.first.empty(), "The first street is empty");
+    ENSURE(fStreet1.first == street1, "The first street is not the same as the first street in the XML");
+    ENSURE(fStreet2.first == street2, "The second street is not the same as the second street in the XML");
+    ENSURE(fStreet1.second == position1, "The first position is not the same as the first position in the XML");
+    ENSURE(fStreet2.second == position2, "The second position is not the same as the second position in the XML");
+
+    ENSURE(errStream.good(), "The errorStream is not good at the end of parseCrossroad()");
 
     return true;
 }

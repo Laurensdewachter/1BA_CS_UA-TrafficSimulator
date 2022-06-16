@@ -7,6 +7,7 @@
 // ===========================================================
 
 #include "ElementParser.h"
+#include "../DesignByContract.h"
 #include "StreetParser.h"
 #include "TrafficLightParser.h"
 #include "VehicleParser.h"
@@ -15,7 +16,8 @@
 #include "CrossroadParser.h"
 
 ElementParser::ElementParser() {
-    _initCheck = this;
+    ElementParser::_initCheck = this;
+
     ENSURE(properlyInitialized(), "ElementParser constructor did not end in an initialized state");
 }
 
@@ -25,11 +27,11 @@ bool ElementParser::properlyInitialized() const {
     return ElementParser::_initCheck == this;
 }
 
-EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream &errStream) {
+EParserSuccess ElementParser::parseFile(const std::string &filename, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "ElementParser wasn't initialized when calling parseFile()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseFile()");
 
-    EParserSucces endResult = Success;
+    EParserSuccess endResult = Success;
 
     if (!doc.LoadFile(filename.c_str())) {
         errStream << "XML IMPORT ABORTED: " << doc.ErrorDesc() << std::endl;
@@ -119,6 +121,8 @@ EParserSucces ElementParser::parseFile(const std::string &filename, std::ostream
             }
         }
     doc.Clear();
+
+    ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseFile()");
 
     return endResult;
 }
