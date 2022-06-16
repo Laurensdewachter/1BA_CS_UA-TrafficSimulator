@@ -112,6 +112,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling driveVehicles()")
+     * for (unsigned int i = 0; i < fVehicles.size(); i++) ENSURE(fVehicles[i]->getPosition() >= originalPositions[i] - 0.001, "driveVehicles() postcondition")
      */
     void driveVehicles();
 
@@ -122,8 +123,15 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simGenerator()")
+     * if (spawn) ENSURE(fVehicles.size() == startSize+1, "simGenerator() postcondition")
+     * else ENSURE(fVehicles.size() == startSize, "simGenerator() postcondition")
      */
     void simGenerator(double &time);
+
+    /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simBusStops()")
+     */
+    void simBusStops(double &time);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()")

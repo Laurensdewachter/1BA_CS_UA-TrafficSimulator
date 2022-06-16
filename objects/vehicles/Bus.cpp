@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : Bus.cpp
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `Bus` subclass
+// ===========================================================
+
 #include "Bus.h"
 #include "../../Variables.h"
 #include <cmath>
@@ -10,6 +17,18 @@ Bus::~Bus() {}
 
 double Bus::getLength() const {
     return busLength;
+}
+
+double Bus::getWaitTime() const {
+    return fWaitTime;
+}
+
+void Bus::addWaitTime(double time) {
+    fWaitTime += time;
+}
+
+void Bus::clearWaitTime() {
+    fWaitTime = 0;
 }
 
 std::string Bus::getType() const {

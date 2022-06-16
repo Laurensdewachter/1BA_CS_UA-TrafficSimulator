@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : PoliceCar.cpp
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `PoliceCar` subclass
+// ===========================================================
+
 #include "PoliceCar.h"
 #include "../../Variables.h"
 #include <cmath>

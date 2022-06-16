@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : Car.cpp
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `Car` subclass
+// ===========================================================
+
 #include "Car.h"
 #include "../../Variables.h"
 #include <cmath>

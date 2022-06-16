@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : FireEngine.h
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `FireEngine` subclass
+// ===========================================================
+
 #ifndef TRAFFICSIMULATION_FIREENGINE_H
 #define TRAFFICSIMULATION_FIREENGINE_H
 
