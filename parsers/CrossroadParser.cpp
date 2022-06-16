@@ -8,8 +8,6 @@
 
 #include "CrossroadParser.h"
 #include "../DesignByContract.h"
-#include "../parsers/ElementParser.h"
-#include "../objects/Street.h"
 #include <sstream>
 
 CrossroadParser::CrossroadParser() {
@@ -97,6 +95,13 @@ bool CrossroadParser::parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errS
     fStreet1.second = position1;
     fStreet2.first = street2;
     fStreet2.second = position2;
+
+    REQUIRE(!fStreet1.first.empty(), "The first street is empty");
+    REQUIRE(!fStreet2.first.empty(), "The first street is empty");
+    REQUIRE(fStreet1.first == street1, "The first street is not the same as the first street in the XML");
+    REQUIRE(fStreet2.first == street2, "The second street is not the same as the second street in the XML");
+    REQUIRE(fStreet1.second == position1, "The first position is not the same as the first position in the XML");
+    REQUIRE(fStreet2.second == position2, "The second position is not the same as the second position in the XML");
 
     return true;
 }
