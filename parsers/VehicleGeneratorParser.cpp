@@ -5,11 +5,14 @@
 // Description  : This code is used to parse an XML file that contains a `VehicleGenerator`.
 // ===========================================================
 
+#include <sstream>
 #include "VehicleGeneratorParser.h"
+#include "../DesignByContract.h"
 #include "../objects/VehicleGenerator.h"
 
 VehicleGeneratorParser::VehicleGeneratorParser() {
     VehicleGeneratorParser::_initCheck = this;
+
     ENSURE(properlyInitialized(), "VehicleGeneratorParser constructor did not end in an initialized state");
 }
 
@@ -21,7 +24,7 @@ bool VehicleGeneratorParser::properlyInitialized() const {
 
 bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERATOR, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling parseVehicleGenerator()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseVehicleGenerator()");
 
     TiXmlElement* baanElem = VOERTUIGGENERATOR->FirstChildElement("baan");
     TiXmlElement* frequencyElem = VOERTUIGGENERATOR->FirstChildElement("frequentie");
@@ -77,6 +80,7 @@ bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
     ENSURE(fVehicleGenerator != NULL, "VehicleGeneratorParser could not create a VehicleGenerator");
     ENSURE(fVehicleGenerator->getStreet() == street, "parseVehicleGenerator() postcondition");
     ENSURE(fVehicleGenerator->getFrequency() == frequency, "parseVehicleGenerator() postcondition");
+    ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseVehicleGenerator()");
 
     return true;
 }
@@ -84,5 +88,6 @@ bool VehicleGeneratorParser::parseVehicleGenerator(TiXmlElement *VOERTUIGGENERAT
 VehicleGenerator *VehicleGeneratorParser::getVehicleGenerator() const {
     REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling getVehicleGenerator()");
     REQUIRE(fVehicleGenerator != NULL, "VehicleGeneratorParser had no vehicle generator when calling getVehicleGenerator()");
+
     return fVehicleGenerator;
 }

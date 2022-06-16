@@ -8,10 +8,7 @@
 #ifndef PSE_VEHICLEGENERATORPARSER_H
 #define PSE_VEHICLEGENERATORPARSER_H
 
-#include <iostream>
-#include <sstream>
 #include "tinyxml/tinyxml.h"
-#include "../DesignByContract.h"
 
 class VehicleGenerator;
 
@@ -31,10 +28,12 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGeneratorParser wasn't initialized when calling parseVehicleGenerator()")
-     * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseVehicleGenerator()")
+     *
      * ENSURE(fVehicleGenerator != NULL, "VehicleGeneratorParser could not create a VehicleGenerator")
      * ENSURE(vehicleGenerator->getStreet() == fStreet, "parseVehicleGenerator() postcondition")
      * ENSURE(vehicleGenerator->getFrequency() == fFrequency, "parseVehicleGenerator() postcondition")
+     * ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseVehicleGenerator()")
      */
     bool parseVehicleGenerator(TiXmlElement* VOERTUIGGENERATOR, std::ostream &errStream);
 
