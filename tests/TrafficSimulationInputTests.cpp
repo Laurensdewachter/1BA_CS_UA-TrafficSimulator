@@ -56,7 +56,7 @@ TEST_F(TrafficSimulationInputTest, InputHappyDay) {
 
     std::ofstream errStream;
     errStream.open("testOutput/HappyDayInErrors.txt");
-    EParserSucces parserSucces = sim.parseInputFile("testInput/HappyDayIn.xml", errStream);
+    EParserSuccess parserSucces = sim.parseInputFile("testInput/HappyDayIn.xml", errStream);
     errStream.close();
 
     EXPECT_EQ(Success, parserSucces);
@@ -78,7 +78,7 @@ TEST_F(TrafficSimulationInputTest, InputLegalSimulations) {
 
     while (FileExists(fileName)) {
         errStream.open("testOutput/legalOut.txt");
-        EParserSucces parserSucces = sim.parseInputFile(fileName, errStream);
+        EParserSuccess parserSucces = sim.parseInputFile(fileName, errStream);
         errStream.close();
 
         EXPECT_TRUE(parserSucces == Success);
@@ -109,7 +109,7 @@ TEST_F(TrafficSimulationInputTest, InputXMLSyntaxErrors) {
 
     while (FileExists(filename)) {
         errStream.open(errStreamName.c_str());
-        EParserSucces parserSucces = sim.parseInputFile(filename, errStream);
+        EParserSuccess parserSucces = sim.parseInputFile(filename, errStream);
         errStream.close();
 
         EXPECT_FALSE(parserSucces == Success);
@@ -139,7 +139,7 @@ TEST_F(TrafficSimulationInputTest, InputConsistencyErrors) {
 
     while (FileExists(filename)) {
         errStream.open(errStreamName.c_str());
-        EParserSucces parserSucces = sim.parseInputFile(filename, errStream);
+        EParserSuccess parserSucces = sim.parseInputFile(filename, errStream);
         errStream.close();
 
         EXPECT_FALSE(parserSucces == Success);

@@ -28,7 +28,7 @@ TEST_F(TrafficSimulationDomainTests, HappyDay) {
 
     std::ofstream errStream;
     errStream.open("testOutput/legalOut.txt");
-    EParserSucces parserSucces = sim.parseInputFile("testInput/domainTest.xml", errStream);
+    EParserSuccess parserSucces = sim.parseInputFile("testInput/domainTest.xml", errStream);
     errStream.close();
 
     EXPECT_EQ(Success, parserSucces);
@@ -51,7 +51,7 @@ TEST_F(TrafficSimulationDomainTests, writeOn) {
 
     std::ofstream errStream;
     errStream.open("testOutput/legalOut.txt");
-    EParserSucces parserSucces = sim.parseInputFile("testInput/writeOn.xml", errStream);
+    EParserSuccess parserSucces = sim.parseInputFile("testInput/writeOn.xml", errStream);
     errStream.close();
 
     EXPECT_EQ(Success, parserSucces);

@@ -56,7 +56,7 @@ TEST_F(TrafficSimulationOutputTest, OutputHappyDay) {
 
     std::ofstream errStream;
     errStream.open("testOutput/HappyDayOutErrors.txt");
-    EParserSucces parserSucces = sim.parseInputFile("testInput/HappyDayOut.xml", errStream);
+    EParserSuccess parserSucces = sim.parseInputFile("testInput/HappyDayOut.xml", errStream);
     errStream.close();
 
     EXPECT_TRUE(parserSucces == Success);
