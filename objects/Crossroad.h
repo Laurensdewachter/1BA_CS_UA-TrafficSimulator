@@ -1,3 +1,10 @@
+// ===========================================================
+// Name         : Crossroad.h
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `Crossroad` class
+// ===========================================================
+
 #ifndef TRAFFICSIMULATION_CROSSROAD_H
 #define TRAFFICSIMULATION_CROSSROAD_H
 

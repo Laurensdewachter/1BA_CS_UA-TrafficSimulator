@@ -1,8 +1,15 @@
+// ===========================================================
+// Name         : Crossroad.cpp
+// Author       : Laurens De Wachter & Nabil El Ouaamari
+// Version      : 1.0
+// Description  : This code is contains the `Crossroad` class
+// ===========================================================
+
 #include "Crossroad.h"
 #include "../DesignByContract.h"
 
 Crossroad::Crossroad() {
-    _initCheck = this;
+    Crossroad::_initCheck = this;
 
     ENSURE(properlyInitialized(), "Crossroad constructor did not end in an initialized state");
 }
@@ -10,7 +17,7 @@ Crossroad::Crossroad() {
 Crossroad::~Crossroad() {}
 
 bool Crossroad::properlyInitialized() const {
-    return _initCheck == this;
+    return Crossroad::_initCheck == this;
 }
 
 const std::pair<Street *, unsigned int> &Crossroad::getStreet1() const {
