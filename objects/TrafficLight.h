@@ -9,7 +9,6 @@
 #define PSE_TRAFFICLIGHT_H
 
 #include <iostream>
-#include "../DesignByContract.h"
 
 class TrafficLight {
     TrafficLight* _initCheck;
@@ -32,6 +31,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLastUpdateTime()")
+     *
      * ENSURE(this->getLastUpdateTime() == u, "setLastUpdateTime() postcondition")
      */
     void setLastUpdateTime(double u);
