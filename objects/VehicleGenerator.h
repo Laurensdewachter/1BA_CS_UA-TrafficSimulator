@@ -9,7 +9,6 @@
 #define PSE_VEHICLEGENERATOR_H
 
 #include <iostream>
-#include "../DesignByContract.h"
 
 class VehicleGenerator {
     VehicleGenerator* _initCheck;
@@ -17,11 +16,9 @@ class VehicleGenerator {
     std::string fStreet;
     int fFrequency;
     std::string fType;
-
     double fTimeSinceLastSpawn;
 
 public:
-
     /*
      * ENSURE(properlyInitialized(), "VehicleGenerator constructor did not end in an initialized state")
      */
@@ -33,18 +30,21 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setStreet()")
+     *
      * ENSURE(VehicleGenerator::fStreet == s, "setStreet() postcondition")
      */
     void setStreet(const std::string &s);
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setFrequency()")
+     *
      * ENSURE(VehicleGenerator::fFrequency == f, "setFrequency() postcondition")
      */
     void setFrequency(int f);
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setTimeSinceLastSpawn()")
+     *
      * ENSURE(VehicleGenerator::fTimeSinceLastSpawn == 0, "setTimeSinceLastSpawn() postcondition")
      */
     void setTimeSinceLastSpawn(double t);
@@ -59,6 +59,9 @@ public:
      */
     int getFrequency() const;
 
+    /*
+     * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling getType()")
+     */
     const std::string &getType() const;
 
     /*

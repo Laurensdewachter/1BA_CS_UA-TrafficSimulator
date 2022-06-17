@@ -6,10 +6,11 @@
 // ===========================================================
 
 #include "VehicleGenerator.h"
+#include "../DesignByContract.h"
 
 VehicleGenerator::VehicleGenerator(const std::string &street, int frequency, const std::string &type) :
             fStreet(street), fFrequency(frequency), fType(type), fTimeSinceLastSpawn(0) {
-    _initCheck = this;
+    VehicleGenerator::_initCheck = this;
 
     ENSURE(properlyInitialized(), "VehicleGenerator constructor did not end in an initialized state");
 }
@@ -17,7 +18,7 @@ VehicleGenerator::VehicleGenerator(const std::string &street, int frequency, con
 VehicleGenerator::~VehicleGenerator() {}
 
 bool VehicleGenerator::properlyInitialized() const {
-    return _initCheck == this;
+    return VehicleGenerator::_initCheck == this;
 }
 
 void VehicleGenerator::setStreet(const std::string &s) {
