@@ -7,14 +7,10 @@
 
 #include "Vehicle.h"
 #include "../DesignByContract.h"
-#include "../Variables.h"
-
-#include <cmath>
 
 Vehicle::Vehicle(const std::string &street, double position) :
-            fStreet(street), fPosition(position), fSpeed(0), fAcceleration(0) {
-
-    _initCheck = this;
+    fStreet(street), fPosition(position), fSpeed(0), fAcceleration(0) {
+    Vehicle::_initCheck = this;
 
     ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state");
 }
@@ -22,7 +18,7 @@ Vehicle::Vehicle(const std::string &street, double position) :
 Vehicle::~Vehicle() {}
 
 bool Vehicle::properlyInitialized() const {
-    return _initCheck == this;
+    return Vehicle::_initCheck == this;
 }
 
 const std::string &Vehicle::getStreet() const {
