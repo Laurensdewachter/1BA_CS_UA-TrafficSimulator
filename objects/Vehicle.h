@@ -20,7 +20,7 @@ protected:
     double fSpeed;
     double fAcceleration;
     double fMaxSpeed;
-
+    double fTookTurn;
 public:
     /*
      * ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state")
@@ -61,6 +61,12 @@ public:
     virtual void setMaxSpeed() = 0;
 
     virtual bool hasPriority() const = 0;
+
+    virtual bool hasTurned();
+
+    virtual void setTurn(bool state);
+
+
 };
 
 

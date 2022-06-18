@@ -15,6 +15,7 @@
 #include "objects/Vehicle.h"
 #include "objects/VehicleGenerator.h"
 #include "objects/BusStop.h"
+#include "objects/vehicles/Car.h"
 
 TrafficSimulation::TrafficSimulation() {
     TrafficSimulation::fTime = 0;
@@ -273,16 +274,89 @@ void TrafficSimulation::simulate() {
 
     unsigned int beginSize = fStreets.size();
     for (long unsigned int i = 0; i < fStreets.size(); i++) {
+        simCrossroads();
         fStreets[i]->simGenerator(fTime);
         fStreets[i]->driveVehicles();
         fStreets[i]->simTrafficLights(fTime);
         fStreets[i]->simBusStops(fTime);
     }
+
     fTime += gSimulationTime;
 
     ENSURE(fStreets.size() == beginSize, "The number of streets changed when calling simulate()");
 }
 
+
+void TrafficSimulation::simCrossroads() {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling simCrossroads()");
+
+    for(int s = 0; s<(int)fStreets.size();s++) {
+        std::map<Street*,int> kruispunten = fStreets[s]->getCrossroads();
+
+        for(int v = 0; v<(int)fStreets[s]->getVehicles().size();v++){
+
+            Vehicle * veh = fStreets[s]->getVehicles()[v];
+
+            int pos_veh = veh->getPosition();
+            std::string str_veh = veh->getStreet();
+
+
+            for (std::map<Street*, int>::iterator it = kruispunten.begin(); it != kruispunten.end(); it++){
+                int pos_new = findPosition(fStreets[s],it->first->getCrossroads());
+
+                Street * kruispunt = it->first;
+                int at_pos = it->second;
+
+                if(pos_veh == at_pos && !veh->hasTurned()){
+                    std::cout << "DRIVING (" << pos_veh << ", " << str_veh << ") ---> (" << at_pos << ", " << kruispunt->getName() << ", " << pos_new<<")" << std::endl;
+
+                    if(rand() % 2){
+                        std::cout << "C H O S E N" <<std::endl<<std::endl;
+
+                        std::string type = veh->getType();
+
+                        Vehicle * newVehicle;
+                        newVehicle = fStreets[s]->CreateTypeVehicle(type,kruispunt->getName(),pos_new);
+                        newVehicle->setTurn(true);
+
+                        it->first->addVehicle(newVehicle);
+                        it->first->sortVehicles();
+
+                        fStreets[s]->removeVehicle();
+                        break;
+                    }
+                    else{
+                        std::cout << "S K I P P E D" <<std::endl<<std::endl;
+                        veh->setTurn(true);
+                    }
+                }
+                else if(pos_veh != at_pos && veh->hasTurned() && !contains(pos_veh,kruispunten)){
+
+                    veh->setTurn(false);
+                }
+            }
+        }
+
+    }
+}
+
+int TrafficSimulation::findPosition(Street * street, std::map<Street *, int> kruispunten) {
+    for (std::map<Street*, int>::iterator it = kruispunten.begin(); it != kruispunten.end(); it++){
+        if(it->first->getName() == street->getName()){
+            return it->second;
+        }
+    }
+    return -1;
+}
+bool TrafficSimulation::contains(int pos_veh, std::map<Street *, int> kruispunten) {
+    bool exists = false;
+    for (std::map<Street*, int>::iterator it = kruispunten.begin(); it != kruispunten.end(); it++){
+        if(it->second == pos_veh){
+            exists = true;
+        }
+    }
+    return exists;
+}
 void TrafficSimulation::clearSimulation() {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()");
 

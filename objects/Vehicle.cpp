@@ -9,7 +9,7 @@
 #include "../DesignByContract.h"
 
 Vehicle::Vehicle(const std::string &street, double position) :
-    fStreet(street), fPosition(position), fSpeed(0), fAcceleration(0) {
+            fStreet(street), fPosition(position), fSpeed(0), fAcceleration(0) {
     Vehicle::_initCheck = this;
 
     ENSURE(properlyInitialized(), "Vehicle constructor did not end in an initialized state");
@@ -38,3 +38,27 @@ double Vehicle::getSpeed() const {
 
     return fSpeed;
 }
+
+void Vehicle::setPosition(double newPosition) {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()");
+
+    this->fPosition = newPosition;
+}
+
+void Vehicle::setStreet(std::string newStreet) {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()");
+
+    this->fStreet = newStreet;
+}
+
+bool Vehicle::hasTurned() {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling hasTurned()");
+
+    return fTookTurn;
+}
+void Vehicle::setTurn(bool state) {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setTurn()");
+
+    fTookTurn = state;
+}
+

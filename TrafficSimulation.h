@@ -74,6 +74,11 @@ public:
     void simulate();
 
     /*
+    * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simCrossroads()")
+    */
+    void simCrossroads();
+
+    /*
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling clearSimulation()")
      *
      * ENSURE(fStreets.empty(), "The streets vector wasn't empty at the end of clearSimulation()")
@@ -89,6 +94,10 @@ public:
      * REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getTime()")
      */
     double getTime() const;
+
+    bool contains(int pos_veh,std::map<Street*,int> kruispunten);
+
+    int findPosition(Street * street, std::map<Street*,int> kruispunten);
 
 private:
     Street* getStreetFromString(const std::string &name) const;
