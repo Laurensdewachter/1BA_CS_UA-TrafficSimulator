@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <vector>
-#include <map>
 
 class TrafficLight;
 class Vehicle;
@@ -41,36 +40,42 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addTrafficLight()")
-     *     ENSURE(fTrafficLights.size() == trafficLightsSize+1, "addTrafficLight() postcondition")
+     *
+     * ENSURE(fTrafficLights.size() == trafficLightsSize+1, "addTrafficLight() postcondition")
      */
     void addTrafficLight(TrafficLight* t);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicle()")
-     *     ENSURE(fVehicles.size() == vehiclesSize+1, "addVehicle() postcondition")
+     *
+     * ENSURE(fVehicles.size() == vehiclesSize+1, "addVehicle() postcondition")
      */
     void addVehicle(Vehicle* v);
 
      /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addBusStop()")
+      *
      * ENSURE(fBusStops.size() == busStopsSize+1, "addBusStop() postcondition")
      */
     void addBusStop(BusStop* b);
   
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addCrossroad()")
+     *
      * ENSURE(fVehicles.size() >= 1, "addCrossroad() postcondition")
      */
     void addCrossroad(Street* crossingStreet, unsigned int position);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicleGenerator()")
+     *
      * ENSURE(fVehicleGenerator == vg, "addVehicleGenerator() postcondition")
      */
     void setVehicleGenerator(VehicleGenerator* vg);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling removeVehicle()")
+     *
      * ENSURE(fVehicles.size() == vehiclesSize-1, "removeVehicle() postcondition")
      */
     void removeVehicle();
@@ -117,17 +122,21 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling driveVehicles()")
+     *
      * for (unsigned int i = 0; i < fVehicles.size(); i++) ENSURE(fVehicles[i]->getPosition() >= originalPositions[i] - 0.001, "driveVehicles() postcondition")
      */
     void driveVehicles();
 
     /*
     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simTrafficLights()")
+     *
+     * for (unsigned int i = 0; i < fTrafficLights.size(); i++) ENSURE(fTrafficLights[i]->isGreen() == originalStates[i] || hasChanged[i], "simTrafficLights() postcondition")
     */
     void simTrafficLights(double &time);
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling simGenerator()")
+     *
      * if (spawn) ENSURE(fVehicles.size() == startSize+1, "simGenerator() postcondition")
      * else ENSURE(fVehicles.size() == startSize, "simGenerator() postcondition")
      */
@@ -140,6 +149,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling sortVehicles()")
+     *
      * ENSURE(!fVehicles.empty(), "sortVehicles() postcondition")
      */
     void sortVehicles();

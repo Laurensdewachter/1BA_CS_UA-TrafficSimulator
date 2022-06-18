@@ -8,10 +8,7 @@
 #ifndef TRAFFICSIMULATION_BUSSTOPPARSER_H
 #define TRAFFICSIMULATION_BUSSTOPPARSER_H
 
-#include <iostream>
-#include <sstream>
 #include "tinyxml/tinyxml.h"
-#include "../DesignByContract.h"
 
 class BusStop;
 
@@ -32,11 +29,13 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "BusStopParser wasn't initialized when calling parseBusStop()")
-     * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     * REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseBusStop()")
+     *
      * ENSURE(fBusStop != NULL, "BusStopParser could not create a BusStop");
      * ENSURE(fBusStop->getStreet() == street, "parseBusStop() postcondition");
      * ENSURE(fBusStop->getPosition() == position, "parseBusStop() postcondition");
      * ENSURE(fBusStop->getWaitTime() == waitTime, "parseBusStop() postcondition");
+     * ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseBusStop()");
      */
     bool parseBusStop(TiXmlElement* BUSHALTE, std::ostream &errStream);
 

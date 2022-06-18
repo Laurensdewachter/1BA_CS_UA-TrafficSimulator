@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <vector>
-#include "../DesignByContract.h"
 #include "Vehicle.h"
 
 class BusStop {
@@ -53,6 +52,8 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "BusStop wasn't initialized when calling addArrivedBus()")
+     *
+     * ENSURE(arrivedBusses.size() == originalLength + 1, "addArrivedBus() did not add a bus to the vector")
      */
     void addArrivedBus(Vehicle* bus);
 };

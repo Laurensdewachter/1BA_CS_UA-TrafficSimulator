@@ -9,7 +9,6 @@
 #define TRAFFICSIMULATION_CROSSROADPARSER_H
 
 #include <iostream>
-#include <map>
 #include "tinyxml/tinyxml.h"
 
 class Street;
@@ -34,6 +33,14 @@ public:
     /*
      * REQUIRE(properlyInitialized(), "CrossroadParser wasn't initialized when calling parseCrossroad()")
      * REQUIRE(errStream.good(), "The errorStream wasn't good")
+     *
+     * ENSURE(!fStreet1.first.empty(), "The first street is empty")
+     * ENSURE(!fStreet2.first.empty(), "The first street is empty")
+     * ENSURE(fStreet1.first == street1, "The first street is not the same as the first street in the XML")
+     * ENSURE(fStreet2.first == street2, "The second street is not the same as the second street in the XML")
+     * ENSURE(fStreet1.second == position1, "The first position is not the same as the first position in the XML")
+     * ENSURE(fStreet2.second == position2, "The second position is not the same as the second position in the XML")
+     * ENSURE(errStream.good(), "The errorStream is not good at the end of parseCrossroad()")
      */
     bool parseCrossroad(TiXmlElement* KRUISPUNT, std::ostream &errStream);
 
@@ -47,5 +54,6 @@ public:
      */
     const std::pair<std::string, unsigned int> &getStreet2() const;
 };
+
 
 #endif

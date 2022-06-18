@@ -5,11 +5,13 @@
 // Description  : This code is used to parse an XML file that contains a `BusStop`.
 // ===========================================================
 
+#include <sstream>
 #include "BusStopParser.h"
+#include "../DesignByContract.h"
 #include "../objects/BusStop.h"
 
 BusStopParser::BusStopParser() {
-    _initCheck = this;
+    BusStopParser::_initCheck = this;
 
     ENSURE(properlyInitialized(), "BusStopParser constructor did not end in an initialized state");
 }
@@ -22,7 +24,7 @@ bool BusStopParser::properlyInitialized() const {
 
 bool BusStopParser::parseBusStop(TiXmlElement *BUSHALTE, std::ostream &errStream) {
     REQUIRE(properlyInitialized(), "BusStopParser wasn't initialized when calling parseBusStop()");
-    REQUIRE(errStream.good(), "The errorStream wasn't good");
+    REQUIRE(errStream.good(), "The errorStream wasn't good at the beginning of parseBusStop()");
 
     TiXmlElement* streetElem = BUSHALTE->FirstChildElement("baan");
     TiXmlElement* positionElem = BUSHALTE->FirstChildElement("positie");
@@ -73,11 +75,14 @@ bool BusStopParser::parseBusStop(TiXmlElement *BUSHALTE, std::ostream &errStream
     ENSURE(fBusStop->getPosition() == position, "parseBusStop() postcondition");
     ENSURE(fBusStop->getWaitTime() == waitTime, "parseBusStop() postcondition");
 
+    ENSURE(errStream.good(), "The errorStream wasn't good at the end of parseBusStop()");
+
     return true;
 }
 
 BusStop* BusStopParser::getBusStop() const {
     REQUIRE(properlyInitialized(), "BusStopParser wasn't initialized when calling getBusStop()");
     REQUIRE(fBusStop != NULL, "BusStopParser had no bus stop when calling getBusStop()");
+
     return fBusStop;
 }

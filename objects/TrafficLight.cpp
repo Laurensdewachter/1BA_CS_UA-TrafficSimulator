@@ -6,12 +6,13 @@
 // ===========================================================
 
 #include "TrafficLight.h"
+#include "../DesignByContract.h"
 #include "../Variables.h"
 
 TrafficLight::TrafficLight(const std::string &street, int position, int cycle) : fStreet(street), fPosition(position), fCycle(cycle) {
-    fIsgreen = true;
-    fLastUpdateTime = 0;
-    _initCheck = this;
+    TrafficLight::fIsgreen = true;
+    TrafficLight::fLastUpdateTime = 0;
+    TrafficLight::_initCheck = this;
 
     ENSURE(properlyInitialized(), "TrafficLight constructor did not end in an initialized state");
 }
@@ -61,9 +62,7 @@ double TrafficLight::getLastUpdateTime() const {
 }
 
 void TrafficLight::changeLight() {
-    if (fIsgreen) {
-        fIsgreen = false;
-    } else {
-        fIsgreen = true;
-    }
+    REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling changeLight()");
+
+    fIsgreen = !fIsgreen;
 }

@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include "Street.h"
+#include "../DesignByContract.h"
 #include "TrafficLight.h"
 #include "VehicleGenerator.h"
 #include "BusStop.h"
@@ -17,24 +18,26 @@
 #include "vehicles/FireEngine.h"
 #include "vehicles/Ambulance.h"
 #include "vehicles/PoliceCar.h"
-#include "../DesignByContract.h"
 #include "../Variables.h"
 
 Street::Street(const std::string &name, int length) : fName(name), fLength(length) {
-    fVehicleGenerator = NULL;
-    _initCheck = this;
+    Street::fVehicleGenerator = NULL;
+    Street::_initCheck = this;
 
     ENSURE(properlyInitialized(), "Street constructor did not end in an initialized state");
 }
 
 Street::~Street() {
     for (unsigned int i = 0; i < fTrafficLights.size(); i++) {
-        delete fTrafficLights[i];
+        delete Street::fTrafficLights[i];
     }
     for (unsigned int i = 0; i < fVehicles.size(); i++) {
-        delete fVehicles[i];
+        delete Street::fVehicles[i];
     }
-    delete fVehicleGenerator;
+    for (unsigned int i = 0; i < fBusStops.size(); i++) {
+        delete Street::fBusStops[i];
+    }
+    delete Street::fVehicleGenerator;
 }
 
 bool Street::properlyInitialized() const {
@@ -187,6 +190,12 @@ void Street::simTrafficLights(double &time) {
         return;
     }
 
+    std::vector<bool> originalStates;
+    for (unsigned int i = 0; i < fTrafficLights.size(); i++) {
+        originalStates.push_back(fTrafficLights[i]->isGreen());
+    }
+
+    std::vector<double> hasChanged;
     for (unsigned int i = 0; i < fTrafficLights.size(); i++) {
         // Change traffic light if necessary
         TrafficLight *curTrafficLight = fTrafficLights[i];
@@ -194,6 +203,9 @@ void Street::simTrafficLights(double &time) {
         if (time >= curTrafficLight->getLastUpdateTime()) {
             curTrafficLight->changeLight();
             curTrafficLight->setLastUpdateTime(curTrafficLight->getLastUpdateTime() + curTrafficLight->getCycle());
+            hasChanged.push_back(true);
+        } else {
+            hasChanged.push_back(false);
         }
 
         // Get vehicle closest to the traffic light
@@ -234,7 +246,9 @@ void Street::simTrafficLights(double &time) {
         }
     }
 
-    // TODO: add ENSURE here
+    for (unsigned int i = 0; i < fTrafficLights.size(); i++) {
+        ENSURE(fTrafficLights[i]->isGreen() == originalStates[i] || hasChanged[i], "simTrafficLights() postcondition");
+    }
 }
 
 void Street::simGenerator(double &time) {
