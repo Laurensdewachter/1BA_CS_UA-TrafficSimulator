@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <fstream>
+#include <map>
 #include "parsers/ElementParser.h"
 
 class Street;
