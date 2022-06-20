@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
         bool graph = false;
         bool simpleGraph = false;
         bool help = false;
+        bool image = false;
         for (long unsigned int i = 0; i < args.size(); i++) {
             if (args[i] == "-h" || args[i] == "--help") {
                 help = true;
@@ -58,6 +59,9 @@ int main(int argc, char** argv) {
                 } else if (args[i] == "-sg") {
                     simpleGraph = true;
                     continue;
+                } else if (args[i] == "-i") {
+                    image = true;
+                    continue;
                 } else {
                     std::cout << "Argument " << args[i] << " not recognized. Use \"-h\" for help." << std::endl;
                 }
@@ -77,6 +81,10 @@ int main(int argc, char** argv) {
                 }
                 if (simpleGraph) {
                     sim.writeOn();
+                } if (image) {
+                    if (k % 5 == 0) {
+                        sim.createImage(k);
+                    }
                 }
             }
         } else if (!help) {

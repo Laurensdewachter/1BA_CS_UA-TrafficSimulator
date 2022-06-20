@@ -100,6 +100,8 @@ public:
 
     int findPosition(Street * street, std::map<Street*,int> kruispunten);
 
+    void createImage(unsigned int i);
+
 private:
     Street* getStreetFromString(const std::string &name) const;
 };

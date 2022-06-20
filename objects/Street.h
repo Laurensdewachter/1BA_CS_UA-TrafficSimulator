@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 class TrafficLight;
 class Vehicle;
