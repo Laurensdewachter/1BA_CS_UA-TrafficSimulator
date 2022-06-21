@@ -23,9 +23,9 @@ protected:
 };
 
 TEST_F(BusStopDomainTest, Constructor) {
-    EXPECT_EQ(stop->getStreet(), "street");
-    EXPECT_EQ(stop->getPosition(), 10);
-    EXPECT_EQ(stop->getWaitTime(), 30);
+    EXPECT_EQ("street", stop->getStreet());
+    EXPECT_EQ(10, stop->getPosition());
+    EXPECT_EQ(30, stop->getWaitTime());
     EXPECT_TRUE(stop->getArrivedBusses().empty());
     EXPECT_TRUE(stop->properlyInitialized());
 }
@@ -35,7 +35,7 @@ TEST_F(BusStopDomainTest, HappyDay) {
 
     stop->addArrivedBus(bus);
     long unsigned int expectedSize = 1;
-    EXPECT_EQ(stop->getArrivedBusses().size(), expectedSize);
+    EXPECT_EQ(expectedSize, stop->getArrivedBusses().size());
     EXPECT_EQ(bus, stop->getArrivedBusses()[0]);
     delete bus;
 }

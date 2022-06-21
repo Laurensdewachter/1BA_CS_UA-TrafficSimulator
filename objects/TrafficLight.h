@@ -31,6 +31,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLastUpdateTime()")
+     * REQUIRE(u >= 0, "LastUpdateTime must be greater than 0")
      *
      * ENSURE(this->getLastUpdateTime() == u, "setLastUpdateTime() postcondition")
      */

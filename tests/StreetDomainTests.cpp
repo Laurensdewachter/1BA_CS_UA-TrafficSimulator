@@ -26,8 +26,8 @@ protected:
 };
 
 TEST_F(StreetDomainTest, Constructor) {
-    EXPECT_EQ(street->getName(), "Testbaan");
-    EXPECT_EQ(street->getLength(), 200);
+    EXPECT_EQ("Testbaan", street->getName());
+    EXPECT_EQ(200, street->getLength());
     EXPECT_TRUE(street->getTrafficLights().empty());
     EXPECT_TRUE(street->getBusStops().empty());
     EXPECT_TRUE(street->getVehicles().empty());
@@ -40,8 +40,8 @@ TEST_F(StreetDomainTest, addTrafficLight) {
 
     street->addTrafficLight(trafficLight);
     long unsigned int expectedSize = 1;
-    EXPECT_EQ(street->getTrafficLights().size(), expectedSize);
-    EXPECT_EQ(trafficLight, street->getTrafficLights()[0]);
+    EXPECT_EQ(expectedSize, street->getTrafficLights().size());
+    EXPECT_EQ(street->getTrafficLights()[0], trafficLight);
 }
 
 TEST_F(StreetDomainTest, addVehicle) {
@@ -49,7 +49,7 @@ TEST_F(StreetDomainTest, addVehicle) {
 
     street->addVehicle(car);
     long unsigned int expectedSize = 1;
-    EXPECT_EQ(street->getVehicles().size(), expectedSize);
+    EXPECT_EQ(expectedSize, street->getVehicles().size());
     EXPECT_EQ(car, street->getVehicles()[0]);
 }
 
@@ -58,7 +58,7 @@ TEST_F(StreetDomainTest, addBusStop) {
 
     street->addBusStop(busStop);
     long unsigned int expectedSize = 1;
-    EXPECT_EQ(street->getBusStops().size(), expectedSize);
+    EXPECT_EQ(expectedSize, street->getBusStops().size());
     EXPECT_EQ(busStop, street->getBusStops()[0]);
 }
 
