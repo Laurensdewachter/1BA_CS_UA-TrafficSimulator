@@ -46,6 +46,11 @@ public:
      */
     double getSpeed() const;
 
+    /*
+     * REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getMaxSpeed()")
+     */
+    double getMaxSpeed() const;
+
     virtual double getLength() const = 0;
 
     virtual std::string getType() const = 0;

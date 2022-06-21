@@ -46,6 +46,9 @@ bool Street::properlyInitialized() const {
 
 void Street::addTrafficLight(TrafficLight *t) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addTrafficLight()");
+    REQUIRE(t->getStreet() == fName, "The traffic light did not have the same name as the street it was added to");
+    REQUIRE(t->getPosition() <= fLength, "The traffic light stands of the road");
+    REQUIRE(t->getPosition() >= 0, "The traffic light stands of the road");
 
     unsigned int trafficLightsSize = fTrafficLights.size();
     fTrafficLights.push_back(t);
@@ -55,6 +58,9 @@ void Street::addTrafficLight(TrafficLight *t) {
 
 void Street::addVehicle(Vehicle *v) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicle()");
+    REQUIRE(v->getStreet() == fName, "The vehicle did not have the same name as the street it was added to");
+    REQUIRE(v->getPosition() <= fLength, "The vehicle stands of the road");
+    REQUIRE(v->getPosition() >= 0, "The vehicle stands of the road");
 
     unsigned int vehiclesSize = fVehicles.size();
     fVehicles.push_back(v);
@@ -64,6 +70,9 @@ void Street::addVehicle(Vehicle *v) {
 
 void Street::addBusStop(BusStop *b) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addBusStop()");
+    REQUIRE(b->getStreet() == fName, "The traffic light did not have the same name as the street it was added to");
+    REQUIRE(b->getPosition() <= fLength, "The traffic light stands of the road");
+    REQUIRE(b->getPosition() >= 0, "The traffic light stands of the road");
 
     unsigned int busStopsSize = fBusStops.size();
     fBusStops.push_back(b);
@@ -83,6 +92,7 @@ void Street::addCrossroad(Street* crossingStreet, unsigned int position) {
 
 void Street::setVehicleGenerator(VehicleGenerator *vg) {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicleGenerator()");
+    REQUIRE(vg->getStreet() == fName, "The generator did not have the same name as the street it was added to");
 
     fVehicleGenerator = vg;
 

@@ -25,6 +25,7 @@ bool TrafficLight::properlyInitialized() const {
 
 void TrafficLight::setLastUpdateTime(double u) {
     REQUIRE(properlyInitialized(), "TrafficLight wasn't initialized when calling setLastUpdateTime()");
+    REQUIRE(u >= 0, "LastUpdateTime must be greater than 0");
 
     TrafficLight::fLastUpdateTime = u;
 

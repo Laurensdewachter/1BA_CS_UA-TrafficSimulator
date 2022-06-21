@@ -44,6 +44,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setTimeSinceLastSpawn()")
+     * REQUIRE(t >= 0, "time was negative at setTimeSinceLastSpawn()")
      *
      * ENSURE(VehicleGenerator::fTimeSinceLastSpawn == 0, "setTimeSinceLastSpawn() postcondition")
      */

@@ -39,6 +39,12 @@ double Vehicle::getSpeed() const {
     return fSpeed;
 }
 
+double Vehicle::getMaxSpeed() const {
+    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling getMaxSpeed()");
+
+    return fMaxSpeed;
+}
+
 bool Vehicle::hasTurned() {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling hasTurned()");
 

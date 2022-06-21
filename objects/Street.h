@@ -41,6 +41,9 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addTrafficLight()")
+     * REQUIRE(t->getStreet() == fName, "The traffic light did not have the same name as the street it was added to");
+     * REQUIRE(t->getPosition() <= fLength, "The traffic light stands of the road");
+     * REQUIRE(t->getPosition() >= 0, "The traffic light stands of the road");
      *
      * ENSURE(fTrafficLights.size() == trafficLightsSize+1, "addTrafficLight() postcondition")
      */
@@ -48,6 +51,9 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicle()")
+     * REQUIRE(v->getStreet() == fName, "The traffic light did not have the same name as the street it was added to");
+     * REQUIRE(v->getPosition() <= fLength, "The traffic light stands of the road");
+     * REQUIRE(v->getPosition() >= 0, "The traffic light stands of the road");
      *
      * ENSURE(fVehicles.size() == vehiclesSize+1, "addVehicle() postcondition")
      */
@@ -55,7 +61,10 @@ public:
 
      /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addBusStop()")
-      *
+     * REQUIRE(b->getStreet() == fName, "The traffic light did not have the same name as the street it was added to");
+     * REQUIRE(b->getPosition() <= fLength, "The traffic light stands of the road");
+     * REQUIRE(b->getPosition() >= 0, "The traffic light stands of the road");
+     *
      * ENSURE(fBusStops.size() == busStopsSize+1, "addBusStop() postcondition")
      */
     void addBusStop(BusStop* b);
@@ -69,6 +78,7 @@ public:
 
     /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling addVehicleGenerator()")
+     * REQUIRE(vg->getStreet() == fName, "The generator did not have the same name as the street it was added to")
      *
      * ENSURE(fVehicleGenerator == vg, "addVehicleGenerator() postcondition")
      */
