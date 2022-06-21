@@ -11,20 +11,39 @@
         <naam>Ruggeveldlaan</naam>
         <lengte>500</lengte>
     </BAAN>
-    <VOERTUIG>
-        <baan>Middelheimbaan</baan>
-        <positie>0</positie>
+    <VOERTUIGGENERATOR>
+        <baan>Turnhoutsebaan</baan>
+        <frequentie>10</frequentie>
         <type>auto</type>
-    </VOERTUIG>
+    </VOERTUIGGENERATOR>
+<!--    <VOERTUIG>-->
+<!--        <baan>Turnhoutsebaan</baan>-->
+<!--        <positie>0</positie>-->
+<!--        <type>politiecombi</type>-->
+<!--    </VOERTUIG>-->
+
+<!--    <VOERTUIG>-->
+<!--        <baan>Turnhoutsebaan</baan>-->
+<!--        <positie>40</positie>-->
+<!--        <type>auto</type>-->
+<!--    </VOERTUIG>-->
 
     <KRUISPUNT>
-        <baan positie="150">Turnhoutsebaan</baan>
+        <baan positie="100">Turnhoutsebaan</baan>
         <baan positie="50">Middelheimbaan</baan>
     </KRUISPUNT>
     <KRUISPUNT>
         <baan positie="300">Middelheimbaan</baan>
         <baan positie="100">Ruggeveldlaan</baan>
     </KRUISPUNT>
-
-
+<!--    <VERKEERSLICHT>-->
+<!--        <baan>Turnhoutsebaan</baan>-->
+<!--        <positie>50</positie>-->
+<!--        <cyclus>30</cyclus>-->
+<!--    </VERKEERSLICHT>-->
+<!--    <VERKEERSLICHT>-->
+<!--        <baan>Turnhoutsebaan</baan>-->
+<!--        <positie>150</positie>-->
+<!--        <cyclus>150</cyclus>-->
+<!--    </VERKEERSLICHT>-->
 </SIMULATIE>

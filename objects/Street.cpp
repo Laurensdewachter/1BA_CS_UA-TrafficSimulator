@@ -109,12 +109,27 @@ void Street::removeVehicle() {
     ENSURE(fVehicles.size() == vehiclesSize-1, "removeVehicle() postcondition");
 }
 
+void Street::removeVehicleAddress(Vehicle * veh,int index) {
+    delete fVehicles[index];
+
+    for(int i = 0; i<(int)fVehicles.size();i++){
+        if (fVehicles[i] == veh){
+            fVehicles.erase(fVehicles.begin()+index);
+
+            if(i == 0 && !fVehicles.empty()){
+                fVehicles[i]->drive(fVehicles[i]);
+            }
+            else if(fVehicles.size()>1){
+                fVehicles[i]->drive(fVehicles[i-1]);
+            }
+        }
+    }
+}
 const std::string &Street::getName() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getName()");
 
     return Street::fName;
 }
-
 int Street::getLength() const {
     REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getLength()");
 
@@ -147,16 +162,19 @@ std::map<Street*,int> Street::getCrossroads() const {
 
 Vehicle *Street::CreateTypeVehicle(std::string type,std::string street,int position) {
     Vehicle* newVehicle;
-    if (type == "auto") {
+    if (type == "Car") {
         newVehicle = new Car(street, position);
-    } else if (type == "bus") {
+    } else if (type == "Bus") {
         newVehicle = new Bus(street, position);
-    } else if (type == "brandweerwagen") {
+    } else if (type == "FireEngine") {
         newVehicle = new FireEngine(street, position);
-    } else if (type == "ziekenwagen") {
+    } else if (type == "Ambulance") {
         newVehicle = new Ambulance(street, position);
-    } else {
+    } else if (type == "PoliceCar") {
         newVehicle = new PoliceCar(street, position);
+    }
+    else {
+        std::cout << "Type of car does not exist" << std::endl;
     }
     return newVehicle;
 }

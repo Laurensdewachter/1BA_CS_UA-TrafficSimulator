@@ -299,19 +299,20 @@ void TrafficSimulation::simCrossroads() {
 
             int pos_veh = veh->getPosition();
             std::string str_veh = veh->getStreet();
-
+            std::string type_veh = veh->getType();
 
             for (std::map<Street*, int>::iterator it = kruispunten.begin(); it != kruispunten.end(); it++){
                 int pos_new = findPosition(fStreets[s],it->first->getCrossroads());
 
                 Street * kruispunt = it->first;
                 int at_pos = it->second;
-
+                if(at_pos == fStreets[s]->getLength()){
+                    return;
+                }
                 if(pos_veh == at_pos && !veh->hasTurned()){
-                    std::cout << "DRIVING (" << pos_veh << ", " << str_veh << ") ---> (" << at_pos << ", " << kruispunt->getName() << ", " << pos_new<<")" << std::endl;
+                    std::cout << "DRIVING (" << pos_veh << ", " << str_veh << ", " << veh << ") ---> (" << at_pos << ", " << kruispunt->getName() << ", " << pos_new<<")" << std::endl;
 
                     if(rand() % 2){
-                        std::cout << "C H O S E N" <<std::endl<<std::endl;
 
                         std::string type = veh->getType();
 
@@ -322,21 +323,21 @@ void TrafficSimulation::simCrossroads() {
                         it->first->addVehicle(newVehicle);
                         it->first->sortVehicles();
 
-                        fStreets[s]->removeVehicle();
+                        std::cout << "C H O S E N - " << veh  <<std::endl<<std::endl;
+                        fStreets[s]->removeVehicleAddress(veh,v);
                         break;
                     }
                     else{
-                        std::cout << "S K I P P E D" <<std::endl<<std::endl;
+                        std::cout << "S K I P P E D - " << veh <<std::endl<<std::endl;
                         veh->setTurn(true);
+                        continue;
                     }
                 }
                 else if(pos_veh != at_pos && veh->hasTurned() && !contains(pos_veh,kruispunten)){
-
                     veh->setTurn(false);
                 }
             }
         }
-
     }
 }
 
