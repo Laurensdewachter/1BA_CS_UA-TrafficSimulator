@@ -1,6 +1,1 @@
 Tijd: 0
-Voertuig 1
--> baan: Middelheimbaan
--> positie: 0
--> snelheid: 0
-
