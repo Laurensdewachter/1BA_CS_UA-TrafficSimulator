@@ -35,7 +35,7 @@ TEST_F(StreetDomainTest, Constructor) {
     EXPECT_TRUE(street->properlyInitialized());
 }
 
-TEST_F(StreetDomainTest, addTrafficLight) {
+TEST_F(StreetDomainTest, AddTrafficLight) {
     TrafficLight* trafficLight = new TrafficLight("Testbaan", 20, 10);
 
     street->addTrafficLight(trafficLight);
@@ -44,7 +44,7 @@ TEST_F(StreetDomainTest, addTrafficLight) {
     EXPECT_EQ(street->getTrafficLights()[0], trafficLight);
 }
 
-TEST_F(StreetDomainTest, addVehicle) {
+TEST_F(StreetDomainTest, AddVehicle) {
     Car* car = new Car("Testbaan", 10);
 
     street->addVehicle(car);
@@ -53,7 +53,7 @@ TEST_F(StreetDomainTest, addVehicle) {
     EXPECT_EQ(car, street->getVehicles()[0]);
 }
 
-TEST_F(StreetDomainTest, addBusStop) {
+TEST_F(StreetDomainTest, AddBusStop) {
     BusStop* busStop = new BusStop("Testbaan", 50, 10);
 
     street->addBusStop(busStop);
@@ -62,7 +62,7 @@ TEST_F(StreetDomainTest, addBusStop) {
     EXPECT_EQ(busStop, street->getBusStops()[0]);
 }
 
-TEST_F(StreetDomainTest, addVehicleGenerator) {
+TEST_F(StreetDomainTest, AddVehicleGenerator) {
     VehicleGenerator* generator = new VehicleGenerator("Testbaan", 10, "Car");
 
     street->setVehicleGenerator(generator);
@@ -79,6 +79,7 @@ TEST_F(StreetDomainTest, ContractViolations) {
     EXPECT_DEATH(illegalCopy.getBusStops(), "Assertion.*failed");
     EXPECT_DEATH(illegalCopy.getVehicles(), "Assertion.*failed");
     EXPECT_DEATH(illegalCopy.getCrossroads(), "Assertion.*failed");
+    EXPECT_DEATH(illegalCopy.driveVehicles(), "Assertion.*failed");
 
     // Test addTrafficLight() conditions
     TrafficLight* trafficLight1 = new TrafficLight("Testbaan", 300, 10);
