@@ -39,6 +39,7 @@ void VehicleGenerator::setFrequency(int f) {
 
 void VehicleGenerator::setTimeSinceLastSpawn(double t) {
     REQUIRE(properlyInitialized(), "VehicleGenerator wasn't initialized when calling setTimeSinceLastSpawn()");
+    REQUIRE(t >= 0, "time was negative at setTimeSinceLastSpawn()");
 
     fTimeSinceLastSpawn = t;
 
