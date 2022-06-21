@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
                 }
             }
         }
-
+        unsigned int imageCounter = 0;
         TrafficSimulation sim;
         if (fileName != "noFile" && repetitions != -1) {
             sim.parseInputFile(fileName);
@@ -86,7 +86,8 @@ int main(int argc, char** argv) {
                     sim.writeOn();
                 } if (image) {
                     if (k % 5 == 0) {
-                        sim.createImage(k, imageSize);
+                        sim.createImage(imageCounter, imageSize);
+                        imageCounter++;
                     }
                 }
             }

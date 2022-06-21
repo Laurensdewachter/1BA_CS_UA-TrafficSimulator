@@ -393,7 +393,7 @@ void TrafficSimulation::createImage(unsigned int i, const std::string &size) {
         amountOfFigures += 1;
         amountOfFigures += fStreets[k]->getVehicles().size();
         amountOfFigures += fStreets[k]->getTrafficLights().size();
-        //amountOfFigures += fStreets[k]->getBusStops().size();
+        amountOfFigures += fStreets[k]->getBusStops().size();
     }
     std::ostringstream convert2;
     convert2 << amountOfFigures;
@@ -439,7 +439,7 @@ void TrafficSimulation::createImage(unsigned int i, const std::string &size) {
             std::ostringstream convert5;
             convert5 << figureNumber;
 
-            int vehicleOffset = k*20 + 4;
+            int vehicleOffset = k * 20 + 4;
             std::ostringstream convert6;
             convert6 << vehicleOffset;
 
@@ -479,7 +479,7 @@ void TrafficSimulation::createImage(unsigned int i, const std::string &size) {
             std::ostringstream convert8;
             convert8 << figureNumber;
 
-            int trafficLightOffset = k*20 + 10;
+            int trafficLightOffset = k * 20 + 10;
             std::ostringstream convert9;
             convert9 << trafficLightOffset;
 
@@ -506,7 +506,34 @@ void TrafficSimulation::createImage(unsigned int i, const std::string &size) {
 
             figureNumber += 1;
         }
+
+        std::vector<BusStop*> busStops = fStreets[k]->getBusStops();
+        for (unsigned int l = 0; l < busStops.size(); l++) {
+            std::ostringstream convert11;
+            convert11 << figureNumber;
+
+            int busStopOffset = k * 20 - 3;
+            std::ostringstream convert12;
+            convert12 << busStopOffset;
+
+            std::ostringstream convert13;
+            convert13 << fStreets[k]->getLength() / 2 - busStops[l]->getPosition();
+
+            std::string busStopCenter = "(" + convert13.str() + ", " + convert12.str() + ", 0)";
+
+            ini << "[Figure" << convert11.str() << "]" << std::endl
+                << "type = \"Cube\"" << std::endl
+                << "scale = 1" << std::endl
+                << "rotateX = 0" << std::endl
+                << "rotateY = 0" << std::endl
+                << "rotateZ = 0" << std::endl
+                << "center = " << busStopCenter << std::endl
+                << "ambientReflection = (0, 0, 1)" << std::endl << std::endl;
+
+            figureNumber += 1;
+        }
     }
+    ini.close();
 
     std::string command = "./engine " + fileName;
     system(command.c_str());
