@@ -36,6 +36,8 @@ TEST_F(BusStopDomainTest, HappyDay) {
     stop->addArrivedBus(bus);
     long unsigned int expectedSize = 1;
     EXPECT_EQ(stop->getArrivedBusses().size(), expectedSize);
+    EXPECT_EQ(bus, stop->getArrivedBusses()[0]);
+    delete bus;
 }
 
 TEST_F(BusStopDomainTest, ContractViolations) {
@@ -47,4 +49,6 @@ TEST_F(BusStopDomainTest, ContractViolations) {
     EXPECT_DEATH(illegalCopy.getWaitTime(), "Assertion.*failed");
     EXPECT_DEATH(illegalCopy.getArrivedBusses(), "Assertion.*failed");
     EXPECT_DEATH(illegalCopy.addArrivedBus(bus), "Assertion.*failed");
+
+    delete bus;
 }

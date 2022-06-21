@@ -5,10 +5,10 @@
 - `-r` [REPETITIONS]: the amount of times the simulation must be run (required)
 - `-sg`: simple graphics
 - `-g`: normal graphics
-- `-i`: create images of the simulation
+- `-i [SIZE]`: create images of the simulation with the given size
 
 ### Images
-For the `-i` flag to work, there must be a directory names `images` in the working directory.
+For the `-i` flag to work, there must be a directory names `images` and the engine itself in the working directory.
 
 ### Tests
 The tests need the directories `testInput` & `testOutput` to run.  
