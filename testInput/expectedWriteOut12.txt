@@ -1,15 +1,5 @@
 Tijd: 0
 Voertuig 1
--> baan: Turnhoutsebaan
--> positie: 10
--> snelheid: 0
-
-Voertuig 2
--> baan: Turnhoutsebaan
--> positie: 0
--> snelheid: 0
-
-Voertuig 3
 -> baan: Middelheimbaan
 -> positie: 0
 -> snelheid: 0
