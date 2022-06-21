@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 #include "TrafficSimulation.h"
 #include "DesignByContract.h"
 #include "Variables.h"
@@ -15,7 +16,6 @@
 #include "objects/Vehicle.h"
 #include "objects/VehicleGenerator.h"
 #include "objects/BusStop.h"
-#include "objects/vehicles/Car.h"
 
 TrafficSimulation::TrafficSimulation() {
     TrafficSimulation::fTime = 0;
@@ -379,6 +379,164 @@ double TrafficSimulation::getTime() const {
     REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling getTime()");
 
     return fTime;
+}
+
+void TrafficSimulation::createImage(unsigned int i, const std::string &size) {
+    REQUIRE(properlyInitialized(), "TrafficSimulation wasn't initialized when calling createImage()");
+
+    std::ostringstream convert;
+    convert << i+1;
+    std::string fileName = "images/image" + convert.str() + ".ini";
+
+    unsigned int amountOfFigures = 0;
+    for (unsigned int k = 0; k < fStreets.size(); k++) {
+        amountOfFigures += 1;
+        amountOfFigures += fStreets[k]->getVehicles().size();
+        amountOfFigures += fStreets[k]->getTrafficLights().size();
+        amountOfFigures += fStreets[k]->getBusStops().size();
+    }
+    std::ostringstream convert2;
+    convert2 << amountOfFigures;
+
+    std::ofstream ini;
+    ini.open(fileName.c_str());
+
+    ini << "[General]" << std::endl
+    << "size = " << size << std::endl
+    << "backgroundcolor = (1, 1, 1)" << std::endl
+    << "type = \"LightedZBuffering\"" << std::endl
+    << "nrLights = 1" << std::endl
+    << "eye = (0, 200, -200)" << std::endl
+    << "nrFigures = " << convert2.str() << std::endl << std::endl
+
+    << "[Light0]" << std::endl
+    << "ambientLight = (1, 1, 1)" << std::endl << std::endl;
+
+    unsigned int figureNumber = 0;
+    for (unsigned int k = 0; k < fStreets.size(); k++) {
+        std::ostringstream convert3;
+        convert3 << figureNumber;
+
+        int centerOffset = k*20;
+        std::ostringstream convert4;
+        convert4 << centerOffset;
+        std::string center = "(0, " + convert4.str() + ", 0)";
+
+        ini << "[Figure" << convert3.str() << "]" << std::endl
+        << "type = \"Road\"" << std::endl
+        << "scale = 1" << std::endl
+        << "rotateX = 0" << std::endl
+        << "rotateY = 0" << std::endl
+        << "rotateZ = 0" << std::endl
+        << "center = " << center << std::endl
+        << "ambientReflection = (0.20, 0.20, 0.20)" << std::endl
+        << "length = " << fStreets[k]->getLength()+10 << std::endl << std::endl;
+
+        figureNumber += 1;
+
+        std::vector<Vehicle*> vehicles = fStreets[k]->getVehicles();
+        for (unsigned int l = 0; l < vehicles.size(); l++) {
+            std::ostringstream convert5;
+            convert5 << figureNumber;
+
+            int vehicleOffset = k * 20 + 4;
+            std::ostringstream convert6;
+            convert6 << vehicleOffset;
+
+            std::ostringstream convert7;
+            convert7 << fStreets[k]->getLength()/2 - vehicles[l]->getPosition();
+
+            std::string centerVehicle = "(" + convert7.str() + ", " + convert6.str() + ", 0)";
+
+            std::string color;
+            std::string type = vehicles[l]->getType();
+            if (type == "Ambulance") {
+                color = "(1.00, 1.00, 1.00)";
+            } else if (type == "Bus") {
+                color = "(0.00, 1.00, 0.00)";
+            } else if (type == "Car") {
+                color = "(0.00, 0.00, 0.00)";
+            } else if (type == "FireEngine") {
+                color = "(1.00, 0.00, 0.00)";
+            } else {
+                color = "(0.00, 0.00, 1.00)";
+            }
+
+            ini << "[Figure" << convert5.str() << "]" << std::endl
+            << "type = \"Cube\"" << std::endl
+            << "scale = 1" << std::endl
+            << "rotateX = 0" << std::endl
+            << "rotateY = 0" << std::endl
+            << "rotateZ = 0" << std::endl
+            << "center = " << centerVehicle << std::endl
+            << "ambientReflection = " << color << std::endl << std::endl;
+
+            figureNumber += 1;
+        }
+
+        std::vector<TrafficLight*> trafficLights = fStreets[k]->getTrafficLights();
+        for (unsigned int l = 0; l < trafficLights.size(); l++) {
+            std::ostringstream convert8;
+            convert8 << figureNumber;
+
+            int trafficLightOffset = k * 20 + 10;
+            std::ostringstream convert9;
+            convert9 << trafficLightOffset;
+
+            std::ostringstream convert10;
+            convert10 << fStreets[k]->getLength()/2 - trafficLights[l]->getPosition();
+
+            std::string trafficLightCenter = "(" + convert10.str() + ", " + convert9.str() + ", 0)";
+
+            std::string color;
+            if (trafficLights[l]->isGreen()) {
+                color = "(0, 1, 0)";
+            } else {
+                color = "(1, 0, 0)";
+            }
+
+            ini << "[Figure" << convert8.str() << "]" << std::endl
+                << "type = \"Cube\"" << std::endl
+                << "scale = 1" << std::endl
+                << "rotateX = 0" << std::endl
+                << "rotateY = 0" << std::endl
+                << "rotateZ = 0" << std::endl
+                << "center = " << trafficLightCenter << std::endl
+                << "ambientReflection = " << color << std::endl << std::endl;
+
+            figureNumber += 1;
+        }
+
+        std::vector<BusStop*> busStops = fStreets[k]->getBusStops();
+        for (unsigned int l = 0; l < busStops.size(); l++) {
+            std::ostringstream convert11;
+            convert11 << figureNumber;
+
+            int busStopOffset = k * 20 - 3;
+            std::ostringstream convert12;
+            convert12 << busStopOffset;
+
+            std::ostringstream convert13;
+            convert13 << fStreets[k]->getLength() / 2 - busStops[l]->getPosition();
+
+            std::string busStopCenter = "(" + convert13.str() + ", " + convert12.str() + ", 0)";
+
+            ini << "[Figure" << convert11.str() << "]" << std::endl
+                << "type = \"Cube\"" << std::endl
+                << "scale = 1" << std::endl
+                << "rotateX = 0" << std::endl
+                << "rotateY = 0" << std::endl
+                << "rotateZ = 0" << std::endl
+                << "center = " << busStopCenter << std::endl
+                << "ambientReflection = (0, 0, 1)" << std::endl << std::endl;
+
+            figureNumber += 1;
+        }
+    }
+    ini.close();
+
+    std::string command = "./engine " + fileName;
+    system(command.c_str());
 }
 
 Street *TrafficSimulation::getStreetFromString(const std::string &name) const {

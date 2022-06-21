@@ -39,18 +39,6 @@ double Vehicle::getSpeed() const {
     return fSpeed;
 }
 
-void Vehicle::setPosition(double newPosition) {
-    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setPosition()");
-
-    this->fPosition = newPosition;
-}
-
-void Vehicle::setStreet(std::string newStreet) {
-    REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling setStreet()");
-
-    this->fStreet = newStreet;
-}
-
 bool Vehicle::hasTurned() {
     REQUIRE(properlyInitialized(), "Vehicle wasn't initialized when calling hasTurned()");
 

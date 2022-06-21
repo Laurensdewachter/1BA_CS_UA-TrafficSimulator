@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <fstream>
+#include <map>
 #include "parsers/ElementParser.h"
 
 class Street;
@@ -98,6 +99,8 @@ public:
     bool contains(int pos_veh,std::map<Street*,int> kruispunten);
 
     int findPosition(Street * street, std::map<Street*,int> kruispunten);
+
+    void createImage(unsigned int i, const std::string &size);
 
 private:
     Street* getStreetFromString(const std::string &name) const;

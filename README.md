@@ -1,5 +1,15 @@
 # Traffic Simulation
 
+### Parameters
+- `-f` [FILENAME]: the file from which the simulation must be loaded (required)
+- `-r` [REPETITIONS]: the amount of times the simulation must be run (required)
+- `-sg`: simple graphics
+- `-g`: normal graphics
+- `-i`: create images of the simulation
+
+### Images
+For the `-i` flag to work, there must be a directory names `images` in the working directory.
+
 ### Tests
 The tests need the directories `testInput` & `testOutput` to run.  
 - `testInput` contains all the files that are compared to the test results and therefore need to be established before
