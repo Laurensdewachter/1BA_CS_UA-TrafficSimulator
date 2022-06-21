@@ -82,6 +82,13 @@ public:
     void removeVehicle();
 
     /*
+     * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling removeVehicleAddress()")
+     *
+     * ENSURE(fVehicles.size() == vehiclesSize-1, "removeVehicleAddress() postcondition")
+     */
+    void removeVehicleAddress(Vehicle * veh,int index);
+
+    /*
      * REQUIRE(properlyInitialized(), "Street wasn't initialized when calling getName()")
      */
     const std::string &getName() const;

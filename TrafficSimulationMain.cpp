@@ -74,6 +74,7 @@ int main(int argc, char** argv) {
         TrafficSimulation sim;
         if (fileName != "noFile" && repetitions != -1) {
             sim.parseInputFile(fileName);
+            srand(time(NULL));
             for (int k = 0; k < repetitions; k++) {
                 sim.simulate();
                 if (visualize) {
